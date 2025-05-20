@@ -1,0 +1,29 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "Sweep 'N Slash v1.5.0 - Behavior Pack",
+        "description": "pack.description",
+        "uuid": "29cfdcbb-2333-4334-89ec-1879e98c0f28",
+        "version": [1, 5, 0],
+        "min_engine_version": [1, 21, 80]
+    },
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "4a6fdb68-4eb0-4cf1-9bd5-898ed2705333",
+            "version": [1, 0, 0]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "2e95c672-8edb-4706-9ef2-e97226bdffde",
+            "version": [1, 5, 0]
+        }
+    ],
+    "metadata": {
+        "product_type": "addon",
+        "authors": ["Seawhite", "theaddonn"],
+        "license": "MIT"
+    },
+    "capabilities": ["script_eval"]
+}

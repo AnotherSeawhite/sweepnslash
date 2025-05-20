@@ -1,0 +1,144 @@
+{
+    "author": "theaddonn",
+    "name": "SweepNSlash",
+    "packs": {
+        "behaviorPack": "./packs/BP",
+        "resourcePack": "./packs/RP"
+    },
+    "regolith": {
+        "dataPath": "./packs/data",
+        "filterDefinitions": {
+            "gametests": {
+                "url": "github.com/Bedrock-OSS/regolith-filters",
+                "version": "1.7.3"
+            },
+            "json_cleaner": {
+                "url": "github.com/Bedrock-OSS/regolith-filters",
+                "version": "1.1.1"
+            },
+            "marathon": {
+                "url": "github.com/azurite-bedrock/regolith-filters",
+                "version": "cc18d2a113dba7e0088b653d96b8424fa60a7bb1"
+            },
+            "packer": {
+                "url": "github.com/MCDevKit/regolith-library",
+                "version": "1.0.3"
+            },
+            "type_gen": {
+                "url": "github.com/Bedrock-OSS/regolith-filters",
+                "version": "1.0.1"
+            }
+        },
+        "formatVersion": "1.4.0",
+        "profiles": {
+            "base": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "filter": "json_cleaner"
+                    },
+                    {
+                        "filter": "marathon"
+                    },
+                    {
+                        "filter": "type_gen"
+                    }
+                ]
+            },
+            "default": {
+                "export": {
+                    "build": "standard",
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "profile": "base"
+                    },
+                    {
+                        "profile": "scripts-dev"
+                    }
+                ]
+            },
+            "pack": {
+                "export": {
+                    "readOnly": false,
+                    "target": "none"
+                },
+                "filters": [
+                    {
+                        "profile": "release"
+                    },
+                    {
+                        "filter": "packer",
+                        "settings": {
+                            "output": "SweepNSlash.mcaddon"
+                        }
+                    }
+                ]
+            },
+            "release": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "profile": "base"
+                    },
+                    {
+                        "profile": "scripts"
+                    }
+                ]
+            },
+            "scripts": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "filter": "gametests",
+                        "settings": {
+                            "buildOptions": {
+                                "bundle": true,
+                                "dropLabels": ["DEBUG", "LOGGING"],
+                                "minify": true
+                            },
+                            "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
+                            "modules": [
+                                "@minecraft/server@2.0.0-beta",
+                                "@minecraft/server-ui@2.0.0-beta"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "scripts-dev": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "filter": "gametests",
+                        "settings": {
+                            "buildOptions": {
+                                "entryPoints": ["data/gametests/src/main.ts"],
+                                "minify": false
+                            },
+                            "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
+                            "modules": [
+                                "@minecraft/server@2.0.0-beta",
+                                "@minecraft/server-ui@2.0.0-beta"
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

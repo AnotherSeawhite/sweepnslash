@@ -1,0 +1,14 @@
+{
+    "name": "example-gametest",
+    "version": "0.0.1",
+    "description": "Example of a GameTest module",
+    "main": "main.js",
+    "scripts": {},
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@minecraft/server": "2.0.0-rc.1.21.90-preview.25",
+        "@minecraft/server-ui": "2.0.0-rc.1.21.90-preview.25",
+        "mcbe-ipc": "3.0.4"
+    }
+}
