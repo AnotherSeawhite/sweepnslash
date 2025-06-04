@@ -547,7 +547,7 @@ world.afterEvents.projectileHitEntity.subscribe((event) => {
         player !== target &&
         projectile.typeId === 'minecraft:arrow'
     ) {
-        player.playSound('random.orb', { pitch: 0.5 });
+        player.playSound('game.player.bow.ding', { pitch: 0.5 });
     }
 });
 

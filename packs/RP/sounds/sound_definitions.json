@@ -164,6 +164,15 @@
                     "volume": 0
                 }
             ]
+        },
+        "game.player.bow.ding": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/random/orb",
+                    "volume": 0.5
+                }
+            ]
         }
     }
 }
