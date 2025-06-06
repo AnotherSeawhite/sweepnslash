@@ -1,4 +1,4 @@
-import { world, system, Player } from '@minecraft/server';
+import { world, system, Player, GameMode, EntityDamageCause } from '@minecraft/server';
 import * as mc from '@minecraft/server';
 import { debug, Check, getCooldownTime, selectiveParticle } from './mathAndCalculations.js';
 
@@ -116,7 +116,7 @@ export class CombatManager {
         const shieldBlock = Check.shieldBlock(currentTick, player, target, stats, {
             disable: true,
         });
-        const dmgType = shieldBlock ? 'entityExplosion' : 'entityAttack';
+        const dmgType = shieldBlock ? EntityDamageCause.entityExplosion : EntityDamageCause.entityAttack;
 
         // Knockback calculation
         const applyKnockback = (knockbackLevel, pLoc, tLoc, rot) => {
@@ -141,10 +141,11 @@ export class CombatManager {
         };
 
         player.__rawDamage = dmg.raw;
+        target.__playerHit = true;
 
         const iframes =
             (timeValid || (dmg.raw > lastAttack.rawDamage && dmg.final > lastAttack.damage)) &&
-            !(target instanceof Player && target.getGameMode() == 'creative');
+            !(target instanceof Player && target.getGameMode() == GameMode.creative);
         if (iframes) {
             // Apply sweeping
             sweep = Check.sweep(

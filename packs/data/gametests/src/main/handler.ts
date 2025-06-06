@@ -8,6 +8,8 @@ import {
     Player,
     CustomCommandStatus,
     CustomCommandSource,
+    EntityDamageCause,
+    GameMode
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 import { CombatManager } from './class.js';
@@ -522,7 +524,7 @@ world.afterEvents.playerInteractWithBlock.subscribe(({ player, block }) => {
 world.afterEvents.entityHitBlock.subscribe(({ damagingEntity: player }) => {
     if (!(player instanceof Player)) return;
     if (world.getDynamicProperty('addon_toggle') == false) return;
-    if (player.getGameMode() === 'creative') return;
+    if (player.getGameMode() === GameMode.creative) return;
 
     const status = player.getStatus();
     status.lastShieldTime = system.currentTick;
@@ -548,6 +550,20 @@ world.afterEvents.projectileHitEntity.subscribe((event) => {
         projectile.typeId === 'minecraft:arrow'
     ) {
         player.playSound('random.orb', { pitch: 0.5 });
+    }
+});
+
+world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
+    if (world.getDynamicProperty('addon_toggle') == false) return;
+    if (!entity?.isValid) return;
+    
+    const projectileComp = entity?.getComponent('projectile');
+    const owner = projectileComp?.owner;
+    if (!owner) return;
+    
+    if (owner instanceof Entity) {
+        const ownerVel = owner.getVelocity();
+        entity.applyImpulse(ownerVel);
     }
 });
 
@@ -581,8 +597,21 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
 
     const currentTick = system.currentTick;
     const player = damageSource.damagingEntity;
+    
+    if (!player && damageSource.cause !== EntityDamageCause.override && damage >= 0) {
+        try {
+            if (!hurtEntity.__playerHit)
+                hurtEntity.applyKnockback({x: 0, z: 0}, hurtEntity.getVelocity().y);
+        } catch (e) {
+            const debugMode = world.getDynamicProperty('debug_mode');
+            if (debugMode) debug('Error during knockback: ' + e + ', knockback skipped');
+        }
+    }
+
+    hurtEntity.__playerHit = false;
+    
     if (player instanceof Player) {
-        if (damageSource.cause === 'entityAttack') {
+        if (damageSource.cause === EntityDamageCause.entityAttack) {
             //const { stats } = player.getItemStats();
             //const shieldBlock = Check.shieldBlock(currentTick, player, hurtEntity, stats);
             //if (!shieldBlock)
@@ -592,7 +621,7 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
                 time: currentTick,
             };
             healthParticle(hurtEntity, damage);
-        } else if (damageSource.cause === 'maceSmash') {
+        } else if (damageSource.cause === EntityDamageCause.maceSmash) {
             healthParticle(hurtEntity, damage);
         } else {
             hurtEntity.__lastAttack = {

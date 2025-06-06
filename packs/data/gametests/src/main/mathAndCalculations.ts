@@ -8,6 +8,8 @@ import {
     Player,
     BiomeTypes,
     EquipmentSlot,
+    EntityDamageCause,
+    GameMode
 } from '@minecraft/server';
 import { weaponStats } from './weaponStatsHandler.js';
 import { lambertW0, lambertWm1 } from './lambertw.js';
@@ -505,7 +507,7 @@ export class Check {
 
     // Durability reduction code.
     static durability(player, equippableComp, item, stats) {
-        if (player.getGameMode() === 'creative') return;
+        if (player.getGameMode() === GameMode.creative) return;
         const durabilityComp = item?.getComponent('durability');
         if (!durabilityComp || !stats) return;
 
@@ -587,7 +589,7 @@ export class Check {
                 map,
                 offset
             );
-            if (!(target instanceof Player && target.getGameMode() === 'creative'))
+            if (!(target instanceof Player && target.getGameMode() === GameMode.creative))
                 selectiveSound(player.location, 'critSound', dimension, sound);
         }
         return isValid;
@@ -757,8 +759,8 @@ export class Check {
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
                 disable: true,
             })
-                ? 'entityExplosion'
-                : 'entityAttack';
+                ? EntityDamageCause.entityExplosion
+                : EntityDamageCause.entityAttack;
 
             let formula = 1 + damage * (level / (level + 1));
 
@@ -816,7 +818,7 @@ export class Check {
         let angle = false;
         let specialValid = true;
 
-        if (target instanceof Player && target.getGameMode() == 'creative') return false;
+        if (target instanceof Player && target.getGameMode() == GameMode.creative) return false;
 
         if (world.getDynamicProperty('shieldBreakSpecial') && player instanceof Player)
             specialValid = Check.specialValid(currentTick, player, stats);
