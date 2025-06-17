@@ -120,7 +120,7 @@ function configFormOpener({ sourceEntity: player, sourceType }) {
 
 function configForm(player) {
     const tag = player.hasTag('sweepnslash.config');
-    const op = player.playerPermissionLevel = PlayerPermissionLevel.Operator;
+    const op = player.playerPermissionLevel == PlayerPermissionLevel.Operator;
     let formValuesPush = 0;
 
     let form = new ModalFormData().title({
