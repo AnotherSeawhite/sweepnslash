@@ -68,6 +68,7 @@ function initializePlayerStatus(player) {
         cooldown: 0,
         lastAttackTime: 0,
         lastShieldTime: 0,
+        foodTickTimer: 0,
         fallDistance: 0,
     };
     playerStatus.set(player, status);
@@ -382,6 +383,30 @@ Entity.prototype.getItemStats = function () {
 Entity.prototype.isTamed = function ({ excludeTypes = [] } = {}) {
     if (excludeTypes.includes(this.typeId)) return false;
     return this.getComponent('is_tamed')?.isValid;
+};
+
+Player.prototype.getHunger = function() {
+	return this.getComponent("player.hunger")?.currentValue;
+};
+
+Player.prototype.setHunger = function(number) {
+	this.getComponent("player.hunger")?.setCurrentValue(number);
+};
+
+Player.prototype.getSaturation = function() {
+	return this.getComponent("player.saturation")?.currentValue;
+};
+
+Player.prototype.setSaturation = function(number) {
+	this.getComponent("player.saturation")?.setCurrentValue(number);
+};
+
+Player.prototype.getExhaustion = function() {
+	return this.getComponent("player.exhaustion")?.currentValue;
+};
+
+Player.prototype.setExhaustion = function(number) {
+	this.getComponent("player.exhaustion")?.setCurrentValue(number);
 };
 
 // Script by JaylyMC
