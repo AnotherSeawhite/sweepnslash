@@ -191,7 +191,7 @@ export class CombatManager {
             if (
                 status.mace === false &&
                 !inanimate &&
-                dmg.final > 0 &&
+                dmg.final > 0
             ) {
                 if (player.getGameMode() !== GameMode.Creative) {
                     player.setExhaustion(player.getExhaustion() + 0.1);
