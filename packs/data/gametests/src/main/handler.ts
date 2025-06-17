@@ -410,7 +410,7 @@ system.runInterval(() => {
         if (canHeal) {
             status.foodTickTimer += 1;
 
-            const usingSaturation = saturation > 0;
+            const usingSaturation = saturation > 0 && hunger >= 20;
             const foodTick = usingSaturation ? 10 : 80;
 
             if (status.foodTickTimer >= foodTick) {
