@@ -19,7 +19,7 @@ sweepnslash.servertoggleheader=서버 설정
 sweepnslash.shieldbreakspecial=도끼 대 방패에 쿨다운 적용
 sweepnslash.shieldbreakspecial.tooltip=도끼로 방패를 공격할 때 공격 쿨다운이 84.8%% 이하로 떨어진 상태가 아닐 경우에만 방패를 무력화하도록 합니다.
 sweepnslash.saturationhealing=포만감 회복
-sweepnslash.saturationhealing.tooltip=포만감을 사용하여 체력을 빠르게 회복합니다. 자연 재생 게임 규칙이 자동으로 비활성화됩니다.
+sweepnslash.saturationhealing.tooltip=포만감을 사용하여 체력을 빠르게 회복합니다. 자연 재생 게임 규칙이 강제로 비활성화됩니다.
 
 ## General Toggles
 sweepnslash.generaltoggleheader=일반 설정
