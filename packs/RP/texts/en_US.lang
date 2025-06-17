@@ -14,7 +14,7 @@ sweepnslash.toggledebugmode=Toggle Debug Mode
 sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
 
 ## Server Toggles
-sweepnslash.operatortoggleheader=Server Toggles
+sweepnslash.servertoggleheader=Server Toggles
 sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
 sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
 sweepnslash.saturationhealing=Saturation Healing
