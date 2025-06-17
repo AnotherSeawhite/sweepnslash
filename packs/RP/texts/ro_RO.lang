@@ -4,40 +4,45 @@ pack.description=Aduce sistemul de luptă al Ediției Java 1.9+ în Ediția Bedr
 attribute.name.generic.attackDamage=§r
 
 sweepnslash.tipmessage=§fScrie §e%s §fpentru a deschide meniul de configurare al §3Sweep §f'N §6Slash §f
+sweepnslash.currentversion=Versiune curentă:§e %s
+
 sweepnslash.configmenutitle=Configurare Sweep 'N Slash
+
+## Advanced Operator Toggles
+sweepnslash.operatortoggleheader=Opțiuni avansate de operator
 sweepnslash.toggleaddon=Activează Add-On
-sweepnslash.shieldbreakspecial=Necesită topoare încărcate pentru a sparge scuturile
 sweepnslash.toggledebugmode=Activează modul de depanare
+sweepnslash.toggledebugmode.tooltip=Opțiune mod depanare pentru dezvoltatori și creatori. Scoate diverse informații în Jurnalul de Conținut, și activează testerul DPS (evenimentul de sctipt „sns:testdamage”).
+
+## Server Toggles
+sweepnslash.servertoggleheader=Opțiuni avansate de server
+sweepnslash.shieldbreakspecial=Necesită topoare încărcate pentru a sparge scuturile
+sweepnslash.shieldbreakspecial.tooltip=Dacă este activată, topoarele dezactivează scuturi doar dacă încărcarea cooldown-ului atacatorului este peste 84.8%.
+sweepnslash.saturationhealing=Regenerare bazată pe saturație
+sweepnslash.saturationhealing.tooltip=Dacă este activată, saturația va fi consumată mai rapid pentru regenerare. Acest lucru va opti forțat regula de joc „Regenerare naturală”.
+
+## General Toggles
+sweepnslash.generaltoggleheader=Opțiuni generale
 sweepnslash.excludepetfromsweep=Ignoră animalele îmblânzite la sfâșiere
+sweepnslash.excludepetfromsweep.tooltip=Dacă este activată, atacurile de sfâșiere nu vor lovi animalele îmblânzite.
 sweepnslash.tipmessagetoggle=Arată mesaje sfat la intrarea în lume
+
+## Personal Settings
+sweepnslash.personaltoggleheader=Setări personale
 sweepnslash.indicatorstyle=Indicator atac
+sweepnslash.indicatorstyle.tooltip=Schimbă interfața Indicatorului de atac. Dacă aveți probleme cu interfața addon-ului, încercați să folosiți Gheizer.
 sweepnslash.crosshair=Reticul
 sweepnslash.hotbar=Bară de acțiune
 sweepnslash.geyser=Geyser
 sweepnslash.none=Fără
+sweepnslash.bowhitsound=Sunet lovire arc
 sweepnslash.sweepparticles=Particule sfâșiere
 sweepnslash.enchantedhitparticles=Particule lovitură fermecată
 sweepnslash.damageindicatorparticles=Particyle indicator lovire
 sweepnslash.critparticles=Partivule lovitură critică
 sweepnslash.critsounds=Sunete lovitură critică
 sweepnslash.sweepRGBtitle=Culoare RGB sfâșiere
-sweepnslash.nan=§cValoare NaN(Nu e Număr) a fost înregistrată la culoare RGB sfâșiere. Se revine la 0.
 sweepnslash.saveconfig=Salvare
+
 sweepnslash.canceled=§cConfigurație anulată.
 sweepnslash.saved=§aConfigurație salvată.
-sweepnslash.configopened=Meniu configurare deschis în afara ecranului de chat.
-sweepnslash.bowhitsound=Sunet lovire arc
-sweepnslash.operatortoggleheader=Opțiuni avansate de operator
-sweepnslash.generaltoggleheader=Opțiuni generale
-sweepnslash.personaltoggleheader=Setări personale
-sweepnslash.currentversion=Versiune curentă:§e %s
-
-sweepnslash.shieldbreakspecial.tooltip=Dacă este activată, topoarele dezactivează scuturi doar dacă încărcarea cooldown-ului atacatorului este peste 84.8%.
-sweepnslash.toggledebugmode.tooltip=Opțiune mod depanare pentru dezvoltatori și creatori. Scoate diverse informații în Jurnalul de Conținut, și activează testerul DPS (evenimentul de sctipt „sns:testdamage”).
-sweepnslash.excludepetfromsweep.tooltip=Dacă este activată, atacurile de sfâșiere nu vor lovi animalele îmblânzite.
-sweepnslash.indicatorstyle.tooltip=Schimbă interfața Indicatorului de atac. Dacă aveți probleme cu interfața addon-ului, încercați să folosiți Gheizer.
-
-
-
-
-
