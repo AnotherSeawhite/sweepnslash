@@ -405,7 +405,7 @@ system.runInterval(() => {
             hunger >= 18 &&
             health.currentValue > 0 &&
             health.currentValue < health.effectiveMax &&
-            player.getGameMode() !== "Creative";
+            player.getGameMode() !== GameMode.Creative;
             
         if (canHeal) {
             status.foodTickTimer += 1;
