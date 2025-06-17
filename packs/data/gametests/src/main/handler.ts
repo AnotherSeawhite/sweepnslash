@@ -391,50 +391,50 @@ system.runInterval(() => {
         // Saturation healing
         
         const health = player.getComponent("health");
-		const hunger = player.getHunger();
-		const saturation = player.getSaturation();
-		const exhaustion = player.getExhaustion();
+        const hunger = player.getHunger();
+        const saturation = player.getSaturation();
+        const exhaustion = player.getExhaustion();
 
-		const saturationEffect = player.getEffect("saturation");
-		if (saturationEffect?.isValid && health.currentValue > 0) {
-			const saturationComp = player.getComponent("player.saturation");
-			player.setSaturation(clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax));
-		}
+        const saturationEffect = player.getEffect("saturation");
+        if (saturationEffect?.isValid && health.currentValue > 0) {
+            const saturationComp = player.getComponent("player.saturation");
+            player.setSaturation(clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax));
+        }
 
-		const canHeal =
-			hunger >= 18 &&
-			health.currentValue > 0 &&
-			health.currentValue < health.effectiveMax &&
-			player.getGameMode() !== "Creative";
-			
-		if (canHeal) {
-			status.foodTickTimer += 1;
+        const canHeal =
+            hunger >= 18 &&
+            health.currentValue > 0 &&
+            health.currentValue < health.effectiveMax &&
+            player.getGameMode() !== "Creative";
+            
+        if (canHeal) {
+            status.foodTickTimer += 1;
 
-			const usingSaturation = saturation > 0;
-			const foodTick = usingSaturation ? 10 : 80;
+            const usingSaturation = saturation > 0;
+            const foodTick = usingSaturation ? 10 : 80;
 
-			if (status.foodTickTimer >= foodTick) {
-				let healAmount = 0;
-				let exhaustionToAdd = 0;
+            if (status.foodTickTimer >= foodTick) {
+                let healAmount = 0;
+                let exhaustionToAdd = 0;
 
-				if (usingSaturation) {
-					healAmount = Math.min(1.0, saturation / 6.0);
-					exhaustionToAdd = healAmount * 6.0;
-				} else {
-					healAmount = 1.0;
-					exhaustionToAdd = 6.0;
-				}
+                if (usingSaturation) {
+                    healAmount = Math.min(1.0, saturation / 6.0);
+                    exhaustionToAdd = healAmount * 6.0;
+                } else {
+                    healAmount = 1.0;
+                    exhaustionToAdd = 6.0;
+                }
 
-				// Apply healing and exhaustion
-				player.setExhaustion(exhaustion + exhaustionToAdd);
-				health.setCurrentValue(
-					clampNumber(health.currentValue + healAmount, health.effectiveMin, health.effectiveMax)
-				);
-				status.foodTickTimer = 0;
-			}
-		} else {
-			status.foodTickTimer = 0;
-		}
+                // Apply healing and exhaustion
+                player.setExhaustion(exhaustion + exhaustionToAdd);
+                health.setCurrentValue(
+                    clampNumber(health.currentValue + healAmount, health.effectiveMin, health.effectiveMax)
+                );
+                status.foodTickTimer = 0;
+            }
+        } else {
+            status.foodTickTimer = 0;
+        }
 
         // For UI
         const maxCD = getCooldownTime(player, stats?.attackSpeed).ticks;
