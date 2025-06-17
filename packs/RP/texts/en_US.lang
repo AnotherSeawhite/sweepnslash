@@ -6,9 +6,10 @@ attribute.name.generic.attackDamage=§r
 sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
 sweepnslash.currentversion=Current version:§e %s
 
+sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+
 ## Advanced Operator Toggles
 sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
 sweepnslash.toggleaddon=Toggle Add-On
 sweepnslash.toggledebugmode=Toggle Debug Mode
 sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
