@@ -6,9 +6,10 @@ attribute.name.generic.attackDamage=§r
 sweepnslash.tipmessage=§e%s §f명령어를 입력하여 §3Sweep §f'N §6Slash §f설정 화면 열기
 sweepnslash.currentversion=현재 버전:§e %s
 
+sweepnslash.configmenutitle=Sweep 'N Slash 설정
+
 ## Advanced Operator Toggles
 sweepnslash.operatortoggleheader=고급 애드온 설정
-sweepnslash.configmenutitle=Sweep 'N Slash 설정
 sweepnslash.toggleaddon=애드온 활성화
 sweepnslash.toggledebugmode=디버그 모드 활성화
 sweepnslash.toggledebugmode.tooltip=개발자를 위한 디버그 모드입니다. 콘텐츠 로그에 여러 정보를 출력하며, DPS 실험 기능을 활성화합니다. ('sns:testdamage' 스크립트 이벤트)
