@@ -10,7 +10,8 @@ import {
     CustomCommandStatus,
     CustomCommandSource,
     EntityDamageCause,
-    GameMode
+    GameMode,
+    PlayerPermissionLevel
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 import { CombatManager } from './class.js';
@@ -50,6 +51,10 @@ world.afterEvents.worldLoad.subscribe(() => {
 
     if (world.getDynamicProperty('shieldBreakSpecial') == undefined) {
         world.setDynamicProperty('shieldBreakSpecial', false);
+    }
+
+    if (world.getDynamicProperty('saturationHealing') == undefined) {
+        world.setDynamicProperty('saturationHealing', true);
     }
 });
 
@@ -114,7 +119,8 @@ function configFormOpener({ sourceEntity: player, sourceType }) {
 }
 
 function configForm(player) {
-    const op = player.hasTag('sweepnslash.config');
+    const tag = player.hasTag('sweepnslash.config');
+    const op = player.playerPermissionLevel = PlayerPermissionLevel.Operator;
     let formValuesPush = 0;
 
     let form = new ModalFormData().title({
@@ -126,13 +132,25 @@ function configForm(player) {
         return object.getDynamicProperty(id);
     }
 
-    if (op == true) {
+    if (tag == true) {
         form.label({ translate: 'sweepnslash.operatortoggleheader' });
         if (!world.isHardcore)
-            form.toggle(
-                { translate: 'sweepnslash.toggleaddon' },
-                { defaultValue: dp(world, { id: 'addon_toggle' }) }
-            );
+        form.toggle(
+            { translate: 'sweepnslash.toggleaddon' },
+            { defaultValue: dp(world, { id: 'addon_toggle' }) }
+        );
+        form.toggle(
+            { translate: 'sweepnslash.toggledebugmode' },
+            {
+                defaultValue: dp(world, { id: 'debug_mode' }),
+                tooltip: { translate: 'sweepnslash.toggledebugmode.tooltip' },
+            }
+        );
+        form.divider();
+    }
+
+    if (op == true) {
+        form.label({ translate: 'sweepnslash.servertoggleheader' });
         form.toggle(
             { translate: 'sweepnslash.shieldbreakspecial' },
             {
@@ -141,10 +159,10 @@ function configForm(player) {
             }
         );
         form.toggle(
-            { translate: 'sweepnslash.toggledebugmode' },
+            { translate: 'sweepnslash.saturationhealing' },
             {
-                defaultValue: dp(world, { id: 'debug_mode' }),
-                tooltip: { translate: 'sweepnslash.toggledebugmode.tooltip' },
+                defaultValue: dp(world, { id: 'saturationHealing' }),
+                tooltip: { translate: 'sweepnslash.saturationhealing.tooltip' },
             }
         );
         form.divider();
@@ -259,10 +277,11 @@ function configForm(player) {
             {
                 object: world,
                 dynamicProperty: 'addon_toggle',
-                condition: op && !world.isHardcore,
+                condition: tag && !world.isHardcore,
             },
+            { object: world, dynamicProperty: 'debug_mode', condition: tag },
             { object: world, dynamicProperty: 'shieldBreakSpecial', condition: op },
-            { object: world, dynamicProperty: 'debug_mode', condition: op },
+            { object: world, dynamicProperty: 'saturationHealing', condition: op },
             { object: player, dynamicProperty: 'excludePetFromSweep' },
             { object: player, dynamicProperty: 'tipMessage' },
             { object: player, dynamicProperty: 'cooldownStyle' },
@@ -309,6 +328,7 @@ system.beforeEvents.startup.subscribe((init) => {
 system.runInterval(() => {
     const debugMode = world.getDynamicProperty('debug_mode');
     const addonToggle = world.getDynamicProperty('addon_toggle');
+    const saturationHealing = world.getDynamicProperty('saturationHealing');
     const currentTick = system.currentTick;
 
     for (const player of world.getAllPlayers()) {
@@ -401,7 +421,10 @@ system.runInterval(() => {
             player.setSaturation(clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax));
         }
 
+        if (saturationHealing && world.gameRules.naturalRegeneration == true) world.gameRules.naturalRegeneration = false;
+
         const canHeal =
+            saturationHealing &&
             hunger >= 18 &&
             health.currentValue > 0 &&
             health.currentValue < health.effectiveMax &&
