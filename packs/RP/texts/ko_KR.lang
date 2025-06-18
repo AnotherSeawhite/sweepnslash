@@ -12,14 +12,14 @@ sweepnslash.configmenutitle=Sweep 'N Slash 설정
 sweepnslash.operatortoggleheader=고급 애드온 설정
 sweepnslash.toggleaddon=애드온 활성화
 sweepnslash.toggledebugmode=디버그 모드 활성화
-sweepnslash.toggledebugmode.tooltip=개발자를 위한 디버그 모드입니다. 콘텐츠 로그에 여러 정보를 출력하며, DPS 실험 기능을 활성화합니다. ('sns:testdamage' 스크립트 이벤트)
+sweepnslash.toggledebugmode.tooltip=개발자를 위한 디버그 모드입니다. 콘텐츠 로그에 개발에 필요한 여러 정보를 출력하며, DPS 실험 기능을 활성화합니다. ('sns:testdamage' 스크립트 이벤트)
 
 ## Server Toggles
 sweepnslash.servertoggleheader=서버 설정
 sweepnslash.shieldbreakspecial=도끼 대 방패에 쿨다운 적용
-sweepnslash.shieldbreakspecial.tooltip=도끼로 방패를 공격할 때 공격 쿨다운이 84.8%% 이하로 떨어진 상태가 아닐 경우에만 방패를 무력화하도록 합니다.
+sweepnslash.shieldbreakspecial.tooltip=도끼를 든 채로 방패를 공격할 때 공격 쿨다운이 84.8%% 이상인 경우에만 방패를 무력화하도록 합니다.
 sweepnslash.saturationhealing=포만감 회복
-sweepnslash.saturationhealing.tooltip=포만감을 사용하여 체력을 빠르게 회복합니다. 자연 재생 게임 규칙이 강제로 비활성화됩니다.
+sweepnslash.saturationhealing.tooltip=포만감을 사용하여 체력을 빠르게 회복합니다. 활성화 시 '자연 재생' 월드 옵션이 강제로 비활성화됩니다.
 
 ## General Toggles
 sweepnslash.generaltoggleheader=일반 설정
