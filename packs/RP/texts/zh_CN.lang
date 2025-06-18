@@ -4,40 +4,45 @@ pack.description=将基岩版的战斗机制改为Java版1.9+的战斗机制
 attribute.name.generic.attackDamage=§r
 
 sweepnslash.tipmessage=§f输入 §e%s §f打开§3Sweep §f'N §6Slash §f设置菜单
+sweepnslash.currentversion=当前版本:§e %s
+
 sweepnslash.configmenutitle=Sweep 'N Slash设置菜单
+
+## Advanced Operator Toggles
+sweepnslash.operatortoggleheader=高级开发者设置
 sweepnslash.toggleaddon=切换为Add-On模式
-sweepnslash.shieldbreakspecial=需蓄力斧破盾
 sweepnslash.toggledebugmode=切换为调试模式
+sweepnslash.toggledebugmode.tooltip=给开发者准备的调试模式。所有信息将显示在内容日志中，并且启用DPS测试（'sns:testdamage'的脚本信息）
+
+## Server Toggles
+sweepnslash.servertoggleheader=服务器设置
+sweepnslash.shieldbreakspecial=需蓄力斧破盾
+sweepnslash.shieldbreakspecial.tooltip=启用后，只有在攻击冷却完成度大于84.8%时斧头可以破盾
+sweepnslash.saturationhealing=饱和度用于回血
+sweepnslash.saturationhealing.tooltip=启用后，饱和度会被更快消耗用于回血。该选项会自动禁用"自然生命恢复"选项
+
+## General Toggles
+sweepnslash.generaltoggleheader=通用
 sweepnslash.excludepetfromsweep=横扫攻击时不误伤宠物
+sweepnslash.excludepetfromsweep.tooltip=启用后，横扫攻击将不会对宠物造成伤害
 sweepnslash.tipmessagetoggle=进入游戏时加载提示信息
+
+## Personal Settings
+sweepnslash.personaltoggleheader=自定义
 sweepnslash.indicatorstyle=攻击指示器
+sweepnslash.indicatorstyle.tooltip=改变攻击显示器的UI。如果使用该模组时UI有问题的话，建议用Geyser模式
 sweepnslash.crosshair=十字准星下
 sweepnslash.hotbar=快捷栏旁
 sweepnslash.geyser=Geyser模式
 sweepnslash.none=无
+sweepnslash.bowhitsound=弓箭命中音效
 sweepnslash.sweepparticles=横扫粒子
 sweepnslash.enchantedhitparticles=附魔武器攻击粒子
 sweepnslash.damageindicatorparticles=伤害显示粒子
 sweepnslash.critparticles=暴击粒子
 sweepnslash.critsounds=暴击音效
 sweepnslash.sweepRGBtitle=横扫粒子颜色(RGB)
-sweepnslash.nan=§cNaN(Not a Number) value has been registered in sweep RGB color. Falling back to 0.
 sweepnslash.saveconfig=保存
+
 sweepnslash.canceled=§c已取消保存
 sweepnslash.saved=§a已保存设置
-sweepnslash.configopened=设置菜单已在聊天框之外打开
-sweepnslash.bowhitsound=弓箭命中音效
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.generaltoggleheader=通用
-sweepnslash.personaltoggleheader=自定义
-sweepnslash.currentversion=当前版本:§e %s
-
-sweepnslash.shieldbreakspecial.tooltip=启用后，只有在攻击冷却完成度大于84.8%时斧头可以破盾
-sweepnslash.toggledebugmode.tooltip=给开发者准备的调试模式。所有信息将显示在内容日志中，并且启用DPS测试（'sns:testdamage'的脚本信息）
-sweepnslash.excludepetfromsweep.tooltip=启用后，横扫攻击将不会对宠物造成伤害
-sweepnslash.indicatorstyle.tooltip=改变攻击显示器的UI。如果使用该模组时UI有问题的话，建议用Geyser模式
-
-
-
-
-
