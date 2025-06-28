@@ -1,48 +1,48 @@
-pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
-pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
+pack.name=§3Sweep §f'N §6Slash §f- Gói Tài Nguyên
+pack.description=Chuyển đổi hệ thống chiến đấu của Bedrock Edition sang giống với Java Edition 1.9+.
 
 attribute.name.generic.attackDamage=§r
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tipmessage=§fGõ §e%s §fđể mở menu cấu hình §3Sweep §f'N §6Slash§f
+sweepnslash.currentversion=Phiên bản hiện tại:§e %s
 
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.configmenutitle=Cấu Hình Sweep 'N Slash
 
 ## Advanced Operator Toggles
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.operatortoggleheader=Tùy Chọn Nâng Cao cho Operator
+sweepnslash.toggleaddon=Bật/Tắt Add-On
+sweepnslash.toggledebugmode=Bật/Tắt Chế Độ Gỡ Lỗi
+sweepnslash.toggledebugmode.tooltip=Chế độ gỡ lỗi dành cho nhà phát triển và người sáng tạo. Hiển thị thông tin trong Content Log, và kích hoạt trình kiểm tra DPS (sự kiện script 'sns:testdamage').
 
 ## Server Toggles
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.servertoggleheader=Tùy Chọn Máy Chủ
+sweepnslash.shieldbreakspecial=Yêu Cầu Rìu Sạc Mới Phá Khiên
+sweepnslash.shieldbreakspecial.tooltip=Nếu bật, rìu chỉ vô hiệu hóa khiên khi thanh sạc đòn tấn công của người chơi vượt quá 84.8%%.
+sweepnslash.saturationhealing=Hồi Máu Bằng Saturation
+sweepnslash.saturationhealing.tooltip=Nếu bật, saturation sẽ được tiêu hao nhanh hơn để hồi máu. Điều này sẽ buộc gamerule Hồi Máu Tự Nhiên bị tắt.
 
 ## General Toggles
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.generaltoggleheader=Tùy Chọn Chung
+sweepnslash.excludepetfromsweep=Bỏ Qua Thú Cưng Khi Chém
+sweepnslash.excludepetfromsweep.tooltip=Nếu bật, các đòn chém diện rộng sẽ không gây sát thương cho thú cưng đã thuần hóa.
+sweepnslash.tipmessagetoggle=Hiển Thị Tin Nhắn Gợi Ý Khi Tham Gia
 
 ## Personal Settings
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
+sweepnslash.personaltoggleheader=Cài Đặt Cá Nhân
+sweepnslash.indicatorstyle=Chỉ Báo Đòn Đánh
+sweepnslash.indicatorstyle.tooltip=Thay đổi giao diện chỉ báo đòn đánh. Nếu bạn gặp sự cố với UI của addon, hãy thử sử dụng Geyser.
+sweepnslash.crosshair=Tâm Nhắm
+sweepnslash.hotbar=Thanh Công Cụ
 sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.none=Không có
+sweepnslash.bowhitsound=Âm Thanh Khi Bắn Cung Trúng
+sweepnslash.sweepparticles=Hiệu Ứng Chém Diện Rộng
+sweepnslash.enchantedhitparticles=Hiệu Ứng Khi Trúng Bằng Vũ Khí Phép
+sweepnslash.damageindicatorparticles=Hiệu Ứng Chỉ Báo Sát Thương
+sweepnslash.critparticles=Hiệu Ứng Đòn Chí Mạng
+sweepnslash.critsounds=Âm Thanh Đòn Chí Mạng
+sweepnslash.sweepRGBtitle=Màu RGB Cho Đòn Chém
+sweepnslash.saveconfig=Lưu
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.canceled=§cĐã hủy cấu hình.
+sweepnslash.saved=§aĐã lưu cấu hình.
