@@ -110,7 +110,7 @@
                             },
                             "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
                             "modules": [
-                                "@minecraft/server@2.1.0-beta",
+                                "@minecraft/server@2.2.0-beta",
                                 "@minecraft/server-ui@2.0.0"
                             ]
                         }
@@ -133,7 +133,7 @@
                             },
                             "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
                             "modules": [
-                                "@minecraft/server@2.1.0-beta",
+                                "@minecraft/server@2.2.0-beta",
                                 "@minecraft/server-ui@2.0.0"
                             ]
                         }
