@@ -162,7 +162,15 @@ function configForm(player) {
             { translate: 'sweepnslash.saturationhealing' },
             {
                 defaultValue: dp(world, { id: 'saturationHealing' }),
-                tooltip: { translate: 'sweepnslash.saturationhealing.tooltip' },
+                tooltip: {
+                    rawtext: [
+                        { translate: "sweepnslash.saturationhealing.tooltip" },
+                        { text: "\n\n" },
+                        { translate: "createWorldScreen.naturalregeneration" },
+                        { text: ": " },
+                        { text: world5.gameRules.naturalRegeneration ? "§aON" : "§cOFF"}
+                    ]
+                }
             }
         );
         form.divider();
