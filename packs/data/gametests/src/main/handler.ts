@@ -642,6 +642,9 @@ world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
     const owner = projectileComp?.owner;
     if (!owner) return;
     
+    const { stats } = owner.getItemStats();
+    if (stats?.noInherit) return;
+    
     if (owner instanceof Entity) {
         const ownerVel = owner.getVelocity();
         entity.applyImpulse(ownerVel);
