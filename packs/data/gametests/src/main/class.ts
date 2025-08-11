@@ -196,7 +196,7 @@ export class CombatManager {
                 if (player.getGameMode() !== GameMode.Creative) {
                     player.setExhaustion(player.getExhaustion() + 0.1);
                 }
-                if (!beforeEffect?.cancelDurability) Check.durability(player, equippableComp, item, stats);
+                if (!beforeEffect?.cancelDurability && target?.typeId !== "minecraft:shulker_bullet") Check.durability(player, equippableComp, item, stats);
             }
 
             // Apply knockback

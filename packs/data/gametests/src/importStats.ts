@@ -78,6 +78,10 @@ export type WeaponStats = {
      * Use `mc` argument for Minecraft API access (do not import modules directly).
      * Return properties to override or cancel attack behavior.
      */
+    noInherit?: boolean;
+    /**
+     * If true, projectiles shot with this item will not inherit velocity from the shooter.
+     */
     beforeEffect?: (args: {
         mc: typeof import('@minecraft/server');
         world: World;

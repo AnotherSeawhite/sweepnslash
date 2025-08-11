@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.1.0';
+const version = '2.1.1';
 const configCommand = 'sns:config';
 
 import {
@@ -162,7 +162,15 @@ function configForm(player) {
             { translate: 'sweepnslash.saturationhealing' },
             {
                 defaultValue: dp(world, { id: 'saturationHealing' }),
-                tooltip: { translate: 'sweepnslash.saturationhealing.tooltip' },
+                tooltip: {
+                    rawtext: [
+                        { translate: "sweepnslash.saturationhealing.tooltip" },
+                        { text: "\n\n" },
+                        { translate: "createWorldScreen.naturalregeneration" },
+                        { text: ": " },
+                        { text: world.gameRules.naturalRegeneration ? "§aON" : "§cOFF"}
+                    ]
+                }
             }
         );
         form.divider();
@@ -633,6 +641,9 @@ world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
     const projectileComp = entity?.getComponent('projectile');
     const owner = projectileComp?.owner;
     if (!owner) return;
+    
+    const { stats } = owner.getItemStats();
+    if (stats?.noInherit) return;
     
     if (owner instanceof Entity) {
         const ownerVel = owner.getVelocity();

@@ -675,6 +675,7 @@ export class Check {
         } = {}
     ) {
         const debugMode = world.getDynamicProperty('debug_mode');
+		const pvp = world.gameRules.pvp;
         const status = player.getStatus();
 
         if (
@@ -791,6 +792,7 @@ export class Check {
 
             e.applyDamage(formula, { cause: dmgType, damagingEntity: player });
             try {
+				if (e instanceof Player && !pvp) return;
                 const fireImmune = e?.getComponent('fire_immune')?.isValid;
                 if (!fireImmune) e.setOnFire(fireAspect * 4, true);
             } catch (e) {

@@ -42,8 +42,10 @@ export const betterOnBedrock: WeaponStats[] = [
                 sweepMap: map,
             };
         },
-        script: ({ sweptEntities }) => {
+        script: ({ world, sweptEntities }) => {
+            const pvp = world.gameRules.pvp;
             sweptEntities.forEach((e) => {
+                if (e instanceof Player && !pvp) return;
                 try {
                     e.addEffect('poison', TicksPerSecond * 5);
                 } catch (e) {
@@ -76,8 +78,10 @@ export const betterOnBedrock: WeaponStats[] = [
                 sweepMap: map,
             };
         },
-        script: ({ sweptEntities }) => {
+        script: ({ world, sweptEntities }) => {
+            const pvp = world.gameRules.pvp;
             sweptEntities.forEach((e) => {
+                if (e instanceof Player && !pvp) return;
                 try {
                     const fireImmune = e?.getComponent('fire_immune')?.isValid;
                     if (!fireImmune) e.setOnFire(6, true);

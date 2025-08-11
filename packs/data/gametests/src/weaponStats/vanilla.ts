@@ -23,6 +23,13 @@ export const vanilla: WeaponStats[] = [
         sweep: true,
     },
     {
+        id: 'minecraft:copper_sword',
+        attackSpeed: 1.6,
+        damage: 5,
+        isWeapon: true,
+        sweep: true,
+    },
+    {
         id: 'minecraft:iron_sword',
         attackSpeed: 1.6,
         damage: 6,
@@ -56,6 +63,16 @@ export const vanilla: WeaponStats[] = [
         isWeapon: true,
     },
     {
+        id: "minecraft:crossbow",
+        skipLore: true,
+        noInherit: true,
+        beforeEffect: () => {
+            return {
+                cancelDurability: true
+            }
+        }
+    },
+    {
         id: 'minecraft:wooden_shovel',
         attackSpeed: 1,
         damage: 2.5,
@@ -67,6 +84,11 @@ export const vanilla: WeaponStats[] = [
     },
     {
         id: 'minecraft:stone_shovel',
+        attackSpeed: 1,
+        damage: 3.5,
+    },
+    {
+        id: 'minecraft:copper_shovel',
         attackSpeed: 1,
         damage: 3.5,
     },
@@ -97,6 +119,11 @@ export const vanilla: WeaponStats[] = [
     },
     {
         id: 'minecraft:stone_pickaxe',
+        attackSpeed: 1.2,
+        damage: 3,
+    },
+    {
+        id: 'minecraft:copper_pickaxe',
         attackSpeed: 1.2,
         damage: 3,
     },
@@ -134,6 +161,12 @@ export const vanilla: WeaponStats[] = [
         disableShield: true,
     },
     {
+        id: 'minecraft:copper_axe',
+        attackSpeed: 0.8,
+        damage: 9,
+        disableShield: true,
+    },
+    {
         id: 'minecraft:iron_axe',
         attackSpeed: 0.9,
         damage: 9,
@@ -163,6 +196,11 @@ export const vanilla: WeaponStats[] = [
     },
     {
         id: 'minecraft:stone_hoe',
+        attackSpeed: 2,
+        damage: 1,
+    },
+    {
+        id: 'minecraft:copper_hoe',
         attackSpeed: 2,
         damage: 1,
     },

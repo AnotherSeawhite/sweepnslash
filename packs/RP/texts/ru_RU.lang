@@ -1,43 +1,48 @@
-pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
-pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
+pack.name=§3Sweep §f'N §6Slash §f- Пакет Ресурсов
+pack.description=Конвертирует боевую систему Бэдрок Издании в боевую систему Джава Издании 1.9+.
 
 attribute.name.generic.attackDamage=§r
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.nan=§cNaN(Not a Number) value has been registered in sweep RGB color. Falling back to 0.
-sweepnslash.saveconfig=Save
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
-sweepnslash.configopened=Configuration menu has been opened outside the chat screen.
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tipmessage=§fНапишите §e%s §fчто бы откорыть §3Sweep §f'N §6Slash §fменю конфигурации
+sweepnslash.currentversion=Нынешняя версия:§e %s
 
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
+sweepnslash.configmenutitle=Sweep 'N Slash Конфигурация
 
+## Advanced Operator Toggles
+sweepnslash.operatortoggleheader=Расширенные возможности оператора
+sweepnslash.toggleaddon=Переключить аддон
+sweepnslash.toggledebugmode=Переключить режим отладки
+sweepnslash.toggledebugmode.tooltip=Переключатель режима отладки для разработчиков и создателей. Выводит различную информацию в журнал контента и включает DPS-тестер. ('sns:testdamage' script event).
 
+## Server Toggles
+sweepnslash.servertoggleheader=Переключатели сервера
+sweepnslash.shieldbreakspecial=Для пробития щитов требуются заряженные топоры
+sweepnslash.shieldbreakspecial.tooltip=Если включено то топоры пробивают щиты только в том случае если заряд перезарядки атакующего превышает 84,8%%.
+sweepnslash.saturationhealing=Исцеление от насыщение
+sweepnslash.saturationhealing.tooltip=Если включено то насыщение будет исцелять быстрее. Это отключит игровое правило «Естественная регенерация».
 
+## General Toggles
+sweepnslash.generaltoggleheader=Общие переключатели
+sweepnslash.excludepetfromsweep=Игнорировать прирученных питомцев при разрезе
+sweepnslash.excludepetfromsweep.tooltip=Если эта опция включена то разрезы атаки не будут наносить урон прирученным питомцам.
+sweepnslash.tipmessagetoggle=Подсказка в виде сообщения в чате при присоединении
 
+## Personal Settings
+sweepnslash.personaltoggleheader=Персональные настройки
+sweepnslash.indicatorstyle=Индикатор атаки
+sweepnslash.indicatorstyle.tooltip=Изменяет интерфейс индикатора атаки. Если у вас возникли проблемы с интерфейсом дополнения, попробуйте использовать индекатор Гейзера.
+sweepnslash.crosshair=Крестик
+sweepnslash.hotbar=Хотбар
+sweepnslash.geyser=Гейзер
+sweepnslash.none=Без индекатора
+sweepnslash.bowhitsound=Звук при попадании с лука
+sweepnslash.sweepparticles=Партиклы разрезов
+sweepnslash.enchantedhitparticles=Партиклы зачарованных атак
+sweepnslash.damageindicatorparticles=Партиклы индекатора урона
+sweepnslash.critparticles=Партиклы критического удара
+sweepnslash.critsounds=Звуки критического удара
+sweepnslash.sweepRGBtitle=Цвет разреза в RGB
+sweepnslash.saveconfig=Сохранить
 
+sweepnslash.canceled=§cКонфигурация отменена.
+sweepnslash.saved=§aКонфигурация сохранена.
