@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.1.0';
+const version = '2.1.1';
 const configCommand = 'sns:config';
 
 import {
@@ -168,7 +168,7 @@ function configForm(player) {
                         { text: "\n\n" },
                         { translate: "createWorldScreen.naturalregeneration" },
                         { text: ": " },
-                        { text: world5.gameRules.naturalRegeneration ? "§aON" : "§cOFF"}
+                        { text: world.gameRules.naturalRegeneration ? "§aON" : "§cOFF"}
                     ]
                 }
             }
