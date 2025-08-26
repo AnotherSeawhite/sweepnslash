@@ -259,6 +259,7 @@ function configForm(player) {
             player.sendMessage({ translate: 'sweepnslash.canceled' });
             return;
         } else if (!canceled) {
+            player.playSound('game.player.bow.ding', { volume: 0.5, pitch: 1 });
             player.sendMessage({ translate: 'sweepnslash.saved' });
         }
 
