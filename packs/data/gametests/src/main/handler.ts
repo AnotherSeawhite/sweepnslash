@@ -353,11 +353,6 @@ system.runInterval(() => {
         const shieldTime = currentTick - status.lastShieldTime;
         status.shieldValid = shieldTime >= 5 || shieldTime == 1;
 
-        // Add lore on appropriate items
-        if (system.currentTick % 40 === 0) {
-            inventoryAddLore(player);
-        }
-
         // If the player changes the slot, run cooldown
         if (
             (player.selectedSlotIndex !== status.lastSelectedSlot &&
@@ -583,6 +578,10 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) =
         //if (debugMode) debug(`${Math.random().toFixed(2)} attack event by ${player.name}`);
     }
 });
+
+world.afterEvents.playerInventoryItemChange.subscribe(({ player: source, slot }) => {
+  inventoryAddLore({ source, slot });
+})
 
 world.afterEvents.itemStartUse.subscribe(({ source: player }) => {
     const status = player.getStatus();
