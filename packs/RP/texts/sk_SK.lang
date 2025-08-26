@@ -2,42 +2,47 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
+sweepnslash.item.modifiers.mainhand=V hlavnej ruke:
+sweepnslash.attribute.name.attack_damage=Sila útoku
+sweepnslash.attribute.name.attack_speed=Rýchlosť útoku
 
 sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
+sweepnslash.currentversion=Current version:§e %s
+
 sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+
+sweepnslash.operatortoggleheader=Advanced Operator Toggles
 sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
 sweepnslash.toggledebugmode=Toggle Debug Mode
+sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+
+sweepnslash.servertoggleheader=Server Toggles
+sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
+sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
+sweepnslash.saturationhealing=Saturation Healing
+sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+
+sweepnslash.generaltoggleheader=General Toggles
 sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
+sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
 sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+
+sweepnslash.personaltoggleheader=Personal Settings
 sweepnslash.indicatorstyle=Attack Indicator
+sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
 sweepnslash.crosshair=Crosshair
 sweepnslash.hotbar=Hotbar
 sweepnslash.geyser=Geyser
 sweepnslash.none=None
+sweepnslash.bowhitsound=Bow Hit Sound
 sweepnslash.sweepparticles=Sweep Particles
 sweepnslash.enchantedhitparticles=Enchanted Hit Particles
 sweepnslash.damageindicatorparticles=Damage Indicator Particles
 sweepnslash.critparticles=Critical Hit Particles
 sweepnslash.critsounds=Critical Hit Sounds
 sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.nan=§cNaN(Not a Number) value has been registered in sweep RGB color. Falling back to 0.
 sweepnslash.saveconfig=Save
+
 sweepnslash.canceled=§cConfiguration canceled.
 sweepnslash.saved=§aConfiguration saved.
-sweepnslash.configopened=Configuration menu has been opened outside the chat screen.
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.currentversion=Current version:§e %s
-
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-
-
-
-
 

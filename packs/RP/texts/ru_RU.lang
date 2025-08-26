@@ -2,6 +2,9 @@ pack.name=§3Sweep §f'N §6Slash §f- Пакет Ресурсов
 pack.description=Конвертирует боевую систему Бэдрок Издании в боевую систему Джава Издании 1.9+.
 
 attribute.name.generic.attackDamage=§r
+sweepnslash.item.modifiers.mainhand=Когда в ведущей руке:
+sweepnslash.attribute.name.attack_damage=Урон
+sweepnslash.attribute.name.attack_speed=Скорость атаки
 
 sweepnslash.tipmessage=§fНапишите §e%s §fчто бы откорыть §3Sweep §f'N §6Slash §fменю конфигурации
 sweepnslash.currentversion=Нынешняя версия:§e %s

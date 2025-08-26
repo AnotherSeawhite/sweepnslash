@@ -2,6 +2,9 @@ pack.name=Pachetul de resurse §3Sweep §f'N §6Slash §f-
 pack.description=Aduce sistemul de luptă al Ediției Java 1.9+ în Ediția Bedrock.
 
 attribute.name.generic.attackDamage=§r
+sweepnslash.item.modifiers.mainhand=În mâna principală:
+sweepnslash.attribute.name.attack_damage=Puncte de atac
+sweepnslash.attribute.name.attack_speed=Viteză de atac
 
 sweepnslash.tipmessage=§fScrie §e%s §fpentru a deschide meniul de configurare al §3Sweep §f'N §6Slash §f
 sweepnslash.currentversion=Versiune curentă:§e %s

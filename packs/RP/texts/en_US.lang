@@ -2,6 +2,9 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
+sweepnslash.item.modifiers.mainhand=When in Main Hand:
+sweepnslash.attribute.name.attack_damage=Attack Damage
+sweepnslash.attribute.name.attack_speed=Attack Speed
 
 sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
 sweepnslash.currentversion=Current version:§e %s
