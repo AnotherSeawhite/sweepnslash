@@ -151,54 +151,52 @@ Entity.prototype.viewRotation = function (dist = 1, height = 0) {
     return viewCenter;
 };
 
-// Cycle through inventory and add lores.
-export function inventoryAddLore(source) {
-    const inv = source.getComponent('inventory').container;
-    let slot = inv.size;
+// Add lore for an item in the slot.
+function stringifyRawMessage(msg) {
+  if (!msg) return "";
+  if (msg.text) return msg.text;
+  if (msg.translate) return msg.translate;
+  if (msg.rawtext) return msg.rawtext.map(stringifyRawMessage).join("");
+  return "";
+}
 
-    while (slot--) {
-        const itemSlot = inv.getSlot(slot);
-        if (!itemSlot.hasItem()) continue;
+function inventoryAddLore({ source, slot }) {
+  const inv = source.getComponent("inventory").container;
+  const itemSlot = inv.getSlot(slot);
+  if (!itemSlot.hasItem()) return;
 
-        const item = itemSlot.getItem();
-        if (!item) continue;
+  const item = itemSlot.getItem();
+  if (!item) return;
 
-        const stats = weaponStats.find((wep) => wep.id === item.typeId);
-        if (!stats) continue;
+  const stats = weaponStats.find((wep) => wep.id === item.typeId);
+  if (!stats) return;
 
-        //let sharpnessLevel = Check.enchantLevel(item, "sharpness") ?? 0;
-        //if (sharpnessLevel) sharpnessLevel = 0.5 * sharpnessLevel + 0.5;
+  const damage = stats.damage ?? 0;
+  const atkSpeed = stats.attackSpeed ?? 0;
 
-        const damage = stats.damage ?? 0;
-        const atkSpeed = stats.attackSpeed ?? 0;
+  let existingLore = item.getRawLore() ?? [];
 
-        let existingLore = item.getLore() ?? [];
+  const mainhandStr = { rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
+  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
+  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] };
 
-        // check if the lore already includes SPD/DMG or has formatted stat line
-        const filter = (line) =>
-            (line.includes('SPD') || line.includes('DMG')) &&
-            (line.startsWith('§r§2') || line.startsWith(' §r§2'));
+  function isOurLine(raw) {
+    const str = stringifyRawMessage(raw);
+    return (
+      str.includes('sweepnslash.item.modifiers.mainhand') ||
+      str.includes('sweepnslash.attribute.name.attack_damage') ||
+      str.includes('sweepnslash.attribute.name.attack_speed')
+    );
+  }
+  const itemLore = existingLore.filter((line) => !isOurLine(line));
 
-        const itemLore = existingLore.filter((line) => !filter(line));
+  if (existingLore.length >= 100) return;
 
-        const existingLoreString = existingLore.filter((line) => filter(line)).toString();
-
-        const atkSpeedStr = `§r§2${atkSpeed} SPD`;
-        const damageStr = `§r§2 ${damage} DMG`;
-
-        const loreLine = `${damageStr}\n ${atkSpeedStr}`;
-
-        if (existingLore.length >= 100 || loreLine.length > 1000) continue;
-
-        if (existingLoreString.includes(atkSpeedStr) && existingLoreString.includes(damageStr))
-            continue;
-
-        if (stats?.skipLore) {
-            itemSlot.setLore([...itemLore]);
-        } else {
-            itemSlot.setLore([loreLine, ...itemLore]);
-        }
-    }
+  if (stats.skipLore) {
+    itemSlot.setLore([...itemLore]);
+  } else {
+    itemSlot.setLore([...itemLore, mainhandStr, damageStr, atkSpeedStr]);
+  }
 }
 
 /**
