@@ -508,7 +508,7 @@ system.runInterval(() => {
             }
         } else {
             status.showBar = true;
-            if (curCD > 0 || (viewCheck && stats && barStyle === 0)) {
+            if (curCD > 0 || (viewCheck && stats && stats?.damage && barStyle === 0)) {
                 barStyle !== 2
                     ? player.onScreenDisplay.setTitle(
                           `_sweepnslash:${barArray}:${bonkReady ? 't' : 'f'}:${uiPixelValue}`,
