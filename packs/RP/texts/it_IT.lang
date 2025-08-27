@@ -9,6 +9,7 @@ sweepnslash.attribute.name.attack_speed=Velocità d'attacco
 sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
 sweepnslash.currentversion=Current version:§e %s
 
+sweepnslash.commanddescription=Apre il menu di configurazione per Sweep 'N Slash.
 sweepnslash.configmenutitle=Sweep 'N Slash Configuration
 
 sweepnslash.operatortoggleheader=Advanced Operator Toggles

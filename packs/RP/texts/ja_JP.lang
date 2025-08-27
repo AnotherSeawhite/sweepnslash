@@ -9,6 +9,7 @@ sweepnslash.attribute.name.attack_speed=攻撃速度
 sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
 sweepnslash.currentversion=Current version:§e %s
 
+sweepnslash.commanddescription=「Sweep 'N Slash」の設定メニューを開きます。
 sweepnslash.configmenutitle=Sweep 'N Slash Configuration
 
 sweepnslash.operatortoggleheader=Advanced Operator Toggles

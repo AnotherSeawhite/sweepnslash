@@ -9,6 +9,7 @@ sweepnslash.attribute.name.attack_speed=공격 속도
 sweepnslash.tipmessage=§e%s §f명령어를 입력하여 §3Sweep §f'N §6Slash §f설정 화면 열기
 sweepnslash.currentversion=현재 버전:§e %s
 
+sweepnslash.commanddescription=Sweep 'N Slash 설정 메뉴를 엽니다.
 sweepnslash.configmenutitle=Sweep 'N Slash 설정
 
 ## Advanced Operator Toggles

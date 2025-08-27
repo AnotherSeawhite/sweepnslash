@@ -9,6 +9,7 @@ sweepnslash.attribute.name.attack_speed=Скорость атаки
 sweepnslash.tipmessage=§fНапишите §e%s §fчто бы откорыть §3Sweep §f'N §6Slash §fменю конфигурации
 sweepnslash.currentversion=Нынешняя версия:§e %s
 
+sweepnslash.commanddescription=Открывает меню конфигурации для Sweep 'N Slash.
 sweepnslash.configmenutitle=Sweep 'N Slash Конфигурация
 
 ## Advanced Operator Toggles

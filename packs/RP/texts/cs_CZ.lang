@@ -10,6 +10,7 @@ sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfi
 sweepnslash.currentversion=Current version:§e %s
 
 sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.commanddescription=Otevře konfigurační nabídku pro Sweep 'N Slash.
 
 sweepnslash.operatortoggleheader=Advanced Operator Toggles
 sweepnslash.toggleaddon=Toggle Add-On

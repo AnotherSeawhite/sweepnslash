@@ -9,6 +9,7 @@ sweepnslash.attribute.name.attack_speed=攻击速度
 sweepnslash.tipmessage=§f输入 §e%s §f打开§3Sweep §f'N §6Slash §f设置菜单
 sweepnslash.currentversion=当前版本:§e %s
 
+sweepnslash.commanddescription=打开 Sweep 'N Slash 的配置菜单。
 sweepnslash.configmenutitle=Sweep 'N Slash设置菜单
 
 ## Advanced Operator Toggles

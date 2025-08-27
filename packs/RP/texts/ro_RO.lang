@@ -9,6 +9,7 @@ sweepnslash.attribute.name.attack_speed=Viteză de atac
 sweepnslash.tipmessage=§fScrie §e%s §fpentru a deschide meniul de configurare al §3Sweep §f'N §6Slash §f
 sweepnslash.currentversion=Versiune curentă:§e %s
 
+sweepnslash.commanddescription=Deschide meniul de configurare pentru Sweep 'N Slash.
 sweepnslash.configmenutitle=Configurare Sweep 'N Slash
 
 ## Advanced Operator Toggles
