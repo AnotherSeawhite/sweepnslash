@@ -326,7 +326,7 @@ function configForm(player) {
 system.beforeEvents.startup.subscribe((init) => {
     const configMenuCommand = {
         name: configCommand,
-        description: "Opens up configuration menu for Sweep 'N Slash.",
+        description: "sweepnslash.commanddescription",
         permissionLevel: 0,
         cheatsRequired: false,
     };
