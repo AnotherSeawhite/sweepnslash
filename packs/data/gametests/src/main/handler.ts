@@ -11,7 +11,8 @@ import {
     CustomCommandSource,
     EntityDamageCause,
     GameMode,
-    PlayerPermissionLevel
+    PlayerPermissionLevel,
+    Difficulty
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 import { CombatManager } from './class.js';
@@ -338,6 +339,7 @@ system.runInterval(() => {
     const debugMode = world.getDynamicProperty('debug_mode');
     const addonToggle = world.getDynamicProperty('addon_toggle');
     const saturationHealing = world.getDynamicProperty('saturationHealing');
+    const isPeaceful = world.getDifficulty() === Difficulty.Peaceful;
     const currentTick = system.currentTick;
 
     if (saturationHealing && world.gameRules.naturalRegeneration == true) world.gameRules.naturalRegeneration = false;
@@ -417,14 +419,24 @@ system.runInterval(() => {
         // Saturation healing
         
         const health = player.getComponent("health");
+        const saturationComp = player.getComponent("player.saturation");
         const hunger = player.getHunger();
         const saturation = player.getSaturation();
         const exhaustion = player.getExhaustion();
 
         const saturationEffect = player.getEffect("saturation");
         if (saturationEffect?.isValid && health.currentValue > 0) {
-            const saturationComp = player.getComponent("player.saturation");
-            player.setSaturation(clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax));
+            player.setSaturation(
+                clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax)
+            );
+        }
+        if (saturationHealing && isPeaceful && system.currentTick % 20 === 0) {
+            player.setSaturation(
+                clampNumber(saturation + 1, saturationComp?.effectiveMin, saturationComp?.effectiveMax)
+            );
+            health.setCurrentValue(
+                clampNumber(health.currentValue + 1, health.effectiveMin, health.effectiveMax)
+            );
         }
 
         const canHeal =
