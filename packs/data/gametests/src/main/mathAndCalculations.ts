@@ -195,7 +195,7 @@ export function inventoryAddLore({ source, slot }) {
   if (stats.skipLore) {
     itemSlot.setLore([...itemLore]);
   } else {
-    itemSlot.setLore([...itemLore, mainhandStr, damageStr, atkSpeedStr]);
+    itemSlot.setLore([mainhandStr, damageStr, atkSpeedStr, ...itemLore]);
   }
 }
 
