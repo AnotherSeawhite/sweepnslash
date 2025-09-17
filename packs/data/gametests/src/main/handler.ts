@@ -57,6 +57,8 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (world.getDynamicProperty('saturationHealing') == undefined) {
         world.setDynamicProperty('saturationHealing', true);
     }
+
+    system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty("addon_toggle")}`);
 });
 
 // Initialize dynamic properties
@@ -310,6 +312,8 @@ function configForm(player) {
         ];
 
         properties.forEach(valuePush);
+        
+        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty("addon_toggle")}`);
     });
 }
 
