@@ -657,8 +657,8 @@ export class Check {
             sound = 'entity.player.attack.sweep',
             particle = 'sweepnslash:sweep_particle',
             offset = { x: 0, y: 0, z: 0 },
-            pitch = 1,
-            volume = 1,
+            pitch,
+            volume,
             map,
         } = {}
     ) {
@@ -760,7 +760,7 @@ export class Check {
             };
         }
         player.spawnSelectiveParticle(particle, location || particleLocation, "sweep", offset, map);
-        player.dimension.playSound(sound, pLoc, { pitch, volume });
+        player.dimension.playSound(sound, pLoc, { pitch : pitch ?? undefined, volume: volume ?? undefined });
 
         commonEntities.forEach((e) => {
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
