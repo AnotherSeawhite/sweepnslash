@@ -120,6 +120,9 @@ function configFormOpener({ sourceEntity: player, sourceType }) {
 }
 
 function configForm(player) {
+    if ((player.__configLastClosed || 0) + 20 > system.currentTick)
+        return;
+    
     const tag = player.hasTag('sweepnslash.config');
     const op = player.playerPermissionLevel == PlayerPermissionLevel.Operator;
     let formValuesPush = 0;
@@ -244,6 +247,7 @@ function configForm(player) {
 
     form.show(player).then((response) => {
         const { canceled, formValues, cancelationReason } = response;
+        player.__configLastClosed = system.currentTick;
 
         function n(value) {
             const num = Number(value);
@@ -251,10 +255,8 @@ function configForm(player) {
             return isNaN(num) ? 0 : num;
         }
 
-        if (response && canceled && cancelationReason === 'UserBusy') {
-            configForm(player);
+        if (response && canceled && cancelationReason === 'UserBusy')
             return;
-        }
 
         if (canceled) {
             player.playSound('sns.config.canceled', { pitch: 1 });
