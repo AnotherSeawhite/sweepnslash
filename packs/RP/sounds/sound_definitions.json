@@ -200,8 +200,16 @@
       "sounds": [
         {
           "name": "sounds/random/orb",
-          "volume": 0.5,
-          "stream": true
+          "volume": 0.5
+        }
+      ]
+    },
+    "sns.config.canceled": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name" : "sounds/note/bass",
+          "volume": 0.5
         }
       ]
     }
