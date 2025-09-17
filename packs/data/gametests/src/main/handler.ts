@@ -716,9 +716,9 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
                 damage: damage,
                 time: currentTick,
             };
-            healthParticle(hurtEntity, damage);
+            hurtEntity.healthParticle(damage);
         } else if (damageSource.cause === EntityDamageCause.maceSmash) {
-            healthParticle(hurtEntity, damage);
+            hurtEntity.healthParticle(damage);
         } else {
             hurtEntity.__lastAttack = {
                 rawDamage: damage,
