@@ -573,13 +573,13 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) =
     if (id === 'se:attack') {
         const shieldCooldown = player.getItemCooldown('minecraft:shield');
         player.startItemCooldown('minecraft:shield', shieldCooldown ? shieldCooldown : 5);
-        if (player.__leftClick == true) {
-            player.__leftClick = false;
+        if (status.leftClick == true) {
+            status.leftClick = false;
             return;
         }
 
-        if (player.__rightClick == true) {
-            player.__rightClick = false;
+        if (status.rightClick == true) {
+            status.rightClick = false;
             status.lastShieldTime = system.currentTick;
             return;
         }
@@ -610,7 +610,8 @@ world.afterEvents.itemStopUse.subscribe(({ source: player }) => {
 // For making sure the attack cooldown isn't triggered when the player interacts with levers or buttons.
 world.afterEvents.playerInteractWithBlock.subscribe(({ player, block }) => {
     if (block) {
-        player.__rightClick = true;
+        const status = player.getStatus();
+        status.rightClick = true;
     }
 });
 
@@ -623,7 +624,7 @@ world.afterEvents.entityHitBlock.subscribe(({ damagingEntity: player }) => {
     const status = player.getStatus();
     status.lastShieldTime = system.currentTick;
     status.lastAttackTime = system.currentTick;
-    player.__leftClick = true;
+    status.leftClick = true;
 });
 
 // Handles the entire combat.
@@ -671,6 +672,8 @@ world.afterEvents.playerSpawn.subscribe(({ player }) => {
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity: target }) => {
     if (world.getDynamicProperty('addon_toggle') == false) return;
+    
+    const status = player.getStatus();
     const currentTick = system.currentTick;
 
     if (!(player instanceof Player)) {
@@ -680,8 +683,8 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
         if (shieldBlock) player.applyKnockback({ x: 0, z: 0 }, 0);
         return;
     }
-
-    player.__leftClick = true;
+    
+    status.leftClick = true;
     if (target?.isValid && player?.getComponent('health')?.currentValue > 0)
         CombatManager.attack({ player, target, currentTick });
 });
