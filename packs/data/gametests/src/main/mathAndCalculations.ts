@@ -163,6 +163,7 @@ function stringifyRawMessage(msg) {
   return "";
 }
 
+// Almost had a headache trying to figure this out.
 export function inventoryAddLore({ source, slot }) {
   const inv = source.getComponent("inventory").container;
   const itemSlot = inv.getSlot(slot);
@@ -179,18 +180,28 @@ export function inventoryAddLore({ source, slot }) {
 
   let existingLore = item.getRawLore() ?? [];
 
-  const mainhandStr = { rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
-  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
-  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] };
+  const mainhandStr = { rawtext: [{ text: "§r§7" }, { translate: "sweepnslash.item.modifiers.mainhand" }] };
+  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: "sweepnslash.attribute.name.attack_damage" }] };
+  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: "sweepnslash.attribute.name.attack_speed" }] };
 
   function isOurLine(raw) {
-    const str = stringifyRawMessage(raw);
-    return (
-      str.includes('sweepnslash.item.modifiers.mainhand') ||
-      str.includes('sweepnslash.attribute.name.attack_damage') ||
-      str.includes('sweepnslash.attribute.name.attack_speed')
-    );
-  }
+  const str = stringifyRawMessage(raw) || "";
+
+  if (
+    str.includes("sweepnslash.item.modifiers.mainhand") ||
+    str.includes("sweepnslash.attribute.name.attack_damage") ||
+    str.includes("sweepnslash.attribute.name.attack_speed")
+  ) return true;
+
+  const noColor = str.replace(/§./g, "");
+
+  if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
+
+  if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
+
+  return false;
+}
+
   const itemLore = existingLore.filter((line) => !isOurLine(line));
 
   if (existingLore.length >= 100) return;
