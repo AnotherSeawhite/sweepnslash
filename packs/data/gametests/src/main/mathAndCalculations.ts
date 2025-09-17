@@ -603,7 +603,7 @@ export class Check {
                 map
             );
             if (!(target instanceof Player && target.getGameMode() === GameMode.Creative))
-                player.playSelectiveSound(sound, "critSound");
+                player.playSelectiveSound(sound, "critSound", { location: player.location });
         }
         return isValid;
     }
