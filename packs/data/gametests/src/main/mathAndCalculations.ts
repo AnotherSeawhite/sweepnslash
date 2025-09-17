@@ -64,6 +64,8 @@ function initializePlayerStatus(player) {
         attackReady: false,
         showBar: true,
         holdInteract: false,
+		leftClick: false,
+    	rightClick: false,
         lastSelectedItem: undefined,
         lastSelectedSlot: undefined,
         cooldown: 0,
