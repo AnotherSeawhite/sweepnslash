@@ -57,6 +57,8 @@ world.afterEvents.worldLoad.subscribe(() => {
     if (world.getDynamicProperty('saturationHealing') == undefined) {
         world.setDynamicProperty('saturationHealing', true);
     }
+
+    system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty("addon_toggle")}`);
 });
 
 // Initialize dynamic properties
@@ -120,6 +122,9 @@ function configFormOpener({ sourceEntity: player, sourceType }) {
 }
 
 function configForm(player) {
+    if ((player.__configLastClosed || 0) + 20 > system.currentTick)
+        return;
+    
     const tag = player.hasTag('sweepnslash.config');
     const op = player.playerPermissionLevel == PlayerPermissionLevel.Operator;
     let formValuesPush = 0;
@@ -244,6 +249,7 @@ function configForm(player) {
 
     form.show(player).then((response) => {
         const { canceled, formValues, cancelationReason } = response;
+        player.__configLastClosed = system.currentTick;
 
         function n(value) {
             const num = Number(value);
@@ -251,16 +257,15 @@ function configForm(player) {
             return isNaN(num) ? 0 : num;
         }
 
-        if (response && canceled && cancelationReason === 'UserBusy') {
-            configForm(player);
+        if (response && canceled && cancelationReason === 'UserBusy')
             return;
-        }
 
         if (canceled) {
+            player.playSound('sns.config.canceled', { pitch: 1 });
             player.sendMessage({ translate: 'sweepnslash.canceled' });
             return;
         } else if (!canceled) {
-            player.playSound('game.player.bow.ding', { volume: 0.5, pitch: 1 });
+            player.playSound('game.player.bow.ding', { pitch: 1 });
             player.sendMessage({ translate: 'sweepnslash.saved' });
         }
 
@@ -307,6 +312,8 @@ function configForm(player) {
         ];
 
         properties.forEach(valuePush);
+        
+        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty("addon_toggle")}`);
     });
 }
 
@@ -572,13 +579,13 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) =
     if (id === 'se:attack') {
         const shieldCooldown = player.getItemCooldown('minecraft:shield');
         player.startItemCooldown('minecraft:shield', shieldCooldown ? shieldCooldown : 5);
-        if (player.__leftClick == true) {
-            player.__leftClick = false;
+        if (status.leftClick == true) {
+            status.leftClick = false;
             return;
         }
 
-        if (player.__rightClick == true) {
-            player.__rightClick = false;
+        if (status.rightClick == true) {
+            status.rightClick = false;
             status.lastShieldTime = system.currentTick;
             return;
         }
@@ -609,7 +616,8 @@ world.afterEvents.itemStopUse.subscribe(({ source: player }) => {
 // For making sure the attack cooldown isn't triggered when the player interacts with levers or buttons.
 world.afterEvents.playerInteractWithBlock.subscribe(({ player, block }) => {
     if (block) {
-        player.__rightClick = true;
+        const status = player.getStatus();
+        status.rightClick = true;
     }
 });
 
@@ -622,7 +630,7 @@ world.afterEvents.entityHitBlock.subscribe(({ damagingEntity: player }) => {
     const status = player.getStatus();
     status.lastShieldTime = system.currentTick;
     status.lastAttackTime = system.currentTick;
-    player.__leftClick = true;
+    status.leftClick = true;
 });
 
 // Handles the entire combat.
@@ -670,6 +678,8 @@ world.afterEvents.playerSpawn.subscribe(({ player }) => {
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity: target }) => {
     if (world.getDynamicProperty('addon_toggle') == false) return;
+    
+    const status = player.getStatus();
     const currentTick = system.currentTick;
 
     if (!(player instanceof Player)) {
@@ -679,8 +689,8 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
         if (shieldBlock) player.applyKnockback({ x: 0, z: 0 }, 0);
         return;
     }
-
-    player.__leftClick = true;
+    
+    status.leftClick = true;
     if (target?.isValid && player?.getComponent('health')?.currentValue > 0)
         CombatManager.attack({ player, target, currentTick });
 });
@@ -716,9 +726,9 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
                 damage: damage,
                 time: currentTick,
             };
-            healthParticle(hurtEntity, damage);
+            hurtEntity.healthParticle(damage);
         } else if (damageSource.cause === EntityDamageCause.maceSmash) {
-            healthParticle(hurtEntity, damage);
+            hurtEntity.healthParticle(damage);
         } else {
             hurtEntity.__lastAttack = {
                 rawDamage: damage,

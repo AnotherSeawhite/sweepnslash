@@ -1,6 +1,6 @@
 import { world, system, Player, GameMode, EntityDamageCause } from '@minecraft/server';
 import * as mc from '@minecraft/server';
-import { debug, Check, getCooldownTime, selectiveParticle } from './mathAndCalculations.js';
+import { debug, Check, getCooldownTime } from './mathAndCalculations.js';
 
 export class CombatManager {
     static attack(eventData: { player: Player; target: mc.Entity; currentTick: number }) {
@@ -216,27 +216,23 @@ export class CombatManager {
 
             if (dmg.final > 0) {
                 if (dmg.enchantedHit)
-                    selectiveParticle(
-                        target.center({ x: 0, y: 1, z: 0 }),
-                        'enchantedHit',
-                        targetDimensionID,
-                        'sweepnslash:magic_critical_hit_emitter'
+                    target?.spawnSelectiveParticle(
+                      "sweepnslash:magic_critical_hit_emitter",
+                      target?.center({ x: 0, y: 1, z: 0 }),
+                      "enchantedHit"
                     );
                 if (!(sweep?.swept || crit)) {
                     player.dimension.playSound(
                         specialCheck
                             ? 'game.player.attack.strong.se'
                             : 'game.player.attack.weak.se',
-                        loc,
-                        { volume: 0.7 }
+                        loc
                     );
                 }
             }
         } else {
             if (dmg.final > 0)
-                player.dimension.playSound('game.player.attack.nodamage.se', loc, {
-                    volume: 0.7,
-                });
+                player.dimension.playSound('game.player.attack.nodamage.se', loc);
         }
 
         if (debugMode) {

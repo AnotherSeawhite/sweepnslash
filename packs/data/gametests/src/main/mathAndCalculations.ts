@@ -9,7 +9,8 @@ import {
     BiomeTypes,
     EquipmentSlot,
     EntityDamageCause,
-    GameMode
+    GameMode,
+	PlayerSoundOptions
 } from '@minecraft/server';
 import { weaponStats } from './weaponStatsHandler.js';
 import { lambertW0, lambertWm1 } from './lambertw.js';
@@ -63,6 +64,8 @@ function initializePlayerStatus(player) {
         attackReady: false,
         showBar: true,
         holdInteract: false,
+		leftClick: false,
+    	rightClick: false,
         lastSelectedItem: undefined,
         lastSelectedSlot: undefined,
         cooldown: 0,
@@ -160,8 +163,9 @@ function stringifyRawMessage(msg) {
   return "";
 }
 
+// Almost had a headache trying to figure this out.
 export function inventoryAddLore({ source, slot }) {
-  const inv = source.getComponent("inventory").container;
+  const inv = source.getComponent('inventory').container;
   const itemSlot = inv.getSlot(slot);
   if (!itemSlot.hasItem()) return;
 
@@ -176,18 +180,28 @@ export function inventoryAddLore({ source, slot }) {
 
   let existingLore = item.getRawLore() ?? [];
 
-  const mainhandStr = { rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
+  const mainhandStr = { rawtext: [{ text: "§r§7" }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
   const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
   const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] };
 
   function isOurLine(raw) {
-    const str = stringifyRawMessage(raw);
-    return (
-      str.includes('sweepnslash.item.modifiers.mainhand') ||
-      str.includes('sweepnslash.attribute.name.attack_damage') ||
-      str.includes('sweepnslash.attribute.name.attack_speed')
-    );
-  }
+  const str = stringifyRawMessage(raw) || "";
+
+  if (
+    str.includes('sweepnslash.item.modifiers.mainhand') ||
+    str.includes('sweepnslash.attribute.name.attack_damage') ||
+    str.includes('sweepnslash.attribute.name.attack_speed')
+  ) return true;
+
+  const noColor = str.replace(/§./g, "");
+
+  if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
+
+  if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
+
+  return false;
+}
+
   const itemLore = existingLore.filter((line) => !isOurLine(line));
 
   if (existingLore.length >= 100) return;
@@ -273,63 +287,53 @@ Entity.prototype.applyImpulseAsKnockback = function (vector3) {
 };
 
 // For spawning particles that's only visible to players with particle configuration.
-export function selectiveParticle(
-    location,
-    dynamicProperty,
-    dimension,
-    particleId,
-    map,
-    offset = { x: 0, y: 0, z: 0 }
-) {
-    system.run(() => {
-        try {
-            const offsetLocation = {
-                x: location.x + offset.x,
-                y: location.y + offset.y,
-                z: location.z + offset.z,
-            };
-            for (const p of world.getAllPlayers()) {
-                if (
-                    p.getDynamicProperty(dynamicProperty) == true &&
-                    p.dimension.id == dimension
-                )
-                    map
-                        ? p.spawnParticle(particleId, offsetLocation, map)
-                        : p.spawnParticle(particleId, offsetLocation);
-            }
-        } catch (e) {} //this error is ignorable
-    });
+Entity.prototype.spawnSelectiveParticle = function (effectName, location, dynamicProperty, offset = { x: 0, y: 0, z: 0 }, molangVariables: MolangVariableMap) {
+    try {
+      const offsetLocation = {
+        x: location.x + offset.x,
+        y: location.y + offset.y,
+        z: location.z + offset.z
+      };
+      for (const p of world.getAllPlayers()) {
+        if (
+            p.getDynamicProperty(dynamicProperty) == true &&
+            p.dimension.id == this.dimension.id
+        )
+          molangVariables ? p.spawnParticle(effectName, offsetLocation, molangVariables) : p.spawnParticle(effectName, offsetLocation);
+      }
+    } catch (e) {
+        console.warn(e)
+    }
 }
 
 // For playing sounds that's only audible to players with sounds configuration.
-function selectiveSound(location, dynamicProperty, dimension, soundId, volume = 1) {
-    system.run(() => {
-        try {
-            for (const p of world.getAllPlayers()) {
-                if (
-                    p.getDynamicProperty(dynamicProperty) == true &&
-                    p.dimension.id == dimension
-                )
-                    p.playSound(soundId, { location, volume });
-            }
-        } catch (e) {} //this error is ignorable
-    });
+Entity.prototype.playSelectiveSound = function (soundId, dynamicProperty, soundOptions: PlayerSoundOptions) {
+    try {
+      for (const p of world.getAllPlayers()) {
+        if (
+            p.getDynamicProperty(dynamicProperty) == true &&
+            p.dimension.id == this.dimension.id
+        )
+          p.playSound(soundId, soundOptions);
+      }
+    } catch (e) {
+      console.warn(e)
+    }
 }
 
 // For damage particles, with molang variable maps.
-export function healthParticle(target, damage) {
-    const loc = target.center({ x: 0, y: 0.5, z: 0 });
-    const hp = target.getComponent('health');
+Entity.prototype.healthParticle = function(damage) {
+    const loc = this.center({ x: 0, y: 0.5, z: 0 });
+    const hp = this.getComponent('health');
     const dmg = clampNumber(damage, hp.effectiveMin, hp.effectiveMax) / 2;
     const amount = Math.trunc(dmg);
-    const dimension = target.dimension.id;
     let map = new MolangVariableMap();
     map.setFloat('variable.amount', amount);
-    selectiveParticle(
+        this.spawnSelectiveParticle(
+        "sweepnslash:damage_indicator_emitter",
         loc,
-        'damageIndicator',
-        dimension,
-        'sweepnslash:damage_indicator_emitter',
+        "damageIndicator",
+        undefined,
         map
     );
 }
@@ -604,16 +608,15 @@ export class Check {
                 forced == undefined) ||
             forced == true;
         if (!noEffect && isValid) {
-            selectiveParticle(
-                target.center({ x: 0, y: 1, z: 0 }),
-                'criticalHit',
-                dimension,
+            target.spawnSelectiveParticle(
                 particle,
-                map,
-                offset
+                target.center({ x: 0, y: 1, z: 0 }),
+                "criticalHit",
+                offset,
+                map
             );
             if (!(target instanceof Player && target.getGameMode() === GameMode.Creative))
-                selectiveSound(player.location, 'critSound', dimension, sound);
+                player.playSelectiveSound(sound, "critSound", { location: player.location });
         }
         return isValid;
     }
@@ -667,8 +670,8 @@ export class Check {
             sound = 'entity.player.attack.sweep',
             particle = 'sweepnslash:sweep_particle',
             offset = { x: 0, y: 0, z: 0 },
-            pitch = 1,
-            volume = 1,
+            pitch,
+            volume,
             map,
         } = {}
     ) {
@@ -769,15 +772,8 @@ export class Check {
                 z: pLoc.z + unitDirection.z * dist,
             };
         }
-        selectiveParticle(
-            location || particleLocation,
-            'sweep',
-            dimension,
-            particle,
-            map,
-            offset
-        );
-        player.dimension.playSound(sound, pLoc, { pitch, volume });
+        player.spawnSelectiveParticle(particle, location || particleLocation, "sweep", offset, map);
+        player.dimension.playSound(sound, pLoc, { pitch : pitch ?? undefined, volume: volume ?? undefined });
 
         commonEntities.forEach((e) => {
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
