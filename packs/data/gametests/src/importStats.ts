@@ -74,13 +74,13 @@ export type WeaponStats = {
      */
     skipLore?: boolean;
     /**
-     * Optional function to modify or cancel attack before it lands.
-     * Use `mc` argument for Minecraft API access (do not import modules directly).
-     * Return properties to override or cancel attack behavior.
+     * If true, projectiles shot with this item will not inherit velocity from the shooter.
      */
     noInherit?: boolean;
     /**
-     * If true, projectiles shot with this item will not inherit velocity from the shooter.
+     * Optional function to modify or cancel attack before it lands.
+     * Use `mc` argument for Minecraft API access (do not import modules directly).
+     * Return properties to override or cancel attack behavior.
      */
     beforeEffect?: (args: {
         mc: typeof import('@minecraft/server');
