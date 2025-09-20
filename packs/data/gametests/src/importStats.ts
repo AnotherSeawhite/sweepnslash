@@ -70,6 +70,14 @@ export type WeaponStats = {
      */
     enchantedKnockback?: number;
     /**
+     * Vertical knockback distance (in blocks) without knockback enchantment.
+     */
+    regularVerticalKnockback?: number;
+    /**
+     * Vertical knockback distance (in blocks) with knockback enchantment and/or sprint knockback.
+     */
+    enchantedVerticalKnockback?: number;
+    /**
      * If true, disables adding lore text (Attack Speed/Damage) to the item.
      */
     skipLore?: boolean;
@@ -117,6 +125,10 @@ export type WeaponStats = {
         regularKnockback?: number;
         /** Override enchanted knockback value, distance in blocks. */
         enchantedKnockback?: number;
+        /** Override vertical regular attack knockback value, distance in blocks. */
+        regularVerticalKnockback?: number;
+        /** Override vertical enchanted attack knockback value, distance in blocks. */
+        enchantedVerticalKnockback?: number;
         /** Override sweep attack location (default: target's location). */
         sweepLocation?: { x: number; y: number; z: number };
         /** Override sweep attack radius (in blocks). */
