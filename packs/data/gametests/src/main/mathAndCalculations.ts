@@ -164,7 +164,7 @@ function stringifyRawMessage(msg) {
 }
 
 // Almost had a headache trying to figure this out.
-function inventoryAddLore({ source, slot }) {
+export function inventoryAddLore({ source, slot }) {
   const inv = source.getComponent('inventory').container;
   const itemSlot = inv.getSlot(slot);
   if (!itemSlot.hasItem()) return;
