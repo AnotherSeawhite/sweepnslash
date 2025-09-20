@@ -175,8 +175,6 @@ export class CombatManager {
                 }
             );
 
-            const targetDimensionID = target.dimension.id;
-
             // Apply damage
 
             const damageValid =
