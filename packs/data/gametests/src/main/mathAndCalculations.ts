@@ -177,9 +177,9 @@ export function inventoryAddLore({ source, slot }) {
   let statsFromCustomComponents;
   if (customComponents) {
     customComponentStats = {
-      damage: customParams.damage,
-      attackSpeed: customParams.attack_speed,
-      skipLore: customParams.skip_lore,
+      damage: customComponentParams.damage,
+      attackSpeed: customComponentParams.attack_speed,
+      skipLore: customComponentParams.skip_lore,
     };
   }
   
@@ -394,11 +394,11 @@ Entity.prototype.getItemStats = function () {
 
   const baseStats = item?.typeId ? weaponStats.find((wep) => wep.id === item.typeId) : undefined;
 
-  const customParams = item?.getComponent("sweepnslash:stats")?.customComponentParameters?.params;
+  const customComponentParams = item?.getComponent("sweepnslash:stats")?.customComponentParameters?.params;
 
   let stats = baseStats ? { ...baseStats } : (item ? { id: item.typeId } : undefined);
 
-  if (customParams && item) {
+  if (customComponentParams && item) {
     const keyMap = {
       damage: "damage",
       attack_speed: "attackSpeed",
@@ -416,8 +416,8 @@ Entity.prototype.getItemStats = function () {
     stats = stats || { id: item.typeId };
 
     Object.keys(keyMap).forEach((jsonKey) => {
-      if (customParams[jsonKey] !== undefined) {
-        stats[keyMap[jsonKey]] = customParams[jsonKey];
+      if (customComponentParams[jsonKey] !== undefined) {
+        stats[keyMap[jsonKey]] = customComponentParams[jsonKey];
       }
     });
 
