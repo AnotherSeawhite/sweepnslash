@@ -172,11 +172,11 @@ export function inventoryAddLore({ source, slot }) {
   const item = itemSlot.getItem();
   if (!item) return;
 
-  const customParams = item.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
+  const customComponents = item.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
 
-  let statsFromCustom;
-  if (customParams) {
-    statsFromCustom = {
+  let statsFromCustomComponents;
+  if (customComponents) {
+    customComponentStats = {
       damage: customParams.damage,
       attackSpeed: customParams.attack_speed,
       skipLore: customParams.skip_lore,
@@ -185,14 +185,13 @@ export function inventoryAddLore({ source, slot }) {
   
   const jsStats = weaponStats.find((wep) => wep.id === item.typeId);
 
-  const stats = statsFromCustom ?? jsStats;
+  const stats = customComponentStats ?? jsStats;
   if (!stats) return;
 
   const damage = stats.damage ?? 1;
   const atkSpeed = stats.attackSpeed ?? 4;
 
-  let existingLore = (typeof item.getRawLore === 'function' ? item.getRawLore() : null) ?? [];
-  if (!Array.isArray(existingLore)) existingLore = [];
+  let existingLore = item.getRawLore() ?? [];
 
   const mainhandStr = { rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
   const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
