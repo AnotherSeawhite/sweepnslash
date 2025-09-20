@@ -165,14 +165,14 @@ function stringifyRawMessage(msg) {
 
 // Almost had a headache trying to figure this out.
 function inventoryAddLore({ source, slot }) {
-  const inv = source.getComponent("inventory").container;
+  const inv = source.getComponent('inventory').container;
   const itemSlot = inv.getSlot(slot);
   if (!itemSlot.hasItem()) return;
 
   const item = itemSlot.getItem();
   if (!item) return;
 
-  const customParams = item.getComponent("sweepnslash:stats")?.customComponentParameters?.params;
+  const customParams = item.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
 
   let statsFromCustom;
   if (customParams) {
@@ -191,20 +191,20 @@ function inventoryAddLore({ source, slot }) {
   const damage = stats.damage ?? 1;
   const atkSpeed = stats.attackSpeed ?? 4;
 
-  let existingLore = (typeof item.getRawLore === "function" ? item.getRawLore() : null) ?? [];
+  let existingLore = (typeof item.getRawLore === 'function' ? item.getRawLore() : null) ?? [];
   if (!Array.isArray(existingLore)) existingLore = [];
 
-  const mainhandStr = { rawtext: [{ text: "§r§7" }, { translate: "sweepnslash.item.modifiers.mainhand" }] };
-  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: "sweepnslash.attribute.name.attack_damage" }] };
-  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: "sweepnslash.attribute.name.attack_speed" }] };
+  const mainhandStr = { rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
+  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
+  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] };
 
   function isOurLine(raw) {
     const str = stringifyRawMessage(raw) || "";
 
     if (
-      str.includes("sweepnslash.item.modifiers.mainhand") ||
-      str.includes("sweepnslash.attribute.name.attack_damage") ||
-      str.includes("sweepnslash.attribute.name.attack_speed")
+      str.includes('sweepnslash.item.modifiers.mainhand') ||
+      str.includes('sweepnslash.attribute.name.attack_damage') ||
+      str.includes('sweepnslash.attribute.name.attack_speed')
     ) return true;
 
     const noColor = str.replace(/§./g, "");
