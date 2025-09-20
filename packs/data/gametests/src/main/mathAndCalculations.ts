@@ -164,43 +164,57 @@ function stringifyRawMessage(msg) {
 }
 
 // Almost had a headache trying to figure this out.
-export function inventoryAddLore({ source, slot }) {
-  const inv = source.getComponent('inventory').container;
+function inventoryAddLore({ source, slot }) {
+  const inv = source.getComponent("inventory").container;
   const itemSlot = inv.getSlot(slot);
   if (!itemSlot.hasItem()) return;
 
   const item = itemSlot.getItem();
   if (!item) return;
 
-  const stats = weaponStats.find((wep) => wep.id === item.typeId);
+  const customParams = item.getComponent("sweepnslash:stats")?.customComponentParameters?.params;
+
+  let statsFromCustom;
+  if (customParams) {
+    statsFromCustom = {
+      damage: customParams.damage,
+      attackSpeed: customParams.attack_speed,
+      skipLore: customParams.skip_lore,
+    };
+  }
+  
+  const jsStats = weaponStats.find((wep) => wep.id === item.typeId);
+
+  const stats = statsFromCustom ?? jsStats;
   if (!stats) return;
 
-  const damage = stats.damage ?? 0;
-  const atkSpeed = stats.attackSpeed ?? 0;
+  const damage = stats.damage ?? 1;
+  const atkSpeed = stats.attackSpeed ?? 4;
 
-  let existingLore = item.getRawLore() ?? [];
+  let existingLore = (typeof item.getRawLore === "function" ? item.getRawLore() : null) ?? [];
+  if (!Array.isArray(existingLore)) existingLore = [];
 
-  const mainhandStr = { rawtext: [{ text: "§r§7" }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
-  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
-  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] };
+  const mainhandStr = { rawtext: [{ text: "§r§7" }, { translate: "sweepnslash.item.modifiers.mainhand" }] };
+  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: "sweepnslash.attribute.name.attack_damage" }] };
+  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: "sweepnslash.attribute.name.attack_speed" }] };
 
   function isOurLine(raw) {
-  const str = stringifyRawMessage(raw) || "";
+    const str = stringifyRawMessage(raw) || "";
 
-  if (
-    str.includes('sweepnslash.item.modifiers.mainhand') ||
-    str.includes('sweepnslash.attribute.name.attack_damage') ||
-    str.includes('sweepnslash.attribute.name.attack_speed')
-  ) return true;
+    if (
+      str.includes("sweepnslash.item.modifiers.mainhand") ||
+      str.includes("sweepnslash.attribute.name.attack_damage") ||
+      str.includes("sweepnslash.attribute.name.attack_speed")
+    ) return true;
 
-  const noColor = str.replace(/§./g, "");
+    const noColor = str.replace(/§./g, "");
 
-  if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
+    if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
 
-  if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
+    if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
 
-  return false;
-}
+    return false;
+  }
 
   const itemLore = existingLore.filter((line) => !isOurLine(line));
 
@@ -376,12 +390,43 @@ export function getCooldownTime(player: Player, baseAttackSpeed = 4) {
 
 // Return the stats of the weapon from player's weapon.
 Entity.prototype.getItemStats = function () {
-    const equippableComp = this.getComponent('equippable');
-    const item = equippableComp?.getEquipment(EquipmentSlot.Mainhand);
-    const stats = weaponStats.find((wep) => wep.id === item?.typeId);
-    return { equippableComp, item, stats };
-};
+  const equippableComp = this.getComponent("equippable");
+  const item = equippableComp?.getEquipment(EquipmentSlot.Mainhand);
 
+  const baseStats = item?.typeId ? weaponStats.find((wep) => wep.id === item.typeId) : undefined;
+
+  const customParams = item?.getComponent("sweepnslash:stats")?.customComponentParameters?.params;
+
+  let stats = baseStats ? { ...baseStats } : (item ? { id: item.typeId } : undefined);
+
+  if (customParams && item) {
+    const keyMap = {
+      damage: "damage",
+      attack_speed: "attackSpeed",
+      is_weapon: "isWeapon",
+      sweep: "sweep",
+      disable_shield: "disableShield",
+      regular_knockback: "regularKnockback",
+      enchanted_knockback: "enchantedKnockback",
+      regular_vertical_knockback: "regularVerticalKnockback",
+      enchanted_vertical_knockback: "enchantedVerticalKnockback",
+      skip_lore: "skipLore",
+      no_inherit: "noInherit"
+    };
+
+    stats = stats || { id: item.typeId };
+
+    Object.keys(keyMap).forEach((jsonKey) => {
+      if (customParams[jsonKey] !== undefined) {
+        stats[keyMap[jsonKey]] = customParams[jsonKey];
+      }
+    });
+
+    stats.id = stats.id || item.typeId;
+  }
+
+  return { equippableComp, item, stats };
+};
 Entity.prototype.isTamed = function ({ excludeTypes = [] } = {}) {
     if (excludeTypes.includes(this.typeId)) return false;
     return this.getComponent('is_tamed')?.isValid;
