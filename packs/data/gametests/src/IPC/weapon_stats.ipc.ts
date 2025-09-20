@@ -11,6 +11,7 @@ export const WeaponStatsSerializer = PROTO.Object({
     skipLore: PROTO.Optional(PROTO.Boolean),
     regularKnockback: PROTO.Optional(PROTO.Float64),
     enchantedKnockback: PROTO.Optional(PROTO.Float64),
+    noInherit: PROTO.Optional(PROTO.Float64),
     beforeEffect: PROTO.Optional(FunctionSerializer),
     script: PROTO.Optional(FunctionSerializer),
 });
