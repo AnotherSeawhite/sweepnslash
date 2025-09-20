@@ -16,6 +16,8 @@ export class CombatManager {
         const baseDamage = stats?.damage || 1;
         let regularKBDistance = stats?.regularKnockback ?? 1.552;
         let enchantedKBDistance = stats?.enchantedKnockback ?? 2.586;
+		let regularVerticalKBHeight = stats?.regularVerticalKnockback ?? 0.7955;
+		let enchantedVerticalKBHeight = stats?.enchantedVerticalKnockback ?? 1;
         const maxCD = Math.round(getCooldownTime(player, stats?.attackSpeed).ticks);
         const curCD = status.cooldown;
         let cooldown = (maxCD - curCD) / maxCD; // Attack charge (0~1)
@@ -60,6 +62,8 @@ export class CombatManager {
 
         regularKBDistance = beforeEffect?.regularKnockback ?? regularKBDistance;
         enchantedKBDistance = beforeEffect?.enchantedKnockback ?? enchantedKBDistance;
+		regularVerticalKBHeight = beforeEffect?.regularVerticalKnockback ?? regularVerticalKBHeight;
+		enchantedVerticalKBHeight = beforeEffect?.enchantedVerticalKnockback ?? enchantedVerticalKBHeight;
 
         // Damage calculation, reapply checks with updated damage
         dmg = Check.finalDamageCalculation(currentTick, player, target, item, stats, {
@@ -129,7 +133,7 @@ export class CombatManager {
             const dirZ = knockbackValid ? Math.cos(rot.y * (Math.PI / 180)) : tLoc.z - pLoc.z;
             const length = Math.sqrt(dirX ** 2 + dirZ ** 2) || 1; // Avoid division by zero
 
-            const knockbackY = target.isOnGround ? (knockbackValid ? 1 : 0.7955) : 0;
+            const knockbackY = target.isOnGround ? (knockbackValid ? enchantedVerticalKBHeight : regularVerticalKBHeight) : 0;
             target.applyAttackKnockback(
                 {
                     x: tLoc.x + (dirX / length) * knockbackX,
