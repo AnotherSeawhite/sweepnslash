@@ -13,7 +13,7 @@ export const WeaponStatsSerializer = PROTO.Object({
     enchantedKnockback: PROTO.Optional(PROTO.Float64),
     regularVerticalKnockback: PROTO.Optional(PROTO.Float64),
     enchantedVerticalKnockback: PROTO.Optional(PROTO.Float64),
-    noInherit: PROTO.Optional(PROTO.Float64),
+    noInherit: PROTO.Optional(PROTO.Boolean),
     beforeEffect: PROTO.Optional(FunctionSerializer),
     script: PROTO.Optional(FunctionSerializer),
 });
