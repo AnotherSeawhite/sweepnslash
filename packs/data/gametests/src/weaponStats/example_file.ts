@@ -3,7 +3,8 @@
 
 import { WeaponStats } from '../importStats';
 
-// Read CROSS_COMPATIBILITY_GUIDE.txt for adding stat files
+// Refer to CROSS_COMPATIBILITY_GUIDE.txt for exporting stats
+// importStats.ts for types
 
 /* Pro tip:
 	Dividing 1 by the attack speed will tell how fast you can attack.
