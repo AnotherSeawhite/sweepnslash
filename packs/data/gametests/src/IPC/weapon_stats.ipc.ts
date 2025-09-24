@@ -3,8 +3,8 @@ import { FunctionSerializer } from './function.ipc';
 
 export const WeaponStatsSerializer = PROTO.Object({
     id: PROTO.String,
-    attackSpeed: PROTO.Float64,
-    damage: PROTO.Float64,
+    attackSpeed: PROTO.Optional(PROTO.Float64),
+    damage: PROTO.Optional(PROTO.Float64),
     isWeapon: PROTO.Optional(PROTO.Boolean),
     sweep: PROTO.Optional(PROTO.Boolean),
     disableShield: PROTO.Optional(PROTO.Boolean),

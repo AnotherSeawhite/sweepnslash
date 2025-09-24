@@ -169,38 +169,36 @@ export function inventoryAddLore({ source, slot }) {
   const itemSlot = inv.getSlot(slot);
   if (!itemSlot.hasItem()) return;
 
-  const item = itemSlot.getItem();
-  if (!item) return;
-
-  const stats = weaponStats.find((wep) => wep.id === item.typeId);
+  const { item, stats } = source.getItemStats(itemSlot.getItem());
   if (!stats) return;
-
-  const damage = stats.damage ?? 0;
-  const atkSpeed = stats.attackSpeed ?? 0;
 
   let existingLore = item.getRawLore() ?? [];
 
-  const mainhandStr = { rawtext: [{ text: "§r§7" }, { translate: 'sweepnslash.item.modifiers.mainhand' }] };
-  const damageStr = { rawtext: [{ text: ` §r§2${damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] };
-  const atkSpeedStr = { rawtext: [{ text: ` §r§2${atkSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] };
+  const damageStr = stats.damage !== undefined
+    ? { rawtext: [{ text: ` §r§2${stats.damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] }
+    : null;
+
+  const atkSpeedStr = stats.attackSpeed !== undefined
+    ? { rawtext: [{ text: ` §r§2${stats.attackSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] }
+    : null;
 
   function isOurLine(raw) {
-  const str = stringifyRawMessage(raw) || "";
+    const str = stringifyRawMessage(raw) || "";
 
-  if (
-    str.includes('sweepnslash.item.modifiers.mainhand') ||
-    str.includes('sweepnslash.attribute.name.attack_damage') ||
-    str.includes('sweepnslash.attribute.name.attack_speed')
-  ) return true;
+    if (
+      str.includes('sweepnslash.item.modifiers.mainhand') ||
+      str.includes('sweepnslash.attribute.name.attack_damage') ||
+      str.includes('sweepnslash.attribute.name.attack_speed')
+    ) return true;
 
-  const noColor = str.replace(/§./g, "");
+    const noColor = str.replace(/§./g, "");
 
-  if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
+    if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
 
-  if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
+    if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
 
-  return false;
-}
+    return false;
+  }
 
   const itemLore = existingLore.filter((line) => !isOurLine(line));
 
@@ -209,7 +207,16 @@ export function inventoryAddLore({ source, slot }) {
   if (stats.skipLore) {
     itemSlot.setLore([...itemLore]);
   } else {
-    itemSlot.setLore([mainhandStr, damageStr, atkSpeedStr, ...itemLore]);
+    const newLore = [];
+
+    // Add mainhand string if damage or attack speed exists
+    if (damageStr || atkSpeedStr) {
+      newLore.push({ rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] });
+      if (damageStr) newLore.push(damageStr);
+      if (atkSpeedStr) newLore.push(atkSpeedStr);
+    }
+
+    itemSlot.setLore([...newLore, ...itemLore]);
   }
 }
 
@@ -375,11 +382,54 @@ export function getCooldownTime(player: Player, baseAttackSpeed = 4) {
 }
 
 // Return the stats of the weapon from player's weapon.
-Entity.prototype.getItemStats = function () {
+Entity.prototype.getItemStats = function (itemStack) {
     const equippableComp = this.getComponent('equippable');
-    const item = equippableComp?.getEquipment(EquipmentSlot.Mainhand);
-    const stats = weaponStats.find((wep) => wep.id === item?.typeId);
-    return { equippableComp, item, stats };
+    const item = itemStack ?? equippableComp?.getEquipment(EquipmentSlot.Mainhand);
+
+    const jsStats = weaponStats.find((wep) => wep.id === item?.typeId);
+
+    const jsonParams = item?.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
+
+    const keyMap = {
+        damage: 'damage',
+        attack_speed: 'attackSpeed',
+        is_weapon: 'isWeapon',
+        sweep: 'sweep',
+        disable_shield: 'disableShield',
+        skip_lore: 'skipLore',
+        no_inherit: 'noInherit',
+        regular_knockback: 'regularKnockback',
+        enchanted_knockback: 'enchantedKnockback',
+        regular_vertical_knockback: 'regularVerticalKnockback',
+        enchanted_vertical_knockback: 'enchantedVerticalKnockback'
+    };
+
+    const jsonStats = {};
+    if (jsonParams && typeof jsonParams === 'object') {
+        for (const [jsonKey, statKey] of Object.entries(keyMap)) {
+            if (jsonParams[jsonKey] !== undefined) {
+                jsonStats[statKey] = jsonParams[jsonKey];
+            }
+        }
+    }
+
+    const mergedStats = {};
+    for (const k in jsonStats) mergedStats[k] = jsonStats[k];
+
+    if (jsStats && typeof jsStats === 'object') {
+        for (const k in jsStats) {
+            if (jsStats[k] !== undefined) {
+                mergedStats[k] = jsStats[k];
+            }
+        }
+    }
+
+    const statsToReturn =
+        Object.keys(mergedStats).length ? mergedStats
+        : (jsStats && Object.keys(jsStats).length ? jsStats
+        : (Object.keys(jsonStats).length ? jsonStats : undefined));
+
+    return { equippableComp, item, stats: statsToReturn };
 };
 
 Entity.prototype.isTamed = function ({ excludeTypes = [] } = {}) {

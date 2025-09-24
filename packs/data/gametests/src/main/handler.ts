@@ -36,6 +36,11 @@ import('@minecraft/server-gametest')
         //console.error(err);
     });
 
+// Custom component registry, required to fetch basic stats from custom components in items
+system.beforeEvents.startup.subscribe(({ itemComponentRegistry }) => {
+    itemComponentRegistry.registerCustomComponent("sweepnslash:stats", {});
+});
+
 // If it's the first time running the add-on, set up the world
 world.afterEvents.worldLoad.subscribe(() => {
     system.run(() =>
