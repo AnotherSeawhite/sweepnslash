@@ -58,7 +58,7 @@ export const vanilla: WeaponStats[] = [
     },
     {
         id: 'minecraft:mace',
-        attackSpeed: 0.5,
+        attackSpeed: 0.6,
         damage: 6,
         isWeapon: true,
     },
