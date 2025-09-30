@@ -461,43 +461,6 @@ Player.prototype.setExhaustion = function(number) {
 	this.getComponent("player.exhaustion")?.setCurrentValue(number);
 };
 
-// Script by JaylyMC
-/**
- * Returns the biome that this location in this dimension resides in
- * @returns The biome that this location in this dimension resides in
- */
-Entity.prototype.getBiome = function () {
-    const debugMode = world.getDynamicProperty('debug_mode');
-    const { location, dimension } = this;
-    // Retrieve a list of all available biome types in the dimension.
-    const biomeTypes = BiomeTypes.getAll();
-    // Define the search options, specifying a bounding search area of 64 blocks in all directions.
-    const searchOptions = {
-        boundingSize: { x: 64, y: 64, z: 64 },
-    };
-    // Variable to track the closest biome found during the search.
-    let closestBiome;
-    // Iterate through all available biome types.
-    for (const biome of biomeTypes) {
-        // Attempt to locate the closest instance of the current biome type.
-        const biomeLocation = dimension.findClosestBiome(location, biome, searchOptions);
-        // If a biome location is found, calculate its distance from the input location.
-        if (biomeLocation) {
-            const distance = Vector3Utils.distance(biomeLocation, location);
-            // Update `closestBiome` if this biome is closer than the previously found one.
-            if (!closestBiome || distance < closestBiome.distance) {
-                closestBiome = { biome, distance };
-            }
-        }
-    }
-    // If no biome was found within the search area, make a debug console log.
-    if (!closestBiome) {
-        if (debugMode) debug(`Could not find any biome within given location`);
-    }
-    // Return the closest biome type found.
-    return closestBiome.biome;
-};
-
 // Boolean check whether the player is riding anything or not. Used for shield check.
 // ex) Entity.isRiding == true
 Object.defineProperty(Entity.prototype, 'isRiding', {
@@ -965,7 +928,7 @@ export class Check {
         const isInRain =
             !target.isUnderground &&
             target.dimension.getWeather() !== 'Clear' &&
-            !biomeArray.includes(target.getBiome()?.id);
+            !biomeArray.includes(target.dimension.getBiome(target.location)?.id);
 
         if (impalingLevel > 0 && (target.isInWater || isInRain)) {
             impalingLevel = impalingLevel * 2.5;
