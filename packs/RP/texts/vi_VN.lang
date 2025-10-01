@@ -2,11 +2,15 @@ pack.name=§3Sweep §f'N §6Slash §f- Gói Tài Nguyên
 pack.description=Chuyển đổi hệ thống chiến đấu của Bedrock Edition sang giống với Java Edition 1.9+.
 
 attribute.name.generic.attackDamage=§r
+sweepnslash.item.modifiers.mainhand=Khi ở tay chính:
+sweepnslash.attribute.name.attack_damage=Sức tấn công
+sweepnslash.attribute.name.attack_speed=Tốc độ tấn công
 
 sweepnslash.tipmessage=§fGõ §e%s §fđể mở menu cấu hình §3Sweep §f'N §6Slash§f
 sweepnslash.currentversion=Phiên bản hiện tại:§e %s
 
-sweepnslash.configmenutitle=Cấu Hình Sweep 'N Slash (Vietnamese by pkonq)
+sweepnslash.commanddescription=Mở menu cấu hình cho Sweep 'N Slash.
+sweepnslash.configmenutitle=Cấu Hình Sweep 'N Slash
 
 ## Advanced Operator Toggles
 sweepnslash.operatortoggleheader=Tùy Chọn Nâng Cao Cho Người Điều Hành

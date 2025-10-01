@@ -6,10 +6,10 @@ import {
     MolangVariableMap,
     Entity,
     Player,
-    BiomeTypes,
     EquipmentSlot,
     EntityDamageCause,
-    GameMode
+    GameMode,
+	PlayerSoundOptions
 } from '@minecraft/server';
 import { weaponStats } from './weaponStatsHandler.js';
 import { lambertW0, lambertWm1 } from './lambertw.js';
@@ -63,6 +63,8 @@ function initializePlayerStatus(player) {
         attackReady: false,
         showBar: true,
         holdInteract: false,
+		leftClick: false,
+    	rightClick: false,
         lastSelectedItem: undefined,
         lastSelectedSlot: undefined,
         cooldown: 0,
@@ -151,54 +153,70 @@ Entity.prototype.viewRotation = function (dist = 1, height = 0) {
     return viewCenter;
 };
 
-// Cycle through inventory and add lores.
-export function inventoryAddLore(source) {
-    const inv = source.getComponent('inventory').container;
-    let slot = inv.size;
+// Add lore for an item in the slot.
+function stringifyRawMessage(msg) {
+  if (!msg) return "";
+  if (msg.text) return msg.text;
+  if (msg.translate) return msg.translate;
+  if (msg.rawtext) return msg.rawtext.map(stringifyRawMessage).join("");
+  return "";
+}
 
-    while (slot--) {
-        const itemSlot = inv.getSlot(slot);
-        if (!itemSlot.hasItem()) continue;
+// Almost had a headache trying to figure this out.
+export function inventoryAddLore({ source, slot }) {
+  const inv = source.getComponent('inventory').container;
+  const itemSlot = inv.getSlot(slot);
+  if (!itemSlot.hasItem()) return;
 
-        const item = itemSlot.getItem();
-        if (!item) continue;
+  const { item, stats } = source.getItemStats(itemSlot.getItem());
+  if (!stats) return;
 
-        const stats = weaponStats.find((wep) => wep.id === item.typeId);
-        if (!stats) continue;
+  let existingLore = item.getRawLore() ?? [];
 
-        //let sharpnessLevel = Check.enchantLevel(item, "sharpness") ?? 0;
-        //if (sharpnessLevel) sharpnessLevel = 0.5 * sharpnessLevel + 0.5;
+  const damageStr = stats.damage !== undefined
+    ? { rawtext: [{ text: ` §r§2${stats.damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] }
+    : null;
 
-        const damage = stats.damage ?? 0;
-        const atkSpeed = stats.attackSpeed ?? 0;
+  const atkSpeedStr = stats.attackSpeed !== undefined
+    ? { rawtext: [{ text: ` §r§2${stats.attackSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] }
+    : null;
 
-        let existingLore = item.getLore() ?? [];
+  function isOurLine(raw) {
+    const str = stringifyRawMessage(raw) || "";
 
-        // check if the lore already includes SPD/DMG or has formatted stat line
-        const filter = (line) =>
-            (line.includes('SPD') || line.includes('DMG')) &&
-            (line.startsWith('§r§2') || line.startsWith(' §r§2'));
+    if (
+      str.includes('sweepnslash.item.modifiers.mainhand') ||
+      str.includes('sweepnslash.attribute.name.attack_damage') ||
+      str.includes('sweepnslash.attribute.name.attack_speed')
+    ) return true;
 
-        const itemLore = existingLore.filter((line) => !filter(line));
+    const noColor = str.replace(/§./g, "");
 
-        const existingLoreString = existingLore.filter((line) => filter(line)).toString();
+    if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
 
-        const atkSpeedStr = `§r§2${atkSpeed} SPD`;
-        const damageStr = `§r§2 ${damage} DMG`;
+    if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
 
-        const loreLine = `${damageStr}\n ${atkSpeedStr}`;
+    return false;
+  }
 
-        if (existingLore.length >= 100 || loreLine.length > 1000) continue;
+  const itemLore = existingLore.filter((line) => !isOurLine(line));
 
-        if (existingLoreString.includes(atkSpeedStr) && existingLoreString.includes(damageStr))
-            continue;
+  if (existingLore.length >= 100) return;
 
-        if (stats?.skipLore) {
-            itemSlot.setLore([...itemLore]);
-        } else {
-            itemSlot.setLore([loreLine, ...itemLore]);
-        }
+  if (stats.skipLore) {
+    itemSlot.setLore([...itemLore]);
+  } else {
+    const newLore = [];
+
+    // Add mainhand string if damage or attack speed exists
+    if (damageStr || atkSpeedStr) {
+      newLore.push({ rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] });
+      if (damageStr) newLore.push(damageStr);
+      if (atkSpeedStr) newLore.push(atkSpeedStr);
     }
+
+    itemSlot.setLore([...newLore, ...itemLore]);
+  }
 }
 
 /**
@@ -275,63 +293,53 @@ Entity.prototype.applyImpulseAsKnockback = function (vector3) {
 };
 
 // For spawning particles that's only visible to players with particle configuration.
-export function selectiveParticle(
-    location,
-    dynamicProperty,
-    dimension,
-    particleId,
-    map,
-    offset = { x: 0, y: 0, z: 0 }
-) {
-    system.run(() => {
-        try {
-            const offsetLocation = {
-                x: location.x + offset.x,
-                y: location.y + offset.y,
-                z: location.z + offset.z,
-            };
-            for (const p of world.getAllPlayers()) {
-                if (
-                    p.getDynamicProperty(dynamicProperty) == true &&
-                    p.dimension.id == dimension
-                )
-                    map
-                        ? p.spawnParticle(particleId, offsetLocation, map)
-                        : p.spawnParticle(particleId, offsetLocation);
-            }
-        } catch (e) {} //this error is ignorable
-    });
+Entity.prototype.spawnSelectiveParticle = function (effectName, location, dynamicProperty, offset = { x: 0, y: 0, z: 0 }, molangVariables: MolangVariableMap) {
+    try {
+      const offsetLocation = {
+        x: location.x + offset.x,
+        y: location.y + offset.y,
+        z: location.z + offset.z
+      };
+      for (const p of world.getAllPlayers()) {
+        if (
+            p.getDynamicProperty(dynamicProperty) == true &&
+            p.dimension.id == this.dimension.id
+        )
+          molangVariables ? p.spawnParticle(effectName, offsetLocation, molangVariables) : p.spawnParticle(effectName, offsetLocation);
+      }
+    } catch (e) {
+        console.warn(e)
+    }
 }
 
 // For playing sounds that's only audible to players with sounds configuration.
-function selectiveSound(location, dynamicProperty, dimension, soundId, volume = 1) {
-    system.run(() => {
-        try {
-            for (const p of world.getAllPlayers()) {
-                if (
-                    p.getDynamicProperty(dynamicProperty) == true &&
-                    p.dimension.id == dimension
-                )
-                    p.playSound(soundId, { location, volume });
-            }
-        } catch (e) {} //this error is ignorable
-    });
+Entity.prototype.playSelectiveSound = function (soundId, dynamicProperty, soundOptions: PlayerSoundOptions) {
+    try {
+      for (const p of world.getAllPlayers()) {
+        if (
+            p.getDynamicProperty(dynamicProperty) == true &&
+            p.dimension.id == this.dimension.id
+        )
+          p.playSound(soundId, soundOptions);
+      }
+    } catch (e) {
+      console.warn(e)
+    }
 }
 
 // For damage particles, with molang variable maps.
-export function healthParticle(target, damage) {
-    const loc = target.center({ x: 0, y: 0.5, z: 0 });
-    const hp = target.getComponent('health');
+Entity.prototype.healthParticle = function(damage) {
+    const loc = this.center({ x: 0, y: 0.5, z: 0 });
+    const hp = this.getComponent('health');
     const dmg = clampNumber(damage, hp.effectiveMin, hp.effectiveMax) / 2;
     const amount = Math.trunc(dmg);
-    const dimension = target.dimension.id;
     let map = new MolangVariableMap();
     map.setFloat('variable.amount', amount);
-    selectiveParticle(
+        this.spawnSelectiveParticle(
+        "sweepnslash:damage_indicator_emitter",
         loc,
-        'damageIndicator',
-        dimension,
-        'sweepnslash:damage_indicator_emitter',
+        "damageIndicator",
+        undefined,
         map
     );
 }
@@ -373,11 +381,54 @@ export function getCooldownTime(player: Player, baseAttackSpeed = 4) {
 }
 
 // Return the stats of the weapon from player's weapon.
-Entity.prototype.getItemStats = function () {
+Entity.prototype.getItemStats = function (itemStack) {
     const equippableComp = this.getComponent('equippable');
-    const item = equippableComp?.getEquipment(EquipmentSlot.Mainhand);
-    const stats = weaponStats.find((wep) => wep.id === item?.typeId);
-    return { equippableComp, item, stats };
+    const item = itemStack ?? equippableComp?.getEquipment(EquipmentSlot.Mainhand);
+
+    const jsStats = weaponStats.find((wep) => wep.id === item?.typeId);
+
+    const jsonParams = item?.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
+
+    const keyMap = {
+        damage: 'damage',
+        attack_speed: 'attackSpeed',
+        is_weapon: 'isWeapon',
+        sweep: 'sweep',
+        disable_shield: 'disableShield',
+        skip_lore: 'skipLore',
+        no_inherit: 'noInherit',
+        regular_knockback: 'regularKnockback',
+        enchanted_knockback: 'enchantedKnockback',
+        regular_vertical_knockback: 'regularVerticalKnockback',
+        enchanted_vertical_knockback: 'enchantedVerticalKnockback'
+    };
+
+    const jsonStats = {};
+    if (jsonParams && typeof jsonParams === 'object') {
+        for (const [jsonKey, statKey] of Object.entries(keyMap)) {
+            if (jsonParams[jsonKey] !== undefined) {
+                jsonStats[statKey] = jsonParams[jsonKey];
+            }
+        }
+    }
+
+    const mergedStats = {};
+    for (const k in jsonStats) mergedStats[k] = jsonStats[k];
+
+    if (jsStats && typeof jsStats === 'object') {
+        for (const k in jsStats) {
+            if (jsStats[k] !== undefined) {
+                mergedStats[k] = jsStats[k];
+            }
+        }
+    }
+
+    const statsToReturn =
+        Object.keys(mergedStats).length ? mergedStats
+        : (jsStats && Object.keys(jsStats).length ? jsStats
+        : (Object.keys(jsonStats).length ? jsonStats : undefined));
+
+    return { equippableComp, item, stats: statsToReturn };
 };
 
 Entity.prototype.isTamed = function ({ excludeTypes = [] } = {}) {
@@ -407,43 +458,6 @@ Player.prototype.getExhaustion = function() {
 
 Player.prototype.setExhaustion = function(number) {
 	this.getComponent("player.exhaustion")?.setCurrentValue(number);
-};
-
-// Script by JaylyMC
-/**
- * Returns the biome that this location in this dimension resides in
- * @returns The biome that this location in this dimension resides in
- */
-Entity.prototype.getBiome = function () {
-    const debugMode = world.getDynamicProperty('debug_mode');
-    const { location, dimension } = this;
-    // Retrieve a list of all available biome types in the dimension.
-    const biomeTypes = BiomeTypes.getAll();
-    // Define the search options, specifying a bounding search area of 64 blocks in all directions.
-    const searchOptions = {
-        boundingSize: { x: 64, y: 64, z: 64 },
-    };
-    // Variable to track the closest biome found during the search.
-    let closestBiome;
-    // Iterate through all available biome types.
-    for (const biome of biomeTypes) {
-        // Attempt to locate the closest instance of the current biome type.
-        const biomeLocation = dimension.findClosestBiome(location, biome, searchOptions);
-        // If a biome location is found, calculate its distance from the input location.
-        if (biomeLocation) {
-            const distance = Vector3Utils.distance(biomeLocation, location);
-            // Update `closestBiome` if this biome is closer than the previously found one.
-            if (!closestBiome || distance < closestBiome.distance) {
-                closestBiome = { biome, distance };
-            }
-        }
-    }
-    // If no biome was found within the search area, make a debug console log.
-    if (!closestBiome) {
-        if (debugMode) debug(`Could not find any biome within given location`);
-    }
-    // Return the closest biome type found.
-    return closestBiome.biome;
 };
 
 // Boolean check whether the player is riding anything or not. Used for shield check.
@@ -606,16 +620,15 @@ export class Check {
                 forced == undefined) ||
             forced == true;
         if (!noEffect && isValid) {
-            selectiveParticle(
-                target.center({ x: 0, y: 1, z: 0 }),
-                'criticalHit',
-                dimension,
+            target.spawnSelectiveParticle(
                 particle,
-                map,
-                offset
+                target.center({ x: 0, y: 1, z: 0 }),
+                "criticalHit",
+                offset,
+                map
             );
             if (!(target instanceof Player && target.getGameMode() === GameMode.Creative))
-                selectiveSound(player.location, 'critSound', dimension, sound);
+                player.playSelectiveSound(sound, "critSound", { location: player.location });
         }
         return isValid;
     }
@@ -669,8 +682,8 @@ export class Check {
             sound = 'entity.player.attack.sweep',
             particle = 'sweepnslash:sweep_particle',
             offset = { x: 0, y: 0, z: 0 },
-            pitch = 1,
-            volume = 1,
+            pitch,
+            volume,
             map,
         } = {}
     ) {
@@ -771,15 +784,8 @@ export class Check {
                 z: pLoc.z + unitDirection.z * dist,
             };
         }
-        selectiveParticle(
-            location || particleLocation,
-            'sweep',
-            dimension,
-            particle,
-            map,
-            offset
-        );
-        player.dimension.playSound(sound, pLoc, { pitch, volume });
+        player.spawnSelectiveParticle(particle, location || particleLocation, "sweep", offset, map);
+        player.dimension.playSound(sound, pLoc, { pitch : pitch ?? undefined, volume: volume ?? undefined });
 
         commonEntities.forEach((e) => {
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
@@ -921,7 +927,7 @@ export class Check {
         const isInRain =
             !target.isUnderground &&
             target.dimension.getWeather() !== 'Clear' &&
-            !biomeArray.includes(target.getBiome()?.id);
+            !biomeArray.includes(target.dimension.getBiome(target.location)?.id);
 
         if (impalingLevel > 0 && (target.isInWater || isInRain)) {
             impalingLevel = impalingLevel * 2.5;

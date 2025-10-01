@@ -2,10 +2,14 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=将基岩版的战斗机制改为Java版1.9+的战斗机制
 
 attribute.name.generic.attackDamage=§r
+sweepnslash.item.modifiers.mainhand=在主手时：
+sweepnslash.attribute.name.attack_damage=攻击伤害
+sweepnslash.attribute.name.attack_speed=攻击速度
 
 sweepnslash.tipmessage=§f输入 §e%s §f打开§3Sweep §f'N §6Slash §f设置菜单
 sweepnslash.currentversion=当前版本:§e %s
 
+sweepnslash.commanddescription=打开 Sweep 'N Slash 的配置菜单。
 sweepnslash.configmenutitle=Sweep 'N Slash设置菜单
 
 ## Advanced Operator Toggles

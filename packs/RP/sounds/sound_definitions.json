@@ -1,186 +1,189 @@
 {
-    "format_version": "1.20.20",
-    "sound_definitions": {
-        "entity.player.attack.crit": {
-            "category": "player",
-            "max_distance": 16.0,
-            "sounds": [
-                {
-                    "name": "sounds/player/attack/crit1",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/crit2",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/crit3",
-                    "volume": 0.7
-                }
-            ]
+  "format_version": "1.20.20",
+  "sound_definitions": {
+    "entity.player.attack.crit": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/player/attack/crit1",
+          "volume": 0.7
         },
-        "entity.player.attack.knockback": {
-            "category": "player",
-            "max_distance": 16.0,
-            "sounds": [
-                {
-                    "name": "sounds/player/attack/knockback1",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/knockback2",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/knockback3",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/knockback4",
-                    "volume": 0.7
-                }
-            ]
+        {
+          "name": "sounds/player/attack/crit2",
+          "volume": 0.7
         },
-        "entity.player.attack.sweep": {
-            "category": "player",
-            "max_distance": 16.0,
-            "sounds": [
-                {
-                    "name": "sounds/player/attack/sweep1",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/sweep2",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/sweep3",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/sweep4",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/sweep5",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/sweep6",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/player/attack/sweep7",
-                    "volume": 0.7
-                }
-            ]
-        },
-        "game.player.attack.nodamage.se": {
-            "category": "player",
-            "max_distance": 16.0,
-            "sounds": [
-                {
-                    "name": "sounds/mob/player/attack/weak1",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/weak2",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/weak3",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/weak4",
-                    "volume": 0.7
-                }
-            ]
-        },
-        "game.player.attack.weak.se": {
-            "category": "player",
-            "max_distance": 16.0,
-            "sounds": [
-                {
-                    "name": "sounds/mob/player/attack/weak1",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/weak2",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/weak3",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/weak4",
-                    "volume": 0.7
-                }
-            ]
-        },
-        "game.player.attack.strong.se": {
-            "category": "player",
-            "max_distance": 16.0,
-            "sounds": [
-                {
-                    "name": "sounds/mob/player/attack/strong1",
-                    "volume": 0.6
-                },
-                {
-                    "name": "sounds/mob/player/attack/strong2",
-                    "volume": 0.6
-                },
-                {
-                    "name": "sounds/mob/player/attack/strong3",
-                    "volume": 0.6
-                },
-                {
-                    "name": "sounds/mob/player/attack/strong4",
-                    "volume": 0.6
-                },
-                {
-                    "name": "sounds/mob/player/attack/strong5",
-                    "volume": 0.7
-                },
-                {
-                    "name": "sounds/mob/player/attack/strong6",
-                    "volume": 0.7
-                }
-            ]
-        },
-        "game.player.attack.strong": {
-            "sounds": [
-                {
-                    "name": "sounds/mob/player/attack/weak1",
-                    "volume": 0
-                }
-            ]
-        },
-        "game.player.attack.nodamage": {
-            "sounds": [
-                {
-                    "name": "sounds/mob/player/attack/weak1",
-                    "volume": 0
-                }
-            ]
-        },
-        "game.player.attack.weak": {
-            "sounds": [
-                {
-                    "name": "sounds/mob/player/attack/weak1",
-                    "volume": 0
-                }
-            ]
-        },
-        "game.player.bow.ding": {
-            "category": "ui",
-            "sounds": [
-                {
-                    "name": "sounds/random/orb",
-                    "volume": 0.5
-                }
-            ]
+        {
+          "name": "sounds/player/attack/crit3",
+          "volume": 0.7
         }
+      ]
+    },
+    "entity.player.attack.knockback": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/player/attack/knockback1",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/knockback2",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/knockback3",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/knockback4",
+          "volume": 0.7
+        }
+      ]
+    },
+    "entity.player.attack.sweep": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/player/attack/sweep1",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/sweep2",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/sweep3",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/sweep4",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/sweep5",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/sweep6",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/player/attack/sweep7",
+          "volume": 0.7
+        }
+      ]
+    },
+    "game.player.attack.nodamage.se": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/player/attack/weak1",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/weak2",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/weak3",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/weak4",
+          "volume": 0.7
+        }
+      ]
+    },
+    "game.player.attack.weak.se": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/player/attack/weak1",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/weak2",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/weak3",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/weak4",
+          "volume": 0.7
+        }
+      ]
+    },
+    "game.player.attack.strong.se": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/player/attack/strong1",
+          "volume": 0.6
+        },
+        {
+          "name": "sounds/mob/player/attack/strong2",
+          "volume": 0.6
+        },
+        {
+          "name": "sounds/mob/player/attack/strong3",
+          "volume": 0.6
+        },
+        {
+          "name": "sounds/mob/player/attack/strong4",
+          "volume": 0.6
+        },
+        {
+          "name": "sounds/mob/player/attack/strong5",
+          "volume": 0.7
+        },
+        {
+          "name": "sounds/mob/player/attack/strong6",
+          "volume": 0.7
+        }
+      ]
+    },
+    "game.player.attack.strong": {
+      "sounds": [
+        {
+          "name": "sounds/mob/player/attack/weak1",
+          "volume": 0
+        }
+      ]
+    },
+    "game.player.attack.nodamage": {
+      "sounds": [
+        {
+          "name": "sounds/mob/player/attack/weak1",
+          "volume": 0
+        }
+      ]
+    },
+    "game.player.attack.weak": {
+      "sounds": [
+        {
+          "name": "sounds/mob/player/attack/weak1",
+          "volume": 0
+        }
+      ]
+    },
+    "game.player.bow.ding": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/orb",
+          "volume": 0.5
+        }
+      ]
+    },
+    "sns.config.canceled": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name" : "sounds/note/bass",
+          "volume": 0.5
+        }
+      ]
     }
+  }
 }
