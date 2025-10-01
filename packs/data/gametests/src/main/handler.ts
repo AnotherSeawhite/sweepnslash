@@ -567,7 +567,12 @@ system.runInterval(() => {
 });
 
 // For air swinging and parsing item stats from other addons
-system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) => {
+system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: player }) => {
+    if (id === 'sweep-and-slash:toggle_check') {
+        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
+        return;
+    }
+    
     if (
         world.getDynamicProperty('addon_toggle') == false ||
         !(player instanceof Player) ||
