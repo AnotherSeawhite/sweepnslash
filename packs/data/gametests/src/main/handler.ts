@@ -38,7 +38,7 @@ import('@minecraft/server-gametest')
 
 // Custom component registry, required to fetch basic stats from custom components in items
 system.beforeEvents.startup.subscribe(({ itemComponentRegistry }) => {
-    itemComponentRegistry.registerCustomComponent("sweepnslash:stats", {});
+    itemComponentRegistry.registerCustomComponent('sweepnslash:stats', {});
 });
 
 // If it's the first time running the add-on, set up the world
@@ -63,7 +63,7 @@ world.afterEvents.worldLoad.subscribe(() => {
         world.setDynamicProperty('saturationHealing', true);
     }
 
-    system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty("addon_toggle")}`);
+    system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
 });
 
 // Initialize dynamic properties
@@ -175,11 +175,11 @@ function configForm(player) {
                 defaultValue: dp(world, { id: 'saturationHealing' }),
                 tooltip: {
                     rawtext: [
-                        { translate: "sweepnslash.saturationhealing.tooltip" },
-                        { text: "\n\n" },
-                        { translate: "createWorldScreen.naturalregeneration" },
-                        { text: ": " },
-                        { text: world.gameRules.naturalRegeneration ? "§aON" : "§cOFF"}
+                        { translate: 'sweepnslash.saturationhealing.tooltip' },
+                        { text: '\n\n' },
+                        { translate: 'createWorldScreen.naturalregeneration' },
+                        { text: ': ' },
+                        { text: world.gameRules.naturalRegeneration ? '§aON' : '§cOFF' }
                     ]
                 }
             }
@@ -318,7 +318,7 @@ function configForm(player) {
 
         properties.forEach(valuePush);
         
-        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty("addon_toggle")}`);
+        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
     });
 }
 
@@ -339,7 +339,7 @@ function configForm(player) {
 system.beforeEvents.startup.subscribe((init) => {
     const configMenuCommand = {
         name: configCommand,
-        description: "sweepnslash.commanddescription",
+        description: 'sweepnslash.commanddescription',
         permissionLevel: 0,
         cheatsRequired: false,
     };
@@ -430,13 +430,13 @@ system.runInterval(() => {
 
         // Saturation healing
         
-        const health = player.getComponent("health");
-        const saturationComp = player.getComponent("player.saturation");
+        const health = player.getComponent('health');
+        const saturationComp = player.getComponent('player.saturation');
         const hunger = player.getHunger();
         const saturation = player.getSaturation();
         const exhaustion = player.getExhaustion();
 
-        const saturationEffect = player.getEffect("saturation");
+        const saturationEffect = player.getEffect('saturation');
         if (saturationEffect?.isValid && health.currentValue > 0) {
             player.setSaturation(
                 clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax)
@@ -598,9 +598,6 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, sourceEntity: player }) =
         if (Check.block(player) && !Check.view(player)) return;
 
         status.lastAttackTime = system.currentTick;
-
-        //const debugMode = world.getDynamicProperty("debug_mode");
-        //if (debugMode) debug(`${Math.random().toFixed(2)} attack event by ${player.name}`);
     }
 });
 
