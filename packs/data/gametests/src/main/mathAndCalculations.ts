@@ -6,7 +6,6 @@ import {
     MolangVariableMap,
     Entity,
     Player,
-    BiomeTypes,
     EquipmentSlot,
     EntityDamageCause,
     GameMode,
