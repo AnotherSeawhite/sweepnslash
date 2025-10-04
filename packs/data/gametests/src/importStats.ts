@@ -44,9 +44,9 @@ export type WeaponStats = {
     /** The item identifier (e.g., "minecraft:iron_sword"). */
     id: string;
     /** The attack speed of the weapon (higher = faster). */
-    attackSpeed: number;
+    attackSpeed?: number;
     /** The base attack damage of the weapon. */
-    damage: number;
+    damage?: number;
     /**
      * If true, item is treated as a weapon (durability -1 per use).
      * If false or undefined, durability is reduced by 2 per use.
