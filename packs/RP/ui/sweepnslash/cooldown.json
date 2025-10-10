@@ -1,152 +1,179 @@
 {
-    "namespace": "sweepnslash",
-
-    "cooldown_layout": {
-        "type": "image",
-        "layer": 2,
-        "$clip_max": 16.0,
-        "clips_children": false,
-        "clip_pixelperfect": true,
-        "bindings": [
+  "namespace": "sweepnslash",
+  "cooldown_layout": {
+    "type": "image",
+    "layer": 2,
+    "$clip_max": 16.0,
+    "clips_children": false,
+    "clip_pixelperfect": true,
+    "bindings": [
+      {
+        "binding_type": "view",
+        "source_control_name": "data_control",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(#preserved_text - $update_string)",
+        "target_property_name": "#texto"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#texto - ('%.6s' * #texto))",
+        "target_property_name": "#texttonumber"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(#texttonumber * 1)",
+        "target_property_name": "#ratio"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(($clip_max - #ratio) / $clip_max)",
+        "target_property_name": "#clip_ratio"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(('%.3s' * #texto) = $prefix_string)",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "cooldown_ready": {
+    "type": "image",
+    "layer": 3,
+    "allow_clipping": false,
+    "bindings": [
+      {
+        "binding_type": "view",
+        "source_control_name": "data_control",
+        "resolve_sibling_scope": true,
+        "source_property_name": "(#preserved_text - $update_string)",
+        "target_property_name": "#texto"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "( (('%.1s' * (#texto - ('%.4s' * #texto))) = 't') and (('%.3s' * #texto) = $prefix_string) )",
+        "target_property_name": "#visible"
+      }
+    ]
+  },
+  "cooldown_crosshair": {
+    "type": "panel",
+    "size": [
+      16,
+      8
+    ],
+    "anchor_from": "bottom_middle",
+    "anchor_to": "top_middle",
+    "$prefix_string": "crs",
+    "controls": [
+      {
+        "data_control@sweepnslash.data_control": {}
+      },
+      {
+        "cooldown_crosshair_layout@sweepnslash.cooldown_layout": {
+          "texture": "textures/cooldown_crosshair_full",
+          "alpha": 0.5,
+          "clip_direction": "left",
+          "controls": [
             {
-                "binding_type": "view",
-                "source_control_name": "data_control",
-                "resolve_sibling_scope": true,
-                "source_property_name": "(#preserved_text - $update_string)",
-                "target_property_name": "#texto"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "(#texto - ('%.6s' * #texto))",
-                "target_property_name": "#texttonumber"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "(#texttonumber * 1)",
-                "target_property_name": "#ratio"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "(($clip_max - #ratio) / $clip_max)",
-                "target_property_name": "#clip_ratio"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "(('%.3s' * #texto) = $prefix_string)",
-                "target_property_name": "#visible"
+              "bar_bg": {
+                "type": "image",
+                "texture": "textures/cooldown_crosshair_empty",
+                "alpha": 0.5,
+                "layer": -1
+              }
             }
-        ]
-    },
-
-    "cooldown_ready": {
-        "type": "image",
-        "layer": 3,
-        "allow_clipping": false,
-        "bindings": [
+          ]
+        }
+      },
+      {
+        "cooldown_ready_crosshair@sweepnslash.cooldown_ready": {
+          "texture": "textures/cooldown_crosshair_ready",
+          "alpha": 0.6,
+          "controls": [
             {
-                "binding_type": "view",
-                "source_control_name": "data_control",
-                "resolve_sibling_scope": true,
-                "source_property_name": "(#preserved_text - $update_string)",
-                "target_property_name": "#texto"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "( (('%.1s' * (#texto - ('%.4s' * #texto))) = 't') and (('%.3s' * #texto) = $prefix_string) )",
-                "target_property_name": "#visible"
+              "full_layout_with_alpha": {
+                "type": "image",
+                "texture": "textures/cooldown_crosshair_full",
+                "alpha": 0.2
+              }
             }
-        ]
-    },
-
-    "cooldown_crosshair": {
-        "type": "panel",
-        "size": [16, 8],
-        "anchor_from": "bottom_middle",
-        "anchor_to": "top_middle",
-        "$prefix_string": "crs",
-        "controls": [
-            { "data_control@sweepnslash.data_control": {} },
+          ]
+        }
+      }
+    ]
+  },
+  "cooldown_hotbar": {
+    "type": "panel",
+    "size": [
+      16,
+      16
+    ],
+    "offset": [
+      4,
+      0
+    ],
+    "anchor_from": "right_middle",
+    "anchor_to": "left_middle",
+    "$prefix_string": "htb",
+    "controls": [
+      {
+        "data_control@sweepnslash.data_control": {}
+      },
+      {
+        "cooldown_hotbar_layout@sweepnslash.cooldown_layout": {
+          "texture": "textures/cooldown_hotbar_full",
+          "clip_direction": "down",
+          "controls": [
             {
-                "cooldown_crosshair_layout@sweepnslash.cooldown_layout": {
-                    "texture": "textures/cooldown_crosshair_full",
-                    "alpha": 0.5,
-                    "clip_direction": "left",
-                    "controls": [
-                        {
-                            "bar_bg": {
-                                "type": "image",
-                                "texture": "textures/cooldown_crosshair_empty",
-                                "alpha": 0.5,
-                                "layer": -1
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "cooldown_ready_crosshair@sweepnslash.cooldown_ready": {
-                    "texture": "textures/cooldown_crosshair_ready",
-                    "alpha": 0.6
-                }
+              "bar_bg": {
+                "type": "image",
+                "texture": "textures/cooldown_hotbar_empty",
+                "layer": -1
+              }
             }
-        ]
-    },
-
-    "cooldown_hotbar": {
-        "type": "panel",
-        "size": [16, 16],
-        "offset": [4, 0],
-        "anchor_from": "right_middle",
-        "anchor_to": "left_middle",
-        "$prefix_string": "htb",
-        "controls": [
-            { "data_control@sweepnslash.data_control": {} },
-            {
-                "cooldown_hotbar_layout@sweepnslash.cooldown_layout": {
-                    "texture": "textures/cooldown_hotbar_full",
-                    "clip_direction": "down",
-                    "controls": [
-                        {
-                            "bar_bg": {
-                                "type": "image",
-                                "texture": "textures/cooldown_hotbar_empty",
-                                "layer": -1
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "cooldown_ready_hotbar@sweepnslash.cooldown_ready": {
-                    "texture": "textures/cooldown_hotbar_ready"
-                }
-            }
-        ]
-    },
-
-    "cooldown_ui": {
-        "type": "panel",
-        "$update_string": "_sweepnslash:",
-        "size": ["100%", "100%"],
-        "controls": [{ "cooldown_crosshair@sweepnslash.cooldown_crosshair": {} }]
-    },
-    "data_control": {
-        "type": "panel",
-        "size": [0, 0],
-        "bindings": [
-            {
-                "binding_name": "#hud_title_text_string"
-            },
-            {
-                "binding_name": "#hud_title_text_string",
-                "binding_name_override": "#preserved_text",
-                "binding_condition": "visibility_changed"
-            },
-            {
-                "binding_type": "view",
-                "source_property_name": "(not (#hud_title_text_string = #preserved_text) and not ((#hud_title_text_string - $update_string) = #hud_title_text_string))",
-                "target_property_name": "#visible"
-            }
-        ]
-    }
+          ]
+        }
+      },
+      {
+        "cooldown_ready_hotbar@sweepnslash.cooldown_ready": {
+          "texture": "textures/cooldown_hotbar_full"
+        }
+      }
+    ]
+  },
+  "cooldown_ui": {
+    "type": "panel",
+    "$update_string": "_sweepnslash:",
+    "size": [
+      "100%",
+      "100%"
+    ],
+    "controls": [
+      {
+        "cooldown_crosshair@sweepnslash.cooldown_crosshair": {}
+      }
+    ]
+  },
+  "data_control": {
+    "type": "panel",
+    "size": [
+      0,
+      0
+    ],
+    "bindings": [
+      {
+        "binding_name": "#hud_title_text_string"
+      },
+      {
+        "binding_name": "#hud_title_text_string",
+        "binding_name_override": "#preserved_text",
+        "binding_condition": "visibility_changed"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(not (#hud_title_text_string = #preserved_text) and not ((#hud_title_text_string - $update_string) = #hud_title_text_string))",
+        "target_property_name": "#visible"
+      }
+    ]
+  }
 }
