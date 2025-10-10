@@ -1,7 +1,7 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Sweep 'N Slash v2.2.1 - Behavior Pack",
+        "name": "Sweep 'N Slash v2.2.0 - Behavior Pack",
         "description": "Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.",
         "uuid": "29cfdcbb-2333-4334-89ec-1879e98c0f28",
         "version": [2, 2, 1],
