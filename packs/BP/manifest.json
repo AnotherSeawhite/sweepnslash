@@ -4,7 +4,7 @@
         "name": "Sweep 'N Slash v2.2.0 - Behavior Pack",
         "description": "Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.",
         "uuid": "29cfdcbb-2333-4334-89ec-1879e98c0f28",
-        "version": [2, 2, 1],
+        "version": [2, 2, 0],
         "min_engine_version": [1, 21, 110]
     },
     "modules": [
@@ -17,7 +17,7 @@
     "dependencies": [
         {
             "uuid": "2e95c672-8edb-4706-9ef2-e97226bdffde",
-            "version": [2, 2, 1]
+            "version": [2, 2, 0]
         }
     ],
     "metadata": {
