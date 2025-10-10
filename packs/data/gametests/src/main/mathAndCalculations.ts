@@ -294,41 +294,45 @@ Entity.prototype.applyImpulseAsKnockback = function (vector3) {
 
 // For spawning particles that's only visible to players with particle configuration.
 Entity.prototype.spawnSelectiveParticle = function (effectName, location, dynamicProperty, offset = { x: 0, y: 0, z: 0 }, molangVariables: MolangVariableMap) {
-    try {
-      const offsetLocation = {
+    const offsetLocation = {
         x: location.x + offset.x,
         y: location.y + offset.y,
-        z: location.z + offset.z
-      };
-      for (const p of world.getAllPlayers()) {
-        if (
-            p.getDynamicProperty(dynamicProperty) == true &&
-            p.dimension.id == this.dimension.id
-        )
-          molangVariables ? p.spawnParticle(effectName, offsetLocation, molangVariables) : p.spawnParticle(effectName, offsetLocation);
-      }
-    } catch (e) {
-        console.warn(e)
+        z: location.z + offset.z,
+    };
+    const debugMode = world.getDynamicProperty('debug_mode');
+    for (const p of world.getAllPlayers()) {
+        try {
+            if (
+                p.getDynamicProperty(dynamicProperty) == true &&
+                p.dimension.id == this.dimension.id
+            )
+                molangVariables
+                    ? p.spawnParticle(effectName, offsetLocation, molangVariables)
+                    : p.spawnParticle(effectName, offsetLocation);
+        } catch (e) {
+            if (debugMode) debug(e);
+        }
     }
-}
+};
 
 // For playing sounds that's only audible to players with sounds configuration.
 Entity.prototype.playSelectiveSound = function (soundId, dynamicProperty, soundOptions: PlayerSoundOptions) {
-    try {
-      for (const p of world.getAllPlayers()) {
-        if (
-            p.getDynamicProperty(dynamicProperty) == true &&
-            p.dimension.id == this.dimension.id
-        )
-          p.playSound(soundId, soundOptions);
-      }
-    } catch (e) {
-      console.warn(e)
+    const debugMode = world.getDynamicProperty('debug_mode');
+    for (const p of world.getAllPlayers()) {
+        try {
+            if (
+                p.getDynamicProperty(dynamicProperty) == true &&
+                p.dimension.id == this.dimension.id
+            )
+                p.playSound(soundId, soundOptions);
+        } catch (e) {
+            if (debugMode) debug(e);
+        }
     }
-}
+};
 
 // For damage particles, with molang variable maps.
-Entity.prototype.healthParticle = function(damage) {
+Entity.prototype.healthParticle = function (damage) {
     const loc = this.center({ x: 0, y: 0.5, z: 0 });
     const hp = this.getComponent('health');
     const dmg = clampNumber(damage, hp.effectiveMin, hp.effectiveMax) / 2;
