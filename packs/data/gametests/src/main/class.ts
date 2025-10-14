@@ -155,20 +155,22 @@ export class CombatManager {
                     sounds.push({ id });
                 }
 
-                if (sweep?.swept) {
-                    sounds.push({
-                        id: beforeEffect?.sweepSound ?? 'entity.player.attack.sweep',
-                        soundOptions: {
-                            pitch: beforeEffect?.sweepPitch ?? undefined,
-                            volume: beforeEffect?.sweepVolume ?? undefined,
-                        },
-                    });
-                }
+                if (boolean) {
+                    if (sweep?.swept) {
+                        sounds.push({
+                            id: beforeEffect?.sweepSound ?? 'entity.player.attack.sweep',
+                            soundOptions: {
+                                pitch: beforeEffect?.sweepPitch ?? undefined,
+                                volume: beforeEffect?.sweepVolume ?? undefined,
+                            },
+                        });
+                    }
 
-                if (crit) {
-                    sounds.push({
-                        id: beforeEffect?.critSound ?? 'entity.player.attack.crit',
-                    });
+                    if (crit) {
+                        sounds.push({
+                            id: beforeEffect?.critSound ?? 'entity.player.attack.crit',
+                        });
+                    }
                 }
 
                 return sounds;
