@@ -592,7 +592,6 @@ export class Check {
         stats,
         { damage, noEffect, forced } = {},
         {
-            sound = 'entity.player.attack.crit',
             particle = 'minecraft:critical_hit_emitter',
             offset = { x: 0, y: 0, z: 0 },
             map,
@@ -631,8 +630,6 @@ export class Check {
                 offset,
                 map
             );
-            if (!(target instanceof Player && target.getGameMode() === GameMode.Creative))
-                player.playSelectiveSound(sound, "critSound", { location: player.location });
         }
         return isValid;
     }
