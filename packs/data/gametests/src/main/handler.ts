@@ -82,7 +82,6 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         'damageIndicator',
         'criticalHit',
         'sweep',
-        'critSound',
         'bowHitSound',
     ];
     if (initialSpawn) {
@@ -234,10 +233,6 @@ function configForm(player) {
         { translate: 'sweepnslash.critparticles' },
         { defaultValue: dp(player, { id: 'criticalHit' }) ?? false }
     );
-    form.toggle(
-        { translate: 'sweepnslash.critsounds' },
-        { defaultValue: dp(player, { id: 'critSound' }) ?? false }
-    );
     form.divider();
     form.label({ translate: 'sweepnslash.sweepRGBtitle' });
     form.slider('§cR', 0, 255, {
@@ -310,7 +305,6 @@ function configForm(player) {
             { object: player, dynamicProperty: 'enchantedHit' },
             { object: player, dynamicProperty: 'damageIndicator' },
             { object: player, dynamicProperty: 'criticalHit' },
-            { object: player, dynamicProperty: 'critSound' },
             { object: player, dynamicProperty: 'sweepR' },
             { object: player, dynamicProperty: 'sweepG' },
             { object: player, dynamicProperty: 'sweepB' },

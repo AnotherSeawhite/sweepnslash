@@ -83,7 +83,6 @@ export class CombatManager {
                 forced: beforeEffect?.critAttack,
             },
             {
-                sound: beforeEffect?.critSound,
                 particle: beforeEffect?.critParticle,
                 offset: beforeEffect?.critOffset,
                 map: beforeEffect?.critMap,
@@ -144,6 +143,50 @@ export class CombatManager {
             );
         };
 
+		const hitSound = (boolean, loc) => {
+            const sound = () => {
+                const sounds = [];
+
+                if (!crit && !sweep?.swept) {
+                    const id = boolean
+                        ? 'game.player.attack.strong.se'
+                        : 'game.player.attack.weak.se';
+
+                    sounds.push({ id });
+                }
+
+                if (boolean) {
+                    if (sweep?.swept) {
+                        sounds.push({
+                            id: beforeEffect?.sweepSound ?? 'entity.player.attack.sweep',
+                            soundOptions: {
+                                pitch: beforeEffect?.sweepPitch ?? undefined,
+                                volume: beforeEffect?.sweepVolume ?? undefined,
+                            },
+                        });
+                    }
+
+                    if (crit) {
+                        sounds.push({
+                            id: beforeEffect?.critSound ?? 'entity.player.attack.crit',
+                        });
+                    }
+                }
+
+                return sounds;
+            };
+
+            for (const s of sound()) {
+                player.dimension.playSound(s.id, loc, s.soundOptions);
+            }
+
+            if (sprintKnockback) {
+                player.dimension.playSound('entity.player.attack.knockback', loc, {
+                    volume: 0.7,
+                });
+            }
+        };
+
         player.__rawDamage = dmg.raw;
         target.__playerHit = true;
 
@@ -166,11 +209,8 @@ export class CombatManager {
                     scale: beforeEffect?.sweepRadius,
                 },
                 {
-                    sound: beforeEffect?.sweepSound,
                     particle: beforeEffect?.sweepParticle,
                     offset: beforeEffect?.sweepOffset,
-                    pitch: beforeEffect?.sweepPitch,
-                    volume: beforeEffect?.sweepVolume,
                     map: beforeEffect?.sweepMap,
                 }
             );
@@ -223,18 +263,11 @@ export class CombatManager {
                       target?.center({ x: 0, y: 1, z: 0 }),
                       "enchantedHit"
                     );
-                if (!(sweep?.swept || crit)) {
-                    player.dimension.playSound(
-                        specialCheck
-                            ? 'game.player.attack.strong.se'
-                            : 'game.player.attack.weak.se',
-                        loc
-                    );
-                }
+				hitSound(specialCheck, loc);
             }
         } else {
             if (dmg.final > 0)
-                player.dimension.playSound('game.player.attack.nodamage.se', loc);
+                hitSound(false, loc);
         }
 
         if (debugMode) {
