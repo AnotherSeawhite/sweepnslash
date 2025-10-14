@@ -665,9 +665,6 @@ export class Check {
             forced == true;
         if (isValid && !noEffect) {
             status.sprintKnockbackHitUsed = true;
-            player.dimension.playSound('entity.player.attack.knockback', player.location, {
-                volume: 0.7,
-            });
         }
         return isValid;
     }
@@ -680,11 +677,8 @@ export class Check {
         stats,
         { fireAspect, damage, level = 1, forced, location, scale = 3 } = {},
         {
-            sound = 'entity.player.attack.sweep',
             particle = 'sweepnslash:sweep_particle',
             offset = { x: 0, y: 0, z: 0 },
-            pitch,
-            volume,
             map,
         } = {}
     ) {
@@ -786,7 +780,6 @@ export class Check {
             };
         }
         player.spawnSelectiveParticle(particle, location || particleLocation, "sweep", offset, map);
-        player.dimension.playSound(sound, pLoc, { pitch : pitch ?? undefined, volume: volume ?? undefined });
 
         commonEntities.forEach((e) => {
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
