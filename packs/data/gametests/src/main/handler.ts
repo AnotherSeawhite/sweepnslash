@@ -692,6 +692,20 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
     }
     
     status.leftClick = true;
+
+    function isTeam(playerA, playerB) {
+        const prefix = 'ae_je:team:';
+        const tagsA = playerA.getTags().filter((tag) => tag.startsWith(prefix));
+        const tagsB = playerB.getTags().filter((tag) => tag.startsWith(prefix));
+
+        return tagsA.some((tag) => tagsB.includes(tag));
+    }
+
+    if (isTeam(player, target)) {
+        status.lastAttackTime = currentTick;
+        return;
+    }
+    
     if (target?.isValid && player?.getComponent('health')?.currentValue > 0)
         CombatManager.attack({ player, target, currentTick });
 });
