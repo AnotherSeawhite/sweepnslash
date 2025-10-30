@@ -632,6 +632,7 @@ export class Check {
         )
             return;
         if (damage <= 0) return;
+        if (forced === false) return false;
         const status = player.getStatus();
         const shieldBlock = Check.shieldBlock(currentTick, player, target, stats);
         const dimension = player.dimension.id;
@@ -899,7 +900,6 @@ export class Check {
         const canTakeCrits = target?.getStats()?.canTakeCrits ?? true;
         const crit =
             this.criticalHit(currentTick, player, target, stats, {
-                noEffect: true,
                 forced: critAttack,
             }) && canTakeCrits
                 ? critMul ?? 1.5

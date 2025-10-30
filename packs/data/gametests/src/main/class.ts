@@ -76,7 +76,7 @@ export class CombatManager {
 
         crit = Check.criticalHit(currentTick, player, target, stats, {
             damage: dmg.final,
-            forced: targetStats?.canTakeCrits ?? beforeEffect?.critAttack,
+            forced: targetStats?.canTakeCrits !== false ? beforeEffect?.critAttack : false,
         });
 
         sprintKnockback = Check.sprintKnockback(currentTick, player, target, stats, {
