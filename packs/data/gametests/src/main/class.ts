@@ -9,6 +9,7 @@ export class CombatManager {
         const debugMode = world.getDynamicProperty('debug_mode');
 
         const status = player.getStatus();
+        const targetStats = target.getStats();
         let loc = player.location;
         let targetLoc = target.location;
 
@@ -75,7 +76,7 @@ export class CombatManager {
 
         crit = Check.criticalHit(currentTick, player, target, stats, {
             damage: dmg.final,
-            forced: beforeEffect?.critAttack,
+            forced: targetStats?.canTakeCrits ?? beforeEffect?.critAttack,
         });
 
         sprintKnockback = Check.sprintKnockback(currentTick, player, target, stats, {
@@ -117,16 +118,25 @@ export class CombatManager {
             const knockbackValid = knockbackLevel > 0;
 
             const knockbackX = knockbackValid
-                ? Math.max(0.552 + enchantedKBDistance * knockbackLevel, 0)
-                : Math.max(regularKBDistance, 0);
+                ? Math.max(
+                      (0.552 + enchantedKBDistance * knockbackLevel) *
+                          (targetStats?.enchantedKnockbackTakeMultiplier ?? 1),
+                      0
+                  )
+                : Math.max(
+                      regularKBDistance * (targetStats?.regularKnockbackTakeMultiplier ?? 1),
+                      0
+                  );
             const dirX = knockbackValid ? -Math.sin(rot.y * (Math.PI / 180)) : tLoc.x - pLoc.x;
             const dirZ = knockbackValid ? Math.cos(rot.y * (Math.PI / 180)) : tLoc.z - pLoc.z;
             const length = Math.sqrt(dirX ** 2 + dirZ ** 2) || 1; // Avoid division by zero
 
             const knockbackY = target.isOnGround
                 ? knockbackValid
-                    ? enchantedVerticalKBHeight
-                    : regularVerticalKBHeight
+                    ? enchantedVerticalKBHeight *
+                      (targetStats?.enchantedKnockbackTakeMultiplier ?? 1)
+                    : regularVerticalKBHeight *
+                      (targetStats?.regularKnockbackTakeMultiplier ?? 1)
                 : 0;
             target.applyAttackKnockback(
                 {
@@ -221,10 +231,7 @@ export class CombatManager {
                 if (player.getGameMode() !== GameMode.Creative) {
                     player.setExhaustion(player.getExhaustion() + 0.1);
                 }
-                if (
-                    !beforeEffect?.cancelDurability &&
-                    target?.typeId !== 'minecraft:shulker_bullet'
-                )
+                if (!beforeEffect?.cancelDurability && targetStats?.damageItem !== false)
                     Check.durability(player, equippableComp, item, stats);
             }
 
@@ -247,7 +254,7 @@ export class CombatManager {
                 if (crit)
                     target?.spawnSelectiveParticle(
                         beforeEffect?.critParticle ?? 'minecraft:critical_hit_emitter',
-                        target.center({ x: 0, y: 1, z: 0 }),
+                        target?.center({ x: 0, y: 1, z: 0 }),
                         'criticalHit',
                         beforeEffect?.critOffset ?? { x: 0, y: 0, z: 0 },
                         beforeEffect?.critMap
