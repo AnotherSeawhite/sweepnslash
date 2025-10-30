@@ -9,7 +9,7 @@ import {
     EquipmentSlot,
     EntityDamageCause,
     GameMode,
-	PlayerSoundOptions
+    PlayerSoundOptions,
 } from '@minecraft/server';
 import { weaponStats } from './weaponStatsHandler.js';
 import { lambertW0, lambertWm1 } from './lambertw.js';
@@ -63,8 +63,8 @@ function initializePlayerStatus(player) {
         attackReady: false,
         showBar: true,
         holdInteract: false,
-		leftClick: false,
-    	rightClick: false,
+        leftClick: false,
+        rightClick: false,
         lastSelectedItem: undefined,
         lastSelectedSlot: undefined,
         cooldown: 0,
@@ -155,68 +155,86 @@ Entity.prototype.viewRotation = function (dist = 1, height = 0) {
 
 // Add lore for an item in the slot.
 function stringifyRawMessage(msg) {
-  if (!msg) return "";
-  if (msg.text) return msg.text;
-  if (msg.translate) return msg.translate;
-  if (msg.rawtext) return msg.rawtext.map(stringifyRawMessage).join("");
-  return "";
+    if (!msg) return '';
+    if (msg.text) return msg.text;
+    if (msg.translate) return msg.translate;
+    if (msg.rawtext) return msg.rawtext.map(stringifyRawMessage).join('');
+    return '';
 }
 
 // Almost had a headache trying to figure this out.
 export function inventoryAddLore({ source, slot }) {
-  const inv = source.getComponent('inventory').container;
-  const itemSlot = inv.getSlot(slot);
-  if (!itemSlot.hasItem()) return;
+    const inv = source.getComponent('inventory').container;
+    const itemSlot = inv.getSlot(slot);
+    if (!itemSlot.hasItem()) return;
 
-  const { item, stats } = source.getItemStats(itemSlot.getItem());
-  if (!stats) return;
+    const { item, stats } = source.getItemStats(itemSlot.getItem());
+    if (!stats) return;
 
-  let existingLore = item.getRawLore() ?? [];
+    let existingLore = item.getRawLore() ?? [];
 
-  const damageStr = stats.damage !== undefined
-    ? { rawtext: [{ text: ` §r§2${stats.damage} ` }, { translate: 'sweepnslash.attribute.name.attack_damage' }] }
-    : null;
+    const damageStr =
+        stats.damage !== undefined
+            ? {
+                  rawtext: [
+                      { text: ` §r§2${stats.damage} ` },
+                      { translate: 'sweepnslash.attribute.name.attack_damage' },
+                  ],
+              }
+            : null;
 
-  const atkSpeedStr = stats.attackSpeed !== undefined
-    ? { rawtext: [{ text: ` §r§2${stats.attackSpeed} ` }, { translate: 'sweepnslash.attribute.name.attack_speed' }] }
-    : null;
+    const atkSpeedStr =
+        stats.attackSpeed !== undefined
+            ? {
+                  rawtext: [
+                      { text: ` §r§2${stats.attackSpeed} ` },
+                      { translate: 'sweepnslash.attribute.name.attack_speed' },
+                  ],
+              }
+            : null;
 
-  function isOurLine(raw) {
-    const str = stringifyRawMessage(raw) || "";
+    function isOurLine(raw) {
+        const str = stringifyRawMessage(raw) || '';
 
-    if (
-      str.includes('sweepnslash.item.modifiers.mainhand') ||
-      str.includes('sweepnslash.attribute.name.attack_damage') ||
-      str.includes('sweepnslash.attribute.name.attack_speed')
-    ) return true;
+        if (
+            str.includes('sweepnslash.item.modifiers.mainhand') ||
+            str.includes('sweepnslash.attribute.name.attack_damage') ||
+            str.includes('sweepnslash.attribute.name.attack_speed')
+        )
+            return true;
 
-    const noColor = str.replace(/§./g, "");
+        const noColor = str.replace(/§./g, '');
 
-    if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
+        if (/\bDMG\b/i.test(noColor) || /\bSPD\b/i.test(noColor)) return true;
 
-    if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
+        if (/\d+(\.\d+)?\s*(DMG|SPD)/i.test(noColor)) return true;
 
-    return false;
-  }
-
-  const itemLore = existingLore.filter((line) => !isOurLine(line));
-
-  if (existingLore.length >= 100) return;
-
-  if (stats.skipLore) {
-    itemSlot.setLore([...itemLore]);
-  } else {
-    const newLore = [];
-
-    // Add mainhand string if damage or attack speed exists
-    if (damageStr || atkSpeedStr) {
-      newLore.push({ rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.modifiers.mainhand' }] });
-      if (damageStr) newLore.push(damageStr);
-      if (atkSpeedStr) newLore.push(atkSpeedStr);
+        return false;
     }
 
-    itemSlot.setLore([...newLore, ...itemLore]);
-  }
+    const itemLore = existingLore.filter((line) => !isOurLine(line));
+
+    if (existingLore.length >= 100) return;
+
+    if (stats.skipLore) {
+        itemSlot.setLore([...itemLore]);
+    } else {
+        const newLore = [];
+
+        // Add mainhand string if damage or attack speed exists
+        if (damageStr || atkSpeedStr) {
+            newLore.push({
+                rawtext: [
+                    { text: '§r§7' },
+                    { translate: 'sweepnslash.item.modifiers.mainhand' },
+                ],
+            });
+            if (damageStr) newLore.push(damageStr);
+            if (atkSpeedStr) newLore.push(atkSpeedStr);
+        }
+
+        itemSlot.setLore([...newLore, ...itemLore]);
+    }
 }
 
 /**
@@ -293,7 +311,13 @@ Entity.prototype.applyImpulseAsKnockback = function (vector3) {
 };
 
 // For spawning particles that's only visible to players with particle configuration.
-Entity.prototype.spawnSelectiveParticle = function (effectName, location, dynamicProperty, offset = { x: 0, y: 0, z: 0 }, molangVariables: MolangVariableMap) {
+Entity.prototype.spawnSelectiveParticle = function (
+    effectName,
+    location,
+    dynamicProperty,
+    offset = { x: 0, y: 0, z: 0 },
+    molangVariables: MolangVariableMap
+) {
     const offsetLocation = {
         x: location.x + offset.x,
         y: location.y + offset.y,
@@ -316,7 +340,11 @@ Entity.prototype.spawnSelectiveParticle = function (effectName, location, dynami
 };
 
 // For playing sounds that's only audible to players with sounds configuration.
-Entity.prototype.playSelectiveSound = function (soundId, dynamicProperty, soundOptions: PlayerSoundOptions) {
+Entity.prototype.playSelectiveSound = function (
+    soundId,
+    dynamicProperty,
+    soundOptions: PlayerSoundOptions
+) {
     const debugMode = world.getDynamicProperty('debug_mode');
     for (const p of world.getAllPlayers()) {
         try {
@@ -339,14 +367,14 @@ Entity.prototype.healthParticle = function (damage) {
     const amount = Math.trunc(dmg);
     let map = new MolangVariableMap();
     map.setFloat('variable.amount', amount);
-        this.spawnSelectiveParticle(
-        "sweepnslash:damage_indicator_emitter",
+    this.spawnSelectiveParticle(
+        'sweepnslash:damage_indicator_emitter',
         loc,
-        "damageIndicator",
+        'damageIndicator',
         undefined,
         map
     );
-}
+};
 
 // Converts vector3 to RGB. Hacky.
 export function toColor(vector3) {
@@ -391,7 +419,8 @@ Entity.prototype.getItemStats = function (itemStack) {
 
     const jsStats = weaponStats.find((wep) => wep.id === item?.typeId);
 
-    const jsonParams = item?.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
+    const jsonParams =
+        item?.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
 
     const keyMap = {
         damage: 'damage',
@@ -404,7 +433,7 @@ Entity.prototype.getItemStats = function (itemStack) {
         regular_knockback: 'regularKnockback',
         enchanted_knockback: 'enchantedKnockback',
         regular_vertical_knockback: 'regularVerticalKnockback',
-        enchanted_vertical_knockback: 'enchantedVerticalKnockback'
+        enchanted_vertical_knockback: 'enchantedVerticalKnockback',
     };
 
     const jsonStats = {};
@@ -427,10 +456,13 @@ Entity.prototype.getItemStats = function (itemStack) {
         }
     }
 
-    const statsToReturn =
-        Object.keys(mergedStats).length ? mergedStats
-        : (jsStats && Object.keys(jsStats).length ? jsStats
-        : (Object.keys(jsonStats).length ? jsonStats : undefined));
+    const statsToReturn = Object.keys(mergedStats).length
+        ? mergedStats
+        : jsStats && Object.keys(jsStats).length
+        ? jsStats
+        : Object.keys(jsonStats).length
+        ? jsonStats
+        : undefined;
 
     return { equippableComp, item, stats: statsToReturn };
 };
@@ -440,28 +472,28 @@ Entity.prototype.isTamed = function ({ excludeTypes = [] } = {}) {
     return this.getComponent('is_tamed')?.isValid;
 };
 
-Player.prototype.getHunger = function() {
-	return this.getComponent("player.hunger")?.currentValue;
+Player.prototype.getHunger = function () {
+    return this.getComponent('player.hunger')?.currentValue;
 };
 
-Player.prototype.setHunger = function(number) {
-	this.getComponent("player.hunger")?.setCurrentValue(number);
+Player.prototype.setHunger = function (number) {
+    this.getComponent('player.hunger')?.setCurrentValue(number);
 };
 
-Player.prototype.getSaturation = function() {
-	return this.getComponent("player.saturation")?.currentValue;
+Player.prototype.getSaturation = function () {
+    return this.getComponent('player.saturation')?.currentValue;
 };
 
-Player.prototype.setSaturation = function(number) {
-	this.getComponent("player.saturation")?.setCurrentValue(number);
+Player.prototype.setSaturation = function (number) {
+    this.getComponent('player.saturation')?.setCurrentValue(number);
 };
 
-Player.prototype.getExhaustion = function() {
-	return this.getComponent("player.exhaustion")?.currentValue;
+Player.prototype.getExhaustion = function () {
+    return this.getComponent('player.exhaustion')?.currentValue;
 };
 
-Player.prototype.setExhaustion = function(number) {
-	this.getComponent("player.exhaustion")?.setCurrentValue(number);
+Player.prototype.setExhaustion = function (number) {
+    this.getComponent('player.exhaustion')?.setCurrentValue(number);
 };
 
 // Boolean check whether the player is riding anything or not. Used for shield check.
@@ -585,18 +617,7 @@ export class Check {
     }
 
     // Duh.
-    static criticalHit(
-        currentTick,
-        player,
-        target,
-        stats,
-        { damage, noEffect, forced } = {},
-        {
-            particle = 'minecraft:critical_hit_emitter',
-            offset = { x: 0, y: 0, z: 0 },
-            map,
-        } = {}
-    ) {
+    static criticalHit(currentTick, player, target, stats, { damage, forced } = {}) {
         if (
             this.inanimate(target, {
                 excludeTypes: ['minecraft:armor_stand'],
@@ -622,15 +643,6 @@ export class Check {
                 !shieldBlock &&
                 forced == undefined) ||
             forced == true;
-        if (!noEffect && isValid) {
-            target.spawnSelectiveParticle(
-                particle,
-                target.center({ x: 0, y: 1, z: 0 }),
-                "criticalHit",
-                offset,
-                map
-            );
-        }
         return isValid;
     }
 
@@ -676,14 +688,10 @@ export class Check {
         target,
         stats,
         { fireAspect, damage, level = 1, forced, location, scale = 3 } = {},
-        {
-            particle = 'sweepnslash:sweep_particle',
-            offset = { x: 0, y: 0, z: 0 },
-            map,
-        } = {}
+        { particle = 'sweepnslash:sweep_particle', offset = { x: 0, y: 0, z: 0 }, map } = {}
     ) {
         const debugMode = world.getDynamicProperty('debug_mode');
-		const pvp = world.gameRules.pvp;
+        const pvp = world.gameRules.pvp;
         const status = player.getStatus();
 
         if (
@@ -779,7 +787,13 @@ export class Check {
                 z: pLoc.z + unitDirection.z * dist,
             };
         }
-        player.spawnSelectiveParticle(particle, location || particleLocation, "sweep", offset, map);
+        player.spawnSelectiveParticle(
+            particle,
+            location || particleLocation,
+            'sweep',
+            offset,
+            map
+        );
 
         commonEntities.forEach((e) => {
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
@@ -792,7 +806,7 @@ export class Check {
 
             e.applyDamage(formula, { cause: dmgType, damagingEntity: player });
             try {
-				if (e instanceof Player && !pvp) return;
+                if (e instanceof Player && !pvp) return;
                 const fireImmune = e?.getComponent('fire_immune')?.isValid;
                 if (!fireImmune) e.setOnFire(fireAspect * 4, true);
             } catch (e) {

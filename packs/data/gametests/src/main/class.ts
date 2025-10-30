@@ -16,8 +16,8 @@ export class CombatManager {
         const baseDamage = stats?.damage || 1;
         let regularKBDistance = stats?.regularKnockback ?? 1.552;
         let enchantedKBDistance = stats?.enchantedKnockback ?? 2.586;
-		let regularVerticalKBHeight = stats?.regularVerticalKnockback ?? 0.7955;
-		let enchantedVerticalKBHeight = stats?.enchantedVerticalKnockback ?? 1;
+        let regularVerticalKBHeight = stats?.regularVerticalKnockback ?? 0.7955;
+        let enchantedVerticalKBHeight = stats?.enchantedVerticalKnockback ?? 1;
         const maxCD = Math.round(getCooldownTime(player, stats?.attackSpeed).ticks);
         const curCD = status.cooldown;
         let cooldown = (maxCD - curCD) / maxCD; // Attack charge (0~1)
@@ -25,9 +25,7 @@ export class CombatManager {
 
         let hit = false;
         let dmg = baseDamage;
-        let crit = Check.criticalHit(currentTick, player, target, stats, {
-            noEffect: true,
-        });
+        let crit = Check.criticalHit(currentTick, player, target, stats);
         let sprintKnockback = Check.sprintKnockback(currentTick, player, target, stats, {
             noEffect: true,
         });
@@ -62,8 +60,10 @@ export class CombatManager {
 
         regularKBDistance = beforeEffect?.regularKnockback ?? regularKBDistance;
         enchantedKBDistance = beforeEffect?.enchantedKnockback ?? enchantedKBDistance;
-		regularVerticalKBHeight = beforeEffect?.regularVerticalKnockback ?? regularVerticalKBHeight;
-		enchantedVerticalKBHeight = beforeEffect?.enchantedVerticalKnockback ?? enchantedVerticalKBHeight;
+        regularVerticalKBHeight =
+            beforeEffect?.regularVerticalKnockback ?? regularVerticalKBHeight;
+        enchantedVerticalKBHeight =
+            beforeEffect?.enchantedVerticalKnockback ?? enchantedVerticalKBHeight;
 
         // Damage calculation, reapply checks with updated damage
         dmg = Check.finalDamageCalculation(currentTick, player, target, item, stats, {
@@ -73,21 +73,10 @@ export class CombatManager {
             cancel: beforeEffect?.cancel,
         });
 
-        crit = Check.criticalHit(
-            currentTick,
-            player,
-            target,
-            stats,
-            {
-                damage: dmg.final,
-                forced: beforeEffect?.critAttack,
-            },
-            {
-                particle: beforeEffect?.critParticle,
-                offset: beforeEffect?.critOffset,
-                map: beforeEffect?.critMap,
-            }
-        );
+        crit = Check.criticalHit(currentTick, player, target, stats, {
+            damage: dmg.final,
+            forced: beforeEffect?.critAttack,
+        });
 
         sprintKnockback = Check.sprintKnockback(currentTick, player, target, stats, {
             damage: dmg.final,
@@ -119,7 +108,9 @@ export class CombatManager {
         const shieldBlock = Check.shieldBlock(currentTick, player, target, stats, {
             disable: true,
         });
-        const dmgType = shieldBlock ? EntityDamageCause.entityExplosion : EntityDamageCause.entityAttack;
+        const dmgType = shieldBlock
+            ? EntityDamageCause.entityExplosion
+            : EntityDamageCause.entityAttack;
 
         // Knockback calculation
         const applyKnockback = (knockbackLevel, pLoc, tLoc, rot) => {
@@ -132,7 +123,11 @@ export class CombatManager {
             const dirZ = knockbackValid ? Math.cos(rot.y * (Math.PI / 180)) : tLoc.z - pLoc.z;
             const length = Math.sqrt(dirX ** 2 + dirZ ** 2) || 1; // Avoid division by zero
 
-            const knockbackY = target.isOnGround ? (knockbackValid ? enchantedVerticalKBHeight : regularVerticalKBHeight) : 0;
+            const knockbackY = target.isOnGround
+                ? knockbackValid
+                    ? enchantedVerticalKBHeight
+                    : regularVerticalKBHeight
+                : 0;
             target.applyAttackKnockback(
                 {
                     x: tLoc.x + (dirX / length) * knockbackX,
@@ -143,19 +138,17 @@ export class CombatManager {
             );
         };
 
-		const hitSound = (boolean, loc) => {
+        const hitSound = (boolean, sweep, crit, loc2) => {
             const sound = () => {
                 const sounds = [];
-
-                if (!crit && !sweep?.swept) {
+                if (!crit && !sweep) {
                     const id = boolean
                         ? 'game.player.attack.strong.se'
                         : 'game.player.attack.weak.se';
-
                     sounds.push({ id });
                 }
 
-                if (sweep?.swept) {
+                if (sweep) {
                     sounds.push({
                         id: beforeEffect?.sweepSound ?? 'entity.player.attack.sweep',
                         soundOptions: {
@@ -164,22 +157,18 @@ export class CombatManager {
                         },
                     });
                 }
-
                 if (crit) {
                     sounds.push({
                         id: beforeEffect?.critSound ?? 'entity.player.attack.crit',
                     });
                 }
-
                 return sounds;
             };
-
             for (const s of sound()) {
-                player.dimension.playSound(s.id, loc, s.soundOptions);
+                player.dimension.playSound(s.id, loc2, s.soundOptions);
             }
-
             if (sprintKnockback) {
-                player.dimension.playSound('entity.player.attack.knockback', loc, {
+                player.dimension.playSound('entity.player.attack.knockback', loc2, {
                     volume: 0.7,
                 });
             }
@@ -228,15 +217,15 @@ export class CombatManager {
             if (target.isValid) targetLoc = target.location;
 
             // Durability check, reduces durability if eligible
-            if (
-                status.mace === false &&
-                !inanimate &&
-                dmg.final > 0
-            ) {
+            if (status.mace === false && !inanimate && dmg.final > 0) {
                 if (player.getGameMode() !== GameMode.Creative) {
                     player.setExhaustion(player.getExhaustion() + 0.1);
                 }
-                if (!beforeEffect?.cancelDurability && target?.typeId !== "minecraft:shulker_bullet") Check.durability(player, equippableComp, item, stats);
+                if (
+                    !beforeEffect?.cancelDurability &&
+                    target?.typeId !== 'minecraft:shulker_bullet'
+                )
+                    Check.durability(player, equippableComp, item, stats);
             }
 
             // Apply knockback
@@ -255,17 +244,24 @@ export class CombatManager {
             }
 
             if (dmg.final > 0) {
+                if (crit)
+                    target?.spawnSelectiveParticle(
+                        beforeEffect?.critParticle ?? 'minecraft:critical_hit_emitter',
+                        target.center({ x: 0, y: 1, z: 0 }),
+                        'criticalHit',
+                        beforeEffect?.critOffset ?? { x: 0, y: 0, z: 0 },
+                        beforeEffect?.critMap
+                    );
                 if (dmg.enchantedHit)
                     target?.spawnSelectiveParticle(
-                      "sweepnslash:magic_critical_hit_emitter",
-                      target?.center({ x: 0, y: 1, z: 0 }),
-                      "enchantedHit"
+                        'sweepnslash:magic_critical_hit_emitter',
+                        target?.center({ x: 0, y: 1, z: 0 }),
+                        'enchantedHit'
                     );
-				hitSound(specialCheck, loc);
+                hitSound(specialCheck, sweep?.swept, crit, loc);
             }
         } else {
-            if (dmg.final > 0)
-                hitSound(false, loc);
+            if (dmg.final > 0) hitSound(false, false, false, loc);
         }
 
         if (debugMode) {
