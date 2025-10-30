@@ -1,15 +1,7 @@
 // Create a file in 'weaponStats' folder and add it here
 // Bottommost entry will have the final stats
 
-import {
-    Entity,
-    ItemStack,
-    MolangVariableMap,
-    Player,
-    System,
-    Vector3,
-    World,
-} from '@minecraft/server';
+import { Entity, ItemStack, MolangVariableMap, Player, System, World } from '@minecraft/server';
 import { alylicaDungeons } from './weaponStats/alylica_dungeons';
 import { betterOnBedrock } from './weaponStats/better_on_bedrock';
 import { exampleArray } from './weaponStats/example_file';
@@ -21,8 +13,6 @@ import { vanillaThrowingKnives } from './weaponStats/tcc/vanilla_throwing_knives
 import { trueWeapons } from './weaponStats/true_wp';
 import { vanilla } from './weaponStats/vanilla';
 import { vanillaSpears } from './weaponStats/vanilla_spears';
-
-import { vanillaEntities } from './entityStats/vanilla';
 
 export const importStats: { items: WeaponStats[]; moduleName: string }[] = [
     { items: exampleArray, moduleName: 'example_file' },
@@ -36,11 +26,6 @@ export const importStats: { items: WeaponStats[]; moduleName: string }[] = [
     { items: vanillaSpears, moduleName: 'vanilla_spears' },
     //{ items: alylicaDungeons, moduleName: 'alylica_dungeons' },
     //{ items: trueWeapons, moduleName: 'true_wp' },
-];
-
-// Feels like it's better to name this as 'properties,' but that would cause even more confusion...
-export const importEntityStats: { items: EntityStats[]; moduleName: string }[] = [
-    { items: vanillaEntities, moduleName: 'vanilla' },
 ];
 
 /**
@@ -190,17 +175,4 @@ export type WeaponStats = {
         inanimate: boolean;
         cooldown: number; // 0~1, attack charge
     }) => void;
-};
-
-// Configures the behavior of attacked entities. WIP.
-export type EntityStats = {
-    id: string;
-    damageTakeMultiplier?: number;
-    critDamageTakeMultiplier?: number;
-    canTakeCrits?: boolean;
-    regularKnockbackTakeMultiplier?: number;
-    enchantedKnockbackTakeMultiplier?: number;
-    damageItem?: boolean;
-    centerOffset?: Vector3;
-    showAttackIndicator?: boolean;
 };

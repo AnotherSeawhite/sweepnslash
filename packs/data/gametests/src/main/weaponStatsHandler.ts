@@ -2,16 +2,14 @@ import { world } from '@minecraft/server';
 import { debug } from './mathAndCalculations.js';
 import { WeaponStatsSerializer } from '../IPC/weapon_stats.ipc.js';
 import { IPC, PROTO } from 'mcbe-ipc';
-import { importStats, importEntityStats, WeaponStats, EntityStats } from '../importStats.js';
+import { importStats, WeaponStats } from '../importStats.js';
 
 export const weaponStats: WeaponStats[] = [];
-export const entityStats: EntityStats[] = [];
 
 // Imports stats from files.
 
 world.afterEvents.worldLoad.subscribe(async () => {
-    let wepLogMessages = [];
-    let entLogMessages = []; // Stores logs to print once at the end
+    let logMessages = []; // Stores logs to print once at the end
 
     for (const stat of importStats) {
         try {
@@ -20,41 +18,18 @@ world.afterEvents.worldLoad.subscribe(async () => {
                 if (index > -1) weaponStats[index] = item;
                 else weaponStats.push(item);
             });
-            wepLogMessages.push(`- "${stat.moduleName}" loaded`);
+            logMessages.push(`- "${stat.moduleName}" loaded`);
         } catch (e) {
-            wepLogMessages.push(
+            logMessages.push(
                 `- Failed to load "${stat.moduleName}": ${e instanceof Error ? e.message : e}`
             );
         }
     }
-
-    for (const stat of importEntityStats) {
-        try {
-            stat.items.forEach((item) => {
-                const index = entityStats.findIndex((entity) => entity.id === item.id);
-                if (index > -1) entityStats[index] = item;
-                else entityStats.push(item);
-            });
-            entLogMessages.push(`- "${stat.moduleName}" loaded`);
-        } catch (e) {
-            entLogMessages.push(
-                `- Failed to load "${stat.moduleName}": ${e instanceof Error ? e.message : e}`
-            );
-        }
-    }
-
-    const combinedLogMessages = [
-        'Weapon Stats Load:',
-        ...wepLogMessages,
-        '',
-        'Entity Stats Load:',
-        ...entLogMessages,
-    ];
 
     // Print all logs in one debug call
-    if (combinedLogMessages.length > 0) {
+    if (logMessages.length > 0) {
         const debugMode = world.getDynamicProperty('debug_mode');
-        if (debugMode) debug(`Stats File Load:\n${combinedLogMessages.join('\n')}`);
+        if (debugMode) debug(`Stats File Load:\n${logMessages.join('\n')}`);
     }
 });
 

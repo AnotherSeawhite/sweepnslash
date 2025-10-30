@@ -63,14 +63,14 @@ export const vanilla: WeaponStats[] = [
         isWeapon: true,
     },
     {
-        id: 'minecraft:crossbow',
+        id: "minecraft:crossbow",
         skipLore: true,
         noInherit: true,
         beforeEffect: () => {
             return {
-                cancelDurability: true,
-            };
-        },
+                cancelDurability: true
+            }
+        }
     },
     {
         id: 'minecraft:wooden_shovel',
