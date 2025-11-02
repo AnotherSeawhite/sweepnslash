@@ -11,9 +11,10 @@ import {
     GameMode,
     PlayerSoundOptions,
 } from '@minecraft/server';
-import { weaponStats } from './weaponStatsHandler.js';
+import { weaponStats } from './statsHandler.js';
 import { lambertW0, lambertWm1 } from './lambertw.js';
 import { Vector3Utils, clampNumber } from './minecraft-math.js';
+import { entityStats } from './statsHandler.js';
 
 const biomeArray = [
     'minecraft:frozen_ocean',
@@ -125,11 +126,11 @@ Entity.prototype.center = function (vector3 = { x: 0, y: 0, z: 0 }) {
     const { x, y, z } = vector3;
     const loc = this.location;
     const head = this.getHeadLocation();
-    const isDragon = this.typeId == 'minecraft:ender_dragon' ? 3 : 0;
+    const offset = this.getStats()?.centerOffset ?? { x: 0, y: 0, z: 0 };
     return {
-        x: loc.x + x,
-        y: (loc.y + head.y) / 2 + y + isDragon,
-        z: loc.z + z,
+        x: loc.x + x + offset.x,
+        y: (loc.y + head.y) / 2 + y + offset.y,
+        z: loc.z + z + offset.z,
     };
 };
 
@@ -318,12 +319,14 @@ Entity.prototype.spawnSelectiveParticle = function (
     offset = { x: 0, y: 0, z: 0 },
     molangVariables: MolangVariableMap
 ) {
+    const debugMode = world.getDynamicProperty('debug_mode');
+
     const offsetLocation = {
         x: location.x + offset.x,
         y: location.y + offset.y,
         z: location.z + offset.z,
     };
-    const debugMode = world.getDynamicProperty('debug_mode');
+
     for (const p of world.getAllPlayers()) {
         try {
             if (
@@ -346,6 +349,7 @@ Entity.prototype.playSelectiveSound = function (
     soundOptions: PlayerSoundOptions
 ) {
     const debugMode = world.getDynamicProperty('debug_mode');
+
     for (const p of world.getAllPlayers()) {
         try {
             if (
@@ -465,6 +469,11 @@ Entity.prototype.getItemStats = function (itemStack) {
         : undefined;
 
     return { equippableComp, item, stats: statsToReturn };
+};
+
+Entity.prototype.getStats = function () {
+    const stats = entityStats.find((ent) => ent.id === this?.typeId);
+    return stats;
 };
 
 Entity.prototype.isTamed = function ({ excludeTypes = [] } = {}) {
@@ -625,6 +634,7 @@ export class Check {
         )
             return;
         if (damage <= 0) return;
+        if (forced === false) return false;
         const status = player.getStatus();
         const shieldBlock = Check.shieldBlock(currentTick, player, target, stats);
         const dimension = player.dimension.id;
@@ -889,11 +899,11 @@ export class Check {
         let T = getCooldownTime(player, attackSpeed).ticks;
         if (damageTest === true && attackSpeedTicks) T = attackSpeedTicks;
         const t = Math.min(timeSinceLastAttack, T);
+        const canTakeCrits = target?.getStats()?.canTakeCrits ?? true;
         const crit =
             this.criticalHit(currentTick, player, target, stats, {
-                noEffect: true,
                 forced: critAttack,
-            }) && target.typeId != 'minecraft:ender_dragon'
+            }) && canTakeCrits
                 ? critMul ?? 1.5
                 : 1;
 

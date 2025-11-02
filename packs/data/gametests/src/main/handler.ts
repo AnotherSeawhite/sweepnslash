@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.2.0';
+const version = '2.3.0';
 const configCommand = 'sns:config';
 
 import {
@@ -12,7 +12,7 @@ import {
     EntityDamageCause,
     GameMode,
     PlayerPermissionLevel,
-    Difficulty
+    Difficulty,
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 import { CombatManager } from './class.js';
@@ -63,7 +63,10 @@ world.afterEvents.worldLoad.subscribe(() => {
         world.setDynamicProperty('saturationHealing', true);
     }
 
-    system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
+    system.sendScriptEvent(
+        'sweep-and-slash:toggle',
+        `${world.getDynamicProperty('addon_toggle')}`
+    );
 });
 
 // Initialize dynamic properties
@@ -126,9 +129,8 @@ function configFormOpener({ sourceEntity: player, sourceType }) {
 }
 
 function configForm(player) {
-    if ((player.__configLastClosed || 0) + 20 > system.currentTick)
-        return;
-    
+    if ((player.__configLastClosed || 0) + 20 > system.currentTick) return;
+
     const tag = player.hasTag('sweepnslash.config');
     const op = player.playerPermissionLevel == PlayerPermissionLevel.Operator;
     let formValuesPush = 0;
@@ -145,10 +147,10 @@ function configForm(player) {
     if (tag == true) {
         form.label({ translate: 'sweepnslash.operatortoggleheader' });
         if (!world.isHardcore)
-        form.toggle(
-            { translate: 'sweepnslash.toggleaddon' },
-            { defaultValue: dp(world, { id: 'addon_toggle' }) }
-        );
+            form.toggle(
+                { translate: 'sweepnslash.toggleaddon' },
+                { defaultValue: dp(world, { id: 'addon_toggle' }) }
+            );
         form.toggle(
             { translate: 'sweepnslash.toggledebugmode' },
             {
@@ -178,9 +180,9 @@ function configForm(player) {
                         { text: '\n\n' },
                         { translate: 'createWorldScreen.naturalregeneration' },
                         { text: ': ' },
-                        { text: world.gameRules.naturalRegeneration ? '§aON' : '§cOFF' }
-                    ]
-                }
+                        { text: world.gameRules.naturalRegeneration ? '§aON' : '§cOFF' },
+                    ],
+                },
             }
         );
         form.divider();
@@ -257,8 +259,7 @@ function configForm(player) {
             return isNaN(num) ? 0 : num;
         }
 
-        if (response && canceled && cancelationReason === 'UserBusy')
-            return;
+        if (response && canceled && cancelationReason === 'UserBusy') return;
 
         if (canceled) {
             player.playSound('sns.config.canceled', { pitch: 1 });
@@ -311,8 +312,11 @@ function configForm(player) {
         ];
 
         properties.forEach(valuePush);
-        
-        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
+
+        system.sendScriptEvent(
+            'sweep-and-slash:toggle',
+            `${world.getDynamicProperty('addon_toggle')}`
+        );
     });
 }
 
@@ -348,7 +352,8 @@ system.runInterval(() => {
     const isPeaceful = world.getDifficulty() === Difficulty.Peaceful;
     const currentTick = system.currentTick;
 
-    if (saturationHealing && world.gameRules.naturalRegeneration == true) world.gameRules.naturalRegeneration = false;
+    if (saturationHealing && world.gameRules.naturalRegeneration == true)
+        world.gameRules.naturalRegeneration = false;
 
     for (const player of world.getAllPlayers()) {
         const status = player.getStatus();
@@ -423,7 +428,7 @@ system.runInterval(() => {
         }
 
         // Saturation healing
-        
+
         const health = player.getComponent('health');
         const saturationComp = player.getComponent('player.saturation');
         const hunger = player.getHunger();
@@ -433,12 +438,20 @@ system.runInterval(() => {
         const saturationEffect = player.getEffect('saturation');
         if (saturationEffect?.isValid && health.currentValue > 0) {
             player.setSaturation(
-                clampNumber(saturation + ((saturationEffect.amplifier + 1) * 2), saturationComp?.effectiveMin, saturationComp?.effectiveMax)
+                clampNumber(
+                    saturation + (saturationEffect.amplifier + 1) * 2,
+                    saturationComp?.effectiveMin,
+                    saturationComp?.effectiveMax
+                )
             );
         }
         if (saturationHealing && isPeaceful && system.currentTick % 20 === 0) {
             player.setSaturation(
-                clampNumber(saturation + 1, saturationComp?.effectiveMin, saturationComp?.effectiveMax)
+                clampNumber(
+                    saturation + 1,
+                    saturationComp?.effectiveMin,
+                    saturationComp?.effectiveMax
+                )
             );
             health.setCurrentValue(
                 clampNumber(health.currentValue + 1, health.effectiveMin, health.effectiveMax)
@@ -451,7 +464,7 @@ system.runInterval(() => {
             health.currentValue > 0 &&
             health.currentValue < health.effectiveMax &&
             player.getGameMode() !== GameMode.Creative;
-            
+
         if (canHeal) {
             status.foodTickTimer += 1;
 
@@ -473,7 +486,11 @@ system.runInterval(() => {
                 // Apply healing and exhaustion
                 player.setExhaustion(exhaustion + exhaustionToAdd);
                 health.setCurrentValue(
-                    clampNumber(health.currentValue + healAmount, health.effectiveMin, health.effectiveMax)
+                    clampNumber(
+                        health.currentValue + healAmount,
+                        health.effectiveMin,
+                        health.effectiveMax
+                    )
                 );
                 status.foodTickTimer = 0;
             }
@@ -563,10 +580,13 @@ system.runInterval(() => {
 // For air swinging and parsing item stats from other addons
 system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: player }) => {
     if (id === 'sweep-and-slash:toggle_check') {
-        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
+        system.sendScriptEvent(
+            'sweep-and-slash:toggle',
+            `${world.getDynamicProperty('addon_toggle')}`
+        );
         return;
     }
-    
+
     if (
         world.getDynamicProperty('addon_toggle') == false ||
         !(player instanceof Player) ||
@@ -601,8 +621,8 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: pl
 });
 
 world.afterEvents.playerInventoryItemChange.subscribe(({ player: source, slot }) => {
-  inventoryAddLore({ source, slot });
-})
+    inventoryAddLore({ source, slot });
+});
 
 world.afterEvents.itemStartUse.subscribe(({ source: player }) => {
     const status = player.getStatus();
@@ -658,14 +678,14 @@ world.afterEvents.projectileHitEntity.subscribe((event) => {
 world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
     if (world.getDynamicProperty('addon_toggle') == false) return;
     if (!entity?.isValid) return;
-    
+
     const projectileComp = entity?.getComponent('projectile');
     const owner = projectileComp?.owner;
     if (!owner) return;
-    
+
     const { stats } = owner.getItemStats();
     if (stats?.noInherit) return;
-    
+
     if (owner instanceof Entity) {
         const ownerVel = owner.getVelocity();
         entity.applyImpulse(ownerVel);
@@ -679,7 +699,7 @@ world.afterEvents.playerSpawn.subscribe(({ player }) => {
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity: target }) => {
     if (world.getDynamicProperty('addon_toggle') == false) return;
-    
+
     const status = player.getStatus();
     const currentTick = system.currentTick;
 
@@ -690,7 +710,7 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
         if (shieldBlock) player.applyKnockback({ x: 0, z: 0 }, 0);
         return;
     }
-    
+
     status.leftClick = true;
 
     function isTeam(playerA, playerB) {
@@ -705,7 +725,7 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
         status.lastAttackTime = currentTick;
         return;
     }
-    
+
     if (target?.isValid && player?.getComponent('health')?.currentValue > 0)
         CombatManager.attack({ player, target, currentTick });
 });
@@ -718,11 +738,11 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
 
     const currentTick = system.currentTick;
     const player = damageSource.damagingEntity;
-    
+
     if (!player && damageSource.cause !== EntityDamageCause.override && damage >= 0) {
         try {
             if (!hurtEntity.__playerHit)
-                hurtEntity.applyKnockback({x: 0, z: 0}, hurtEntity.getVelocity().y);
+                hurtEntity.applyKnockback({ x: 0, z: 0 }, hurtEntity.getVelocity().y);
         } catch (e) {
             const debugMode = world.getDynamicProperty('debug_mode');
             if (debugMode) debug('Error during knockback: ' + e + ', knockback skipped');
@@ -730,7 +750,7 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
     }
 
     hurtEntity.__playerHit = false;
-    
+
     if (player instanceof Player) {
         if (damageSource.cause === EntityDamageCause.entityAttack) {
             //const { stats } = player.getItemStats();
