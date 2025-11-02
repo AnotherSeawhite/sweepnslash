@@ -320,14 +320,15 @@ Entity.prototype.spawnSelectiveParticle = function (
     molangVariables: MolangVariableMap
 ) {
     const debugMode = world.getDynamicProperty('debug_mode');
-    try {
-        const offsetLocation = {
-            x: location.x + offset.x,
-            y: location.y + offset.y,
-            z: location.z + offset.z,
-        };
 
-        for (const p of world.getAllPlayers()) {
+    const offsetLocation = {
+        x: location.x + offset.x,
+        y: location.y + offset.y,
+        z: location.z + offset.z,
+    };
+
+    for (const p of world.getAllPlayers()) {
+        try {
             if (
                 p.getDynamicProperty(dynamicProperty) == true &&
                 p.dimension.id == this.dimension.id
@@ -335,9 +336,9 @@ Entity.prototype.spawnSelectiveParticle = function (
                 molangVariables
                     ? p.spawnParticle(effectName, offsetLocation, molangVariables)
                     : p.spawnParticle(effectName, offsetLocation);
+        } catch (e) {
+            if (debugMode) debug(e);
         }
-    } catch (e) {
-        if (debugMode) debug(e);
     }
 };
 
@@ -348,16 +349,17 @@ Entity.prototype.playSelectiveSound = function (
     soundOptions: PlayerSoundOptions
 ) {
     const debugMode = world.getDynamicProperty('debug_mode');
-    try {
-        for (const p of world.getAllPlayers()) {
+
+    for (const p of world.getAllPlayers()) {
+        try {
             if (
                 p.getDynamicProperty(dynamicProperty) == true &&
                 p.dimension.id == this.dimension.id
             )
                 p.playSound(soundId, soundOptions);
+        } catch (e) {
+            if (debugMode) debug(e);
         }
-    } catch (e) {
-        if (debugMode) debug(e);
     }
 };
 
