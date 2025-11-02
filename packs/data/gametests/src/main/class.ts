@@ -212,6 +212,24 @@ export class CombatManager {
                 }
             );
 
+            if (dmg.final > 0) {
+                if (crit)
+                    target?.spawnSelectiveParticle(
+                        beforeEffect?.critParticle ?? 'minecraft:critical_hit_emitter',
+                        target?.center({ x: 0, y: 1, z: 0 }),
+                        'criticalHit',
+                        beforeEffect?.critOffset ?? { x: 0, y: 0, z: 0 },
+                        beforeEffect?.critMap
+                    );
+                if (dmg.enchantedHit)
+                    target?.spawnSelectiveParticle(
+                        'sweepnslash:magic_critical_hit_emitter',
+                        target?.center({ x: 0, y: 1, z: 0 }),
+                        'enchantedHit'
+                    );
+                hitSound(specialCheck, sweep?.swept, crit, loc);
+            }
+
             // Apply damage
 
             const damageValid =
@@ -248,24 +266,6 @@ export class CombatManager {
                     if (debugMode)
                         debug('Error during knockback: ' + e + ', knockback skipped');
                 }
-            }
-
-            if (dmg.final > 0) {
-                if (crit)
-                    target?.spawnSelectiveParticle(
-                        beforeEffect?.critParticle ?? 'minecraft:critical_hit_emitter',
-                        target?.center({ x: 0, y: 1, z: 0 }),
-                        'criticalHit',
-                        beforeEffect?.critOffset ?? { x: 0, y: 0, z: 0 },
-                        beforeEffect?.critMap
-                    );
-                if (dmg.enchantedHit)
-                    target?.spawnSelectiveParticle(
-                        'sweepnslash:magic_critical_hit_emitter',
-                        target?.center({ x: 0, y: 1, z: 0 }),
-                        'enchantedHit'
-                    );
-                hitSound(specialCheck, sweep?.swept, crit, loc);
             }
         } else {
             if (dmg.final > 0) hitSound(false, false, false, loc);
