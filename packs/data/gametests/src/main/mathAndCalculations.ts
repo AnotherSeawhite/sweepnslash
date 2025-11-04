@@ -979,8 +979,10 @@ export class Check {
         // }
 
         const damage =
-            (baseDamage + (strengthModifier - weaknessModifier)) * crit * multiplier +
-            enchantDamage;
+            Math.max(
+                0,
+                (baseDamage + (strengthModifier - weaknessModifier)) * crit * multiplier
+            ) + enchantDamage;
         const rawDamage = baseDamage * crit;
 
         return { damage, rawDamage, enchantedHit };
