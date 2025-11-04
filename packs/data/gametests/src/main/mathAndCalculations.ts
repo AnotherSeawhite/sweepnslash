@@ -973,10 +973,10 @@ export class Check {
 
         if (enchantBonus > 0) enchantDamage = enchantBonus * Math.min((t + 0.5) / T, 1);
 
-        if (enchantBonus > 0 && weaknessModifier) {
-            player.removeEffect('weakness');
-            //player.onScreenDisplay.setActionBar("There is a bug where attacking with sharpness or any damage bonus enchantments\nweapons while having weakness effect bugs out the vanilla combat.\nThis is unfortunately not fixable. Sorry!")
-        }
+        // if (enchantBonus > 0 && weaknessModifier) {
+        //     player.removeEffect('weakness');
+        //     //player.onScreenDisplay.setActionBar("There is a bug where attacking with sharpness or any damage bonus enchantments\nweapons while having weakness effect bugs out the vanilla combat.\nThis is unfortunately not fixable. Sorry!")
+        // }
 
         const damage =
             (baseDamage + (strengthModifier - weaknessModifier)) * crit * multiplier +
