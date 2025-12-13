@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.3.0';
+const version = '2.4.0';
 const configCommand = 'sns:config';
 
 import {
@@ -19,8 +19,8 @@ import { CombatManager } from './class.js';
 import {
     Check,
     getCooldownTime,
-    healthParticle,
     inventoryAddLore,
+    AttackCooldownManager,
 } from './mathAndCalculations.js';
 import { clampNumber } from './minecraft-math.js';
 
@@ -374,7 +374,11 @@ system.runInterval(() => {
             (status.lastSelectedItem !== item?.typeId &&
                 !(status.lastSelectedItem === undefined && item?.typeId === undefined))
         ) {
-            status.lastAttackTime = currentTick;
+            if (item?.hasFlag('custom_cooldown')) {
+                const cooldownComp = item.getComponent('cooldown');
+                cooldownComp?.startCooldown(player);
+            }
+            player.runAttackCooldown(currentTick);
         }
 
         status.lastSelectedSlot = player.selectedSlotIndex;
@@ -415,8 +419,12 @@ system.runInterval(() => {
         }
 
         // If the player falls more than 1.5 blocks, trigger damage event so that mace smash can work properly
+        // Also for spears
         if (addonToggle == true) {
-            if (Math.abs(fallDist) >= 1.5 && item?.typeId === 'minecraft:mace') {
+            if (
+                (Math.abs(fallDist) >= 1.5 && item?.hasFlag('mace')) ||
+                status.chargeAttacking
+            ) {
                 player.triggerEvent('sweepnslash:mace');
                 status.mace = true;
             } else {
@@ -502,7 +510,12 @@ system.runInterval(() => {
         const maxCD = getCooldownTime(player, stats?.attackSpeed).ticks;
         status.cooldown = Math.max(0, status.lastAttackTime + maxCD - currentTick);
 
-        const curCD = status.cooldown;
+        let curCD = status.cooldown;
+        if (player.hasItemFlag('custom_cooldown')) {
+            const cooldownComp = item?.getComponent('cooldown');
+            if (cooldownComp?.cooldownCategory)
+                curCD = cooldownComp?.getCooldownTicksRemaining(player);
+        }
         const pixelValue = Math.min(16, Math.floor(((Math.round(maxCD) - curCD) / maxCD) * 17));
         const uiPixelValue = clampNumber(pixelValue, 0, 16);
 
@@ -511,7 +524,7 @@ system.runInterval(() => {
         let cooldownSubtitle = '§7˙'.repeat(Math.max(0, subGrey));
         cooldownSubtitle += '§8˙'.repeat(subDarkGrey);
 
-        const inRange = Check.view(player);
+        const inRange = Check.view(player, stats?.reach);
         const targetValid = !(inRange?.getComponent('health')?.currentValue <= 0);
         const specialCheck = Check.specialValid(currentTick, player, stats);
 
@@ -526,7 +539,7 @@ system.runInterval(() => {
         const barStyle = player.getDynamicProperty('cooldownStyle') ?? 0;
         const barArray = ['crs', 'htb', 'sub', 'non'][barStyle];
 
-        const bonkReady = specialCheck && viewCheck && curCD <= 0;
+        const bonkReady = viewCheck && curCD <= 0;
 
         if (!addonToggle || barStyle === 3) {
             if (status.showBar) {
@@ -539,7 +552,10 @@ system.runInterval(() => {
             }
         } else {
             status.showBar = true;
-            if (curCD > 0 || (viewCheck && stats && stats?.damage && barStyle === 0)) {
+            if (
+                curCD > 0 ||
+                (viewCheck && stats && !player?.hasItemFlag('hide_indicator') && barStyle === 0)
+            ) {
                 barStyle !== 2
                     ? player.onScreenDisplay.setTitle(
                           `_sweepnslash:${barArray}:${bonkReady ? 't' : 'f'}:${uiPixelValue}`,
@@ -594,44 +610,58 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: pl
     )
         return;
 
-    const status = player.getStatus();
-
     if (id === 'sns:testdamage') {
         Check.damageTest(player);
     }
-
-    if (id === 'se:attack') {
-        const shieldCooldown = player.getItemCooldown('minecraft:shield');
-        player.startItemCooldown('minecraft:shield', shieldCooldown ? shieldCooldown : 5);
-        if (status.leftClick == true) {
-            status.leftClick = false;
-            return;
-        }
-
-        if (status.rightClick == true) {
-            status.rightClick = false;
-            status.lastShieldTime = system.currentTick;
-            return;
-        }
-
-        if (Check.block(player) && !Check.view(player)) return;
-
-        status.lastAttackTime = system.currentTick;
-    }
 });
+
+world.afterEvents.playerSwingStart.subscribe(({ player, swingSource }) => {
+    if (world.getDynamicProperty('addon_toggle') == false) return;
+
+    const status = player.getStatus();
+
+    const shieldCooldown = player.getItemCooldown('minecraft:shield');
+    player.startItemCooldown('minecraft:shield', shieldCooldown ? shieldCooldown : 5);
+    status.lastShieldTime = system.currentTick;
+
+    // if (status.leftClick == true) {
+    //     status.leftClick = false;
+    //     return;
+    // }
+
+    // if (status.rightClick == true) {
+    //     status.rightClick = false;
+    //     status.lastShieldTime = system.currentTick;
+    //     return;
+    // }
+
+    //if (Check.block(player) && !Check.view(player)) return;
+
+    if (swingSource !== 'Attack') return;
+    AttackCooldownManager.forPlayer(player).onSwing();
+});
+
+// world.afterEvents.playerHotbarSelectedSlotChange.subscribe(({ player, itemStack }) => {
+//     if (itemStack?.hasFlag('custom_cooldown')) {
+//         const cooldownComp = itemStack.getComponent('cooldown');
+//         cooldownComp?.startCooldown(player);
+//     }
+// });
 
 world.afterEvents.playerInventoryItemChange.subscribe(({ player: source, slot }) => {
     inventoryAddLore({ source, slot });
 });
 
-world.afterEvents.itemStartUse.subscribe(({ source: player }) => {
+world.afterEvents.itemStartUse.subscribe(({ source: player, itemStack }) => {
     const status = player.getStatus();
     status.holdInteract = true;
+    if (itemStack?.hasFlag('kinetic_weapon')) status.chargeAttacking = true;
 });
 
-world.afterEvents.itemStopUse.subscribe(({ source: player }) => {
+world.afterEvents.itemStopUse.subscribe(({ source: player, itemStack }) => {
     const status = player.getStatus();
     status.holdInteract = false;
+    if (itemStack?.hasFlag('kinetic_weapon')) status.chargeAttacking = false;
 });
 
 // For making sure the attack cooldown isn't triggered when the player interacts with levers or buttons.
@@ -650,8 +680,8 @@ world.afterEvents.entityHitBlock.subscribe(({ damagingEntity: player }) => {
 
     const status = player.getStatus();
     status.lastShieldTime = system.currentTick;
-    status.lastAttackTime = system.currentTick;
-    status.leftClick = true;
+    player.runAttackCooldown(system.currentTick);
+    //status.leftClick = true;
 });
 
 // Handles the entire combat.
@@ -683,8 +713,8 @@ world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
     const owner = projectileComp?.owner;
     if (!owner) return;
 
-    const { stats } = owner.getItemStats();
-    if (stats?.noInherit) return;
+    const { item, stats } = owner.getItemStats();
+    if (stats?.noInherit || item?.hasFlag('no_inherit')) return;
 
     if (owner instanceof Entity) {
         const ownerVel = owner.getVelocity();
@@ -694,7 +724,7 @@ world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
 
 world.afterEvents.playerSpawn.subscribe(({ player }) => {
     const status = player.getStatus();
-    status.lastAttackTime = system.currentTick;
+    player.runAttackCooldown(system.currentTick);
 });
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity: target }) => {
@@ -727,7 +757,7 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
     }
 
     if (target?.isValid && player?.getComponent('health')?.currentValue > 0)
-        CombatManager.attack({ player, target, currentTick });
+        AttackCooldownManager.forPlayer(player).onHit(target);
 });
 
 // For when the entity is hurt. Handles iframes.

@@ -20,7 +20,7 @@ import { vanillaKnives } from './weaponStats/tcc/vanilla_knives';
 import { vanillaThrowingKnives } from './weaponStats/tcc/vanilla_throwing_knives';
 import { trueWeapons } from './weaponStats/true_wp';
 import { vanilla } from './weaponStats/vanilla';
-import { vanillaSpears } from './weaponStats/vanilla_spears';
+import { vsprsSpears } from './weaponStats/vsprs_spears';
 
 import { vanillaEntities } from './entityStats/vanilla';
 
@@ -33,7 +33,7 @@ export const importStats: { items: WeaponStats[]; moduleName: string }[] = [
     { items: vanillaBattleAxes, moduleName: 'tcc_battle_axes' },
     { items: flintTools, moduleName: 'tcc_flint_tools' },
     { items: copperTools, moduleName: 'tcc_copper_expansion' },
-    { items: vanillaSpears, moduleName: 'vanilla_spears' },
+    { items: vsprsSpears, moduleName: 'vsprs_spears' },
     //{ items: alylicaDungeons, moduleName: 'alylica_dungeons' },
     //{ items: trueWeapons, moduleName: 'true_wp' },
 ];
@@ -56,6 +56,7 @@ export const importEntityStats: { items: EntityStats[]; moduleName: string }[] =
  * See detailed documentation above for function argument explanations and usage tips.
  */
 export type WeaponStats = {
+    formatVersion?: string;
     /** The item identifier (e.g., "minecraft:iron_sword"). */
     id: string;
     /** The attack speed of the weapon (higher = faster). */
@@ -100,6 +101,14 @@ export type WeaponStats = {
      * If true, projectiles shot with this item will not inherit velocity from the shooter.
      */
     noInherit?: boolean;
+    /**
+     * The reach distance (in blocks) of the weapon. Note that this is only used for attack indicator range, and does not actually modify reach.
+     */
+    reach?: number;
+    /**
+     * Optional set of flags for defining special properties. Replaces previous boolean properties.
+     */
+    flags?: string[];
     /**
      * Optional function to modify or cancel attack before it lands.
      * Use `mc` argument for Minecraft API access (do not import modules directly).
@@ -152,6 +161,10 @@ export type WeaponStats = {
         sweepParticle?: string;
         /** Custom crit particle name. */
         critParticle?: string;
+        /** Custom weak hit sound name. */
+        weakHitSound?: string;
+        /** Custom strong hit sound name. */
+        strongHitSound?: string;
         /** Custom sweep sound name. */
         sweepSound?: string;
         /** Custom crit sound name. */

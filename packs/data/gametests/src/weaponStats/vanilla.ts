@@ -5,67 +5,157 @@ export const vanilla: WeaponStats[] = [
         id: 'minecraft:wooden_sword',
         attackSpeed: 1.6,
         damage: 4,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'minecraft:golden_sword',
         attackSpeed: 1.6,
         damage: 4,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'minecraft:stone_sword',
         attackSpeed: 1.6,
         damage: 5,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'minecraft:copper_sword',
         attackSpeed: 1.6,
         damage: 5,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'minecraft:iron_sword',
         attackSpeed: 1.6,
         damage: 6,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'minecraft:diamond_sword',
         attackSpeed: 1.6,
         damage: 7,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'minecraft:netherite_sword',
         attackSpeed: 1.6,
         damage: 8,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
+    },
+    {
+        id: 'minecraft:wooden_spear',
+        damage: 1,
+        attackSpeed: 1.54,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
+    },
+    {
+        id: 'minecraft:golden_spear',
+        damage: 1,
+        attackSpeed: 1.05,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
+    },
+    {
+        id: 'minecraft:stone_spear',
+        damage: 2,
+        attackSpeed: 1.33,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
+    },
+    {
+        id: 'minecraft:copper_spear',
+        damage: 2,
+        attackSpeed: 1.18,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
+    },
+    {
+        id: 'minecraft:iron_spear',
+        damage: 3,
+        attackSpeed: 1.05,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
+    },
+    {
+        id: 'minecraft:diamond_spear',
+        damage: 4,
+        attackSpeed: 0.95,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
+    },
+    {
+        id: 'minecraft:netherite_spear',
+        damage: 5,
+        attackSpeed: 0.87,
+        reach: 4.5,
+        flags: ['kinetic_weapon', 'custom_cooldown', 'is_weapon'],
+        beforeEffect: () => {
+            return {
+                strongHitSound: '',
+                critAttack: false,
+                sprintKnockback: false,
+            };
+        },
     },
     {
         id: 'minecraft:trident',
         attackSpeed: 1.1,
         damage: 9,
-        isWeapon: true,
+        flags: ['is_weapon'],
     },
     {
         id: 'minecraft:mace',
         attackSpeed: 0.6,
         damage: 6,
-        isWeapon: true,
+        flags: ['is_weapon', 'mace'],
     },
     {
         id: 'minecraft:crossbow',
-        skipLore: true,
-        noInherit: true,
+        flags: ['skip_lore', 'no_inherit', 'hide_indicator'],
         beforeEffect: () => {
             return {
                 cancelDurability: true,
@@ -146,43 +236,43 @@ export const vanilla: WeaponStats[] = [
         id: 'minecraft:wooden_axe',
         attackSpeed: 0.8,
         damage: 7,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:golden_axe',
         attackSpeed: 1,
         damage: 7,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:stone_axe',
         attackSpeed: 0.8,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:copper_axe',
         attackSpeed: 0.8,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:iron_axe',
         attackSpeed: 0.9,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:diamond_axe',
         attackSpeed: 1,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:netherite_axe',
         attackSpeed: 1,
         damage: 10,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'minecraft:wooden_hoe',

@@ -14,6 +14,7 @@ export class CombatManager {
         let targetLoc = target.location;
 
         const { equippableComp, item, stats } = player.getItemStats() || {};
+        console.log(stats?.flags);
         const baseDamage = stats?.damage || 1;
         let regularKBDistance = stats?.regularKnockback ?? 1.552;
         let enchantedKBDistance = stats?.enchantedKnockback ?? 2.586;
@@ -76,7 +77,12 @@ export class CombatManager {
 
         crit = Check.criticalHit(currentTick, player, target, stats, {
             damage: dmg.final,
-            forced: targetStats?.canTakeCrits !== false ? beforeEffect?.critAttack : false,
+            forced:
+                beforeEffect?.critAttack === true
+                    ? true
+                    : targetStats?.canTakeCrits !== false
+                    ? beforeEffect?.critAttack
+                    : false,
         });
 
         sprintKnockback = Check.sprintKnockback(currentTick, player, target, stats, {
@@ -153,8 +159,8 @@ export class CombatManager {
                 const sounds = [];
                 if (!crit && !sweep) {
                     const id = boolean
-                        ? 'game.player.attack.strong.se'
-                        : 'game.player.attack.weak.se';
+                        ? beforeEffect?.strongHitSound ?? 'game.player.attack.strong.se'
+                        : beforeEffect?.weakHitSound ?? 'game.player.attack.weak.se';
                     sounds.push({ id });
                 }
 

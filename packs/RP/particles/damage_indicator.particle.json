@@ -8,14 +8,6 @@
                 "texture": "textures/particle/damage_indicator"
             }
         },
-        "curves": {
-            "variable.size": {
-                "type": "linear",
-                "input": "v.particle_random_2",
-                "horizontal_range": "v.particle_lifetime",
-                "nodes": [0.75, 1]
-            }
-        },
         "components": {
             "minecraft:emitter_rate_instant": {
                 "num_particles": "v.amount"
@@ -24,18 +16,25 @@
                 "active_time": 1
             },
             "minecraft:emitter_shape_point": {
-                "direction": ["Math.random(-1,1)", "Math.random(0.5,3)", "Math.random(-1,1)"]
+                "direction": [
+                    "Math.random(-0.75, 0.75)",
+                    "(Math.random(-1.0, 1.0) * 0.4) + 1.0",
+                    "Math.random(-0.75, 0.75)"
+                ]
             },
             "minecraft:particle_lifetime_expression": {
-                "max_lifetime": 1
+                "max_lifetime": "1.0"
             },
-            "minecraft:particle_initial_speed": "Math.random(5,10)",
+            "minecraft:particle_initial_speed": "Math.random(5.0, 20.0)",
             "minecraft:particle_motion_dynamic": {
-                "linear_acceleration": [0, -8, 0],
-                "linear_drag_coefficient": 6
+                "linear_acceleration": [0, -12, 0],
+                "linear_drag_coefficient": 10
             },
             "minecraft:particle_appearance_billboard": {
-                "size": ["0.14*v.size", "0.14*v.size"],
+                "size": [
+                    "(0.1 * (variable.particle_random_1 * 0.5 + 0.5 ) * 2.0) * 0.75",
+                    "(0.1 * (variable.particle_random_1 * 0.5 + 0.5 ) * 2.0) * 0.75"
+                ],
                 "facing_camera_mode": "rotate_xyz",
                 "uv": {
                     "texture_width": 8,

@@ -6,6 +6,7 @@ import {
     MolangVariableMap,
     Entity,
     Player,
+    ItemStack,
     EquipmentSlot,
     EntityDamageCause,
     GameMode,
@@ -15,6 +16,7 @@ import { weaponStats } from './statsHandler.js';
 import { lambertW0, lambertWm1 } from './lambertw.js';
 import { Vector3Utils, clampNumber } from './minecraft-math.js';
 import { entityStats } from './statsHandler.js';
+import { CombatManager } from './class.js';
 
 const biomeArray = [
     'minecraft:frozen_ocean',
@@ -62,6 +64,7 @@ function initializePlayerStatus(player) {
         shieldValid: false,
         mace: false,
         attackReady: false,
+        chargeAttacking: false,
         showBar: true,
         holdInteract: false,
         leftClick: false,
@@ -217,7 +220,7 @@ export function inventoryAddLore({ source, slot }) {
 
     if (existingLore.length >= 100) return;
 
-    if (stats.skipLore) {
+    if (stats.skipLore || source.hasItemFlag('skip_lore')) {
         itemSlot.setLore([...itemLore]);
     } else {
         const newLore = [];
@@ -383,7 +386,7 @@ Entity.prototype.healthParticle = function (damage) {
 // Converts vector3 to RGB. Hacky.
 export function toColor(vector3) {
     const { x, y, z } = vector3;
-    const rand = clampNumber(random(0.5, 1), 0.5, 1);
+    const rand = Math.random() * 0.6 + 0.4;
     const rgb = {
         red: (clampNumber(x, 0, 255) / 255) * rand,
         green: (clampNumber(y, 0, 255) / 255) * rand,
@@ -416,6 +419,11 @@ export function getCooldownTime(player: Player, baseAttackSpeed = 4) {
     return { ticks, baseSpeed };
 }
 
+Player.prototype.runAttackCooldown = function (currentTick: number) {
+    const status = this.getStatus();
+    status.lastAttackTime = currentTick;
+};
+
 // Return the stats of the weapon from player's weapon.
 Entity.prototype.getItemStats = function (itemStack) {
     const equippableComp = this.getComponent('equippable');
@@ -425,6 +433,9 @@ Entity.prototype.getItemStats = function (itemStack) {
 
     const jsonParams =
         item?.getComponent('sweepnslash:stats')?.customComponentParameters?.params;
+
+    // const jsonFlags =
+    //     item?.getComponent('sweepnslash:flags')?.customComponentParameters?.params;
 
     const keyMap = {
         damage: 'damage',
@@ -469,6 +480,42 @@ Entity.prototype.getItemStats = function (itemStack) {
         : undefined;
 
     return { equippableComp, item, stats: statsToReturn };
+};
+
+/** List of flags:
+ * is_weapon
+ * sweep
+ * disable_shield
+ * skip_lore
+ * no_inherit
+ * hide_indicator
+ * mace
+ * kinetic_weapon
+ * custom_cooldown
+ */
+
+Entity.prototype.hasItemFlag = function (flag) {
+    const { item, stats } = this.getItemStats();
+
+    const customComponentParameters =
+        item?.getComponent('sweepnslash:flags')?.customComponentParameters?.params;
+    let flags = customComponentParameters?.flags;
+
+    flags = stats?.flags || flags;
+
+    return Array.isArray(flags) && flags.includes(flag);
+};
+
+ItemStack.prototype.hasFlag = function (flag) {
+    const stats = weaponStats.find((wep) => wep.id === this?.typeId);
+
+    const customComponentParameters =
+        this?.getComponent('sweepnslash:flags')?.customComponentParameters?.params;
+    let flags = customComponentParameters?.flags;
+
+    flags = stats?.flags || flags;
+
+    return Array.isArray(flags) && flags.includes(flag);
 };
 
 Entity.prototype.getStats = function () {
@@ -600,7 +647,7 @@ export class Check {
         const randomizeChance = Math.random() * 100;
         if (breakChance < randomizeChance) return;
 
-        let durabilityModifier = stats?.isWeapon ? 1 : 2;
+        let durabilityModifier = stats?.isWeapon || item?.hasFlag('is_weapon') ? 1 : 2;
         durabilityComp.damage = Math.min(
             durabilityComp.damage + durabilityModifier,
             durabilityComp.maxDurability
@@ -706,7 +753,7 @@ export class Check {
 
         if (
             !(
-                stats?.sweep &&
+                (stats?.sweep || player?.hasItemFlag('sweep')) &&
                 this.specialValid(currentTick, player, stats) &&
                 status.critSweepValid
             ) &&
@@ -876,7 +923,12 @@ export class Check {
 
         if (status.shieldValid) {
             angle = this.angle(player, target);
-            if (stats?.disableShield && angle && specialValid && disable) {
+            if (
+                (stats?.disableShield || player.hasItemFlag('disable_shield')) &&
+                angle &&
+                specialValid &&
+                disable
+            ) {
                 target.startItemCooldown('minecraft:shield', 100);
                 player.dimension.playSound('random.break', target.location);
             }
@@ -907,8 +959,10 @@ export class Check {
                 ? critMul ?? 1.5
                 : 1;
 
+        const isCustomCooldown = item?.hasFlag('custom_cooldown');
+
         // damage multiplier = 0.2 + ((t + 0.5) / T) ^ 2 * 0.8
-        let multiplier = 0.2 + Math.pow((t + 0.5) / T, 2) * 0.8;
+        let multiplier = isCustomCooldown ? 1 : 0.2 + Math.pow((t + 0.5) / T, 2) * 0.8;
         // clamp multiplier to the range 0.2 ~ 1
         multiplier = clampNumber(multiplier, 0.2, 1);
 
@@ -1022,9 +1076,9 @@ export class Check {
         return { final, raw, enchantedHit };
     }
 
-    static view(player) {
+    static view(player, distance = 3) {
         const targetEntity = player.getEntitiesFromViewDirection({
-            maxDistance: 3,
+            maxDistance: distance,
             excludeTypes: [
                 'item',
                 'xp_orb',
@@ -1096,5 +1150,65 @@ export class Check {
                     '\n'
                 )}`
             );
+    }
+}
+
+export class AttackCooldownManager {
+    static playerMap = new Map<Player, AttackCooldownManager>();
+    static forPlayer(player: Player) {
+        let ac = this.playerMap.get(player);
+        if (!ac) {
+            ac = new this(player);
+            this.playerMap.set(player, ac);
+        }
+        return ac;
+    }
+
+    private swingTick?: number;
+    private hitTick?: number;
+
+    private constructor(private player: Player) {}
+
+    onSwing() {
+        const now = system.currentTick;
+        this.swingTick = now;
+
+        // If a hit already came this tick, clear swing immediately
+        if (this.hitTick === now) {
+            this.swingTick = undefined; // paired already
+            return;
+        }
+
+        // Otherwise, wait until two ticks later to decide if it was a miss
+        system.runTimeout(() => this.resolveSwing(now), 2);
+    }
+
+    onHit(target: Entity) {
+        const now = system.currentTick;
+        this.hitTick = now;
+
+        if (this.swingTick === now || this.swingTick === now - 1) {
+            // This hit is associated with a swing event (from the same tick or the previous tick)
+            this.applyHit(target, 'paired');
+            this.swingTick = undefined;
+        } else {
+            // Hit event without a swing event
+            this.applyHit(target, 'no-swing');
+        }
+    }
+
+    private resolveSwing(swingTick: number) {
+        if (this.swingTick === swingTick) {
+            this.applyMiss();
+            this.swingTick = undefined;
+        }
+    }
+
+    private applyHit(target: Entity, mode: string) {
+        CombatManager.attack({ player: this.player, target, currentTick: system.currentTick });
+    }
+
+    private applyMiss() {
+        this.player.runAttackCooldown(system.currentTick);
     }
 }
