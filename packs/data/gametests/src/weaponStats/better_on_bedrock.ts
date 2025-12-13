@@ -8,22 +8,19 @@ export const betterOnBedrock: WeaponStats[] = [
         id: 'better_on_bedrock:amethyst_sword',
         attackSpeed: 1.6,
         damage: 5,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'better_on_bedrock:copper_sword',
         attackSpeed: 1.6,
         damage: 6,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'better_on_bedrock:bane_spike',
         attackSpeed: 1.6,
         damage: 10,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
         beforeEffect: () => {
             function random(min: number, max: number) {
                 return Math.random() * (max - min) + min;
@@ -58,8 +55,7 @@ export const betterOnBedrock: WeaponStats[] = [
         id: 'better_on_bedrock:blade_of_the_nether',
         attackSpeed: 1.6,
         damage: 11,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
         beforeEffect: () => {
             function random(min: number, max: number) {
                 return Math.random() * (max - min) + min;
@@ -95,33 +91,31 @@ export const betterOnBedrock: WeaponStats[] = [
         id: 'better_on_bedrock:enderite_sword',
         attackSpeed: 1.6,
         damage: 11,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'better_on_bedrock:stardust_sword',
         attackSpeed: 1.6,
         damage: 9,
-        isWeapon: true,
-        sweep: true,
+        flags: ['is_weapon', 'sweep'],
     },
     {
         id: 'better_on_bedrock:amethyst_axe',
         attackSpeed: 0.9,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:stone_axe',
         attackSpeed: 0.8,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:copper_axe',
         attackSpeed: 0.9,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:iron_axe',
@@ -133,25 +127,25 @@ export const betterOnBedrock: WeaponStats[] = [
         id: 'better_on_bedrock:diamond_axe',
         attackSpeed: 1,
         damage: 9,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:netherite_axe',
         attackSpeed: 1,
         damage: 10,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:stardust_axe',
         attackSpeed: 1,
         damage: 12,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:enderite_axe',
         attackSpeed: 1,
         damage: 14,
-        disableShield: true,
+        flags: ['disable_shield'],
     },
     {
         id: 'better_on_bedrock:amethyst_pickaxe',

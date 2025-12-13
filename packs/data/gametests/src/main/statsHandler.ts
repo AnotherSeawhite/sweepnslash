@@ -1,6 +1,9 @@
 import { world } from '@minecraft/server';
 import { debug } from './mathAndCalculations.js';
-import { WeaponStatsSerializer } from '../IPC/weapon_stats.ipc.js';
+import {
+    WeaponStatsSerializer,
+    WeaponStatsSerializerVersioned,
+} from '../IPC/weapon_stats.ipc.js';
 import { IPC, PROTO } from 'mcbe-ipc';
 import { importStats, importEntityStats, WeaponStats, EntityStats } from '../importStats.js';
 
@@ -79,3 +82,33 @@ IPC.on('sweep-and-slash:register-weapons', PROTO.Array(WeaponStatsSerializer), (
         }
     }
 });
+
+IPC.on(
+    'sweep-and-slash:register-weapons-versioned',
+    PROTO.Array(WeaponStatsSerializerVersioned),
+    (data) => {
+        const debugMode = world.getDynamicProperty('debug_mode');
+        for (const weaponStat of data) {
+            // Ensure beforeEffect and script are correctly typed
+            const fixedWeaponStat = {
+                ...weaponStat,
+                beforeEffect: weaponStat.beforeEffect as WeaponStats['beforeEffect'],
+                script: weaponStat.script as WeaponStats['script'],
+            };
+            const existingIndex = weaponStats.findIndex(
+                (weapon) => weapon.id === weaponStat.id
+            );
+            if (existingIndex != -1) {
+                weaponStats[existingIndex] = fixedWeaponStat;
+                if (debugMode)
+                    debug(
+                        `IPC Receiver:\n${weaponStats[existingIndex].id} has been overwritten`
+                    );
+            } else {
+                weaponStats.push(fixedWeaponStat);
+                if (debugMode)
+                    debug(`IPC Receiver:\n${weaponStat.id} has been added in the stats`);
+            }
+        }
+    }
+);

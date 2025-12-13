@@ -1,6 +1,6 @@
 import { WeaponStats } from '../importStats';
 
-export const vanillaSpears: WeaponStats[] = [
+export const vsprsSpears: WeaponStats[] = [
     {
         id: 'vsprs:wooden_spear',
         attackSpeed: 1.2,
