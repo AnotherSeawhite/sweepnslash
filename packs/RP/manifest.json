@@ -1,11 +1,11 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Sweep 'N Slash v2.4.0 - Resource Pack",
+        "name": "Sweep 'N Slash v2.5.0 - Resource Pack",
         "description": "Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.",
         "uuid": "2e95c672-8edb-4706-9ef2-e97226bdffde",
         "pack_scope": "world",
-        "version": [2, 4, 0],
+        "version": [2, 5, 0],
         "min_engine_version": [1, 21, 130]
     },
     "modules": [
@@ -19,7 +19,7 @@
     "dependencies": [
         {
             "uuid": "29cfdcbb-2333-4334-89ec-1879e98c0f28",
-            "version": [2, 4, 0]
+            "version": [2, 5, 0]
         }
     ],
     "metadata": {

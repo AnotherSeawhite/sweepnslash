@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.4.0';
+const version = '2.5.0';
 const configCommand = 'sns:config';
 
 import {
@@ -47,8 +47,8 @@ world.afterEvents.worldLoad.subscribe(() => {
         console.log(
             `\n§3Sweep §f'N §6Slash §fhas been loaded!\nVersion: v${version}${
                 gametest ? '-gametest' : ''
-            }`
-        )
+            }`,
+        ),
     );
 
     if (world.getDynamicProperty('addon_toggle') == undefined) {
@@ -65,7 +65,7 @@ world.afterEvents.worldLoad.subscribe(() => {
 
     system.sendScriptEvent(
         'sweep-and-slash:toggle',
-        `${world.getDynamicProperty('addon_toggle')}`
+        `${world.getDynamicProperty('addon_toggle')}`,
     );
 });
 
@@ -149,14 +149,14 @@ function configForm(player) {
         if (!world.isHardcore)
             form.toggle(
                 { translate: 'sweepnslash.toggleaddon' },
-                { defaultValue: dp(world, { id: 'addon_toggle' }) }
+                { defaultValue: dp(world, { id: 'addon_toggle' }) },
             );
         form.toggle(
             { translate: 'sweepnslash.toggledebugmode' },
             {
                 defaultValue: dp(world, { id: 'debug_mode' }),
                 tooltip: { translate: 'sweepnslash.toggledebugmode.tooltip' },
-            }
+            },
         );
         form.divider();
     }
@@ -168,7 +168,7 @@ function configForm(player) {
             {
                 defaultValue: dp(world, { id: 'shieldBreakSpecial' }),
                 tooltip: { translate: 'sweepnslash.shieldbreakspecial.tooltip' },
-            }
+            },
         );
         form.toggle(
             { translate: 'sweepnslash.saturationhealing' },
@@ -183,7 +183,7 @@ function configForm(player) {
                         { text: world.gameRules.naturalRegeneration ? '§aON' : '§cOFF' },
                     ],
                 },
-            }
+            },
         );
         form.divider();
     }
@@ -194,11 +194,11 @@ function configForm(player) {
         {
             defaultValue: dp(player, { id: 'excludePetFromSweep' }) ?? false,
             tooltip: { translate: 'sweepnslash.excludepetfromsweep.tooltip' },
-        }
+        },
     );
     form.toggle(
         { translate: 'sweepnslash.tipmessagetoggle' },
-        { defaultValue: dp(player, { id: 'tipMessage' }) ?? false }
+        { defaultValue: dp(player, { id: 'tipMessage' }) ?? false },
     );
     form.divider();
     form.label({ translate: 'sweepnslash.personaltoggleheader' });
@@ -213,27 +213,27 @@ function configForm(player) {
         {
             defaultValueIndex: dp(player, { id: 'cooldownStyle' }),
             tooltip: { translate: 'sweepnslash.indicatorstyle.tooltip' },
-        }
+        },
     );
     form.toggle(
         { translate: 'sweepnslash.bowhitsound' },
-        { defaultValue: dp(player, { id: 'bowHitSound' }) ?? false }
+        { defaultValue: dp(player, { id: 'bowHitSound' }) ?? false },
     );
     form.toggle(
         { translate: 'sweepnslash.sweepparticles' },
-        { defaultValue: dp(player, { id: 'sweep' }) ?? false }
+        { defaultValue: dp(player, { id: 'sweep' }) ?? false },
     );
     form.toggle(
         { translate: 'sweepnslash.enchantedhitparticles' },
-        { defaultValue: dp(player, { id: 'enchantedHit' }) ?? false }
+        { defaultValue: dp(player, { id: 'enchantedHit' }) ?? false },
     );
     form.toggle(
         { translate: 'sweepnslash.damageindicatorparticles' },
-        { defaultValue: dp(player, { id: 'damageIndicator' }) ?? false }
+        { defaultValue: dp(player, { id: 'damageIndicator' }) ?? false },
     );
     form.toggle(
         { translate: 'sweepnslash.critparticles' },
-        { defaultValue: dp(player, { id: 'criticalHit' }) ?? false }
+        { defaultValue: dp(player, { id: 'criticalHit' }) ?? false },
     );
     form.divider();
     form.label({ translate: 'sweepnslash.sweepRGBtitle' });
@@ -315,7 +315,7 @@ function configForm(player) {
 
         system.sendScriptEvent(
             'sweep-and-slash:toggle',
-            `${world.getDynamicProperty('addon_toggle')}`
+            `${world.getDynamicProperty('addon_toggle')}`,
         );
     });
 }
@@ -449,8 +449,8 @@ system.runInterval(() => {
                 clampNumber(
                     saturation + (saturationEffect.amplifier + 1) * 2,
                     saturationComp?.effectiveMin,
-                    saturationComp?.effectiveMax
-                )
+                    saturationComp?.effectiveMax,
+                ),
             );
         }
         if (saturationHealing && isPeaceful && system.currentTick % 20 === 0) {
@@ -458,11 +458,11 @@ system.runInterval(() => {
                 clampNumber(
                     saturation + 1,
                     saturationComp?.effectiveMin,
-                    saturationComp?.effectiveMax
-                )
+                    saturationComp?.effectiveMax,
+                ),
             );
             health.setCurrentValue(
-                clampNumber(health.currentValue + 1, health.effectiveMin, health.effectiveMax)
+                clampNumber(health.currentValue + 1, health.effectiveMin, health.effectiveMax),
             );
         }
 
@@ -497,8 +497,8 @@ system.runInterval(() => {
                     clampNumber(
                         health.currentValue + healAmount,
                         health.effectiveMin,
-                        health.effectiveMax
-                    )
+                        health.effectiveMax,
+                    ),
                 );
                 status.foodTickTimer = 0;
             }
@@ -563,7 +563,7 @@ system.runInterval(() => {
                               fadeInDuration: 0,
                               fadeOutDuration: 0,
                               stayDuration: 0,
-                          }
+                          },
                       )
                     : player.onScreenDisplay.setTitle(' ', {
                           fadeInDuration: 0,
@@ -598,7 +598,7 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message, sourceEntity: pl
     if (id === 'sweep-and-slash:toggle_check') {
         system.sendScriptEvent(
             'sweep-and-slash:toggle',
-            `${world.getDynamicProperty('addon_toggle')}`
+            `${world.getDynamicProperty('addon_toggle')}`,
         );
         return;
     }
