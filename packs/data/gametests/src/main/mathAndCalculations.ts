@@ -306,7 +306,7 @@ Entity.prototype.applyImpulseAsKnockback = function (vector3) {
                 x: vel.x + directionX * horizontalStrength,
                 z: vel.z + directionZ * horizontalStrength,
             },
-            verticalStrength + (this.isOnGround ? 0 : vel.y)
+            verticalStrength + (this.isOnGround ? 0 : vel.y),
         );
     } catch (e) {
         const debugMode = world.getDynamicProperty('debug_mode');
@@ -320,7 +320,7 @@ Entity.prototype.spawnSelectiveParticle = function (
     location,
     dynamicProperty,
     offset = { x: 0, y: 0, z: 0 },
-    molangVariables: MolangVariableMap
+    molangVariables: MolangVariableMap,
 ) {
     const debugMode = world.getDynamicProperty('debug_mode');
 
@@ -349,7 +349,7 @@ Entity.prototype.spawnSelectiveParticle = function (
 Entity.prototype.playSelectiveSound = function (
     soundId,
     dynamicProperty,
-    soundOptions: PlayerSoundOptions
+    soundOptions: PlayerSoundOptions,
 ) {
     const debugMode = world.getDynamicProperty('debug_mode');
 
@@ -379,7 +379,7 @@ Entity.prototype.healthParticle = function (damage) {
         loc,
         'damageIndicator',
         undefined,
-        map
+        map,
     );
 };
 
@@ -411,7 +411,7 @@ export function getCooldownTime(player: Player, baseAttackSpeed = 4) {
     // Final speed, with minimum safeguard (never go below 0.000005)
     const adjustedSpeed = Math.max(
         baseAttackSpeed * hasteMultiplier * miningFatigueMultiplier,
-        0.000005
+        0.000005,
     );
     const ticks = 20 / adjustedSpeed;
     const baseSpeed = 20 / baseAttackSpeed;
@@ -474,10 +474,10 @@ Entity.prototype.getItemStats = function (itemStack) {
     const statsToReturn = Object.keys(mergedStats).length
         ? mergedStats
         : jsStats && Object.keys(jsStats).length
-        ? jsStats
-        : Object.keys(jsonStats).length
-        ? jsonStats
-        : undefined;
+          ? jsStats
+          : Object.keys(jsonStats).length
+            ? jsonStats
+            : undefined;
 
     return { equippableComp, item, stats: statsToReturn };
 };
@@ -560,26 +560,26 @@ Object.defineProperty(Entity.prototype, 'isRiding', {
     },
 });
 
-Object.defineProperty(Entity.prototype, 'isUnderground', {
-    get: function () {
-        const { dimension, location } = this;
-        const { min, max } = dimension.heightRange;
+// Object.defineProperty(Entity.prototype, 'isUnderground', {
+//     get: function () {
+//         const { dimension, location } = this;
+//         const { min, max } = dimension.heightRange;
 
-        if (location.y < min || location.y > max) return false;
+//         if (location.y < min || location.y > max) return false;
 
-        const blocks = dimension.getBlockFromRay(
-            location,
-            { x: 0, y: 1, z: 0 },
-            {
-                maxDistance: max - location.y,
-                includeLiquidBlocks: true,
-                includePassableBlocks: false,
-            }
-        );
+//         const blocks = dimension.getBlockFromRay(
+//             location,
+//             { x: 0, y: 1, z: 0 },
+//             {
+//                 maxDistance: max - location.y,
+//                 includeLiquidBlocks: true,
+//                 includePassableBlocks: false,
+//             },
+//         );
 
-        if (blocks) return true;
-    },
-});
+//         if (blocks) return true;
+//     },
+// });
 
 Object.defineProperty(Entity.prototype, 'isFasterThanWalk', {
     get: function () {
@@ -650,7 +650,7 @@ export class Check {
         let durabilityModifier = stats?.isWeapon || item?.hasFlag('is_weapon') ? 1 : 2;
         durabilityComp.damage = Math.min(
             durabilityComp.damage + durabilityModifier,
-            durabilityComp.maxDurability
+            durabilityComp.maxDurability,
         );
 
         const maxDurability = durabilityComp.maxDurability;
@@ -709,7 +709,7 @@ export class Check {
         player,
         target,
         stats,
-        { damage, noEffect, forced } = {}
+        { damage, noEffect, forced } = {},
     ) {
         if (
             this.inanimate(target, {
@@ -745,7 +745,7 @@ export class Check {
         target,
         stats,
         { fireAspect, damage, level = 1, forced, location, scale = 3 } = {},
-        { particle = 'sweepnslash:sweep_particle', offset = { x: 0, y: 0, z: 0 }, map } = {}
+        { particle = 'sweepnslash:sweep_particle', offset = { x: 0, y: 0, z: 0 }, map } = {},
     ) {
         const debugMode = world.getDynamicProperty('debug_mode');
         const pvp = world.gameRules.pvp;
@@ -811,7 +811,7 @@ export class Check {
                 entity !== player.getRidingOn() &&
                 (!player.getDynamicProperty('excludePetFromSweep') ||
                     (player.getDynamicProperty('excludePetFromSweep') &&
-                        !entity.isTamed({ excludeTypes: ['minecraft:trader_llama'] })))
+                        !entity.isTamed({ excludeTypes: ['minecraft:trader_llama'] }))),
         );
 
         if (damage == undefined) return { swept: false, commonEntities };
@@ -849,7 +849,7 @@ export class Check {
             location || particleLocation,
             'sweep',
             offset,
-            map
+            map,
         );
 
         commonEntities.forEach((e) => {
@@ -946,7 +946,7 @@ export class Check {
         timeSinceLastAttack,
         baseDamage,
         attackSpeed,
-        { damageTest = false, critAttack, critMul, cancel, attackSpeedTicks } = {}
+        { damageTest = false, critAttack, critMul, cancel, attackSpeedTicks } = {},
     ) {
         let T = getCooldownTime(player, attackSpeed).ticks;
         if (damageTest === true && attackSpeedTicks) T = attackSpeedTicks;
@@ -956,7 +956,7 @@ export class Check {
             this.criticalHit(currentTick, player, target, stats, {
                 forced: critAttack,
             }) && canTakeCrits
-                ? critMul ?? 1.5
+                ? (critMul ?? 1.5)
                 : 1;
 
         const isCustomCooldown = item?.hasFlag('custom_cooldown');
@@ -997,9 +997,13 @@ export class Check {
         }
 
         const isInRain =
-            !target.isUnderground &&
+            // !target.isUnderground &&
             target.dimension.getWeather() !== 'Clear' &&
-            !biomeArray.includes(target.dimension.getBiome(target.location)?.id);
+            !biomeArray.includes(target.dimension.getBiome(target.location)?.id) &&
+            target.dimension
+                .getBlockAbove(target?.location, { includePassableBlocks: false })
+                ?.getComponent('precipitation_interactions')
+                ?.obstructsRain() === (false || undefined);
 
         if (impalingLevel > 0 && (target.isInWater || isInRain)) {
             impalingLevel = impalingLevel * 2.5;
@@ -1035,7 +1039,7 @@ export class Check {
         const damage =
             Math.max(
                 0,
-                (baseDamage + (strengthModifier - weaknessModifier)) * crit * multiplier
+                (baseDamage + (strengthModifier - weaknessModifier)) * crit * multiplier,
             ) + enchantDamage;
         const rawDamage = baseDamage * crit;
 
@@ -1049,7 +1053,7 @@ export class Check {
         target,
         item,
         stats,
-        { damage, critAttack, critMul, cancel }
+        { damage, critAttack, critMul, cancel },
     ) {
         const status = player.getStatus();
         const attackSpeed = stats?.attackSpeed || 4;
@@ -1066,7 +1070,7 @@ export class Check {
             timeSinceLastAttack,
             baseDamage,
             attackSpeed,
-            { critAttack, critMul, cancel }
+            { critAttack, critMul, cancel },
         );
 
         const final = Math.max(0, calculateDamage.damage);
@@ -1131,14 +1135,14 @@ export class Check {
                 t,
                 baseDamage,
                 attackSpeed,
-                { damageTest: true, attackSpeedTicks }
+                { damageTest: true, attackSpeedTicks },
             ).damage;
             damageLog.push(
                 `§f[ §a${t} (${Math.round(
-                    (t * 100) / attackSpeedTicks
+                    (t * 100) / attackSpeedTicks,
                 )}%) §f| §c${damage.toFixed(2)} §f| §e${(damage / (t / 20)).toFixed(2)} (${(
                     damage / Math.max(0.5, t / 20)
-                ).toFixed(2)}) §f]`
+                ).toFixed(2)}) §f]`,
             );
         }
 
@@ -1147,8 +1151,8 @@ export class Check {
                 `${item?.typeId || 'hand'} ${
                     stats || item == undefined ? '' : '§c(Weapon stats not found)§f'
                 }\n[ §aTicks §f| §cDamage §f| §eDPS (with iframes) §f]\n§e${damageLog.join(
-                    '\n'
-                )}`
+                    '\n',
+                )}`,
             );
     }
 }
