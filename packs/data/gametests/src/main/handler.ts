@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.5.0';
+const version = '2.6.0';
 const configCommand = 'sns:config';
 
 import {
