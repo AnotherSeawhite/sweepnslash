@@ -80,6 +80,23 @@
                     }
                 ]
             },
+            "pack-gametest": {
+                "export": {
+                    "readOnly": false,
+                    "target": "none"
+                },
+                "filters": [
+                    {
+                        "profile": "release-gametest"
+                    },
+                    {
+                        "filter": "packer",
+                        "settings": {
+                            "output": "SweepNSlash-gametest.mcaddon"
+                        }
+                    }
+                ]
+            },
             "release": {
                 "export": {
                     "readOnly": false,
