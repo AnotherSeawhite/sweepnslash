@@ -110,7 +110,7 @@ export class CombatManager {
             'minecraft:shield',
             player.getItemCooldown('minecraft:shield') || 1,
         );
-        status.lastShieldTime = currentTick;
+        player.setLastShieldTime(currentTick);
         const shieldBlock = Check.shieldBlock(currentTick, player, target, stats, {
             disable: true,
         });
@@ -288,7 +288,7 @@ export class CombatManager {
         }
 
         // Update last attack time for cooldown
-        if (dmg.final >= 0) status.lastAttackTime = currentTick;
+        if (dmg.final >= 0) player.setAttackCooldown(currentTick);
 
         // Run script effect if exists
         if (stats?.script) {

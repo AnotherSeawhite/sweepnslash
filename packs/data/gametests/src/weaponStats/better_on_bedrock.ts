@@ -2,6 +2,7 @@
 
 import { MolangVariableMap, TicksPerSecond } from '@minecraft/server';
 import { WeaponStats } from '../importStats';
+import { isTeam } from '../main/mathAndCalculations';
 
 export const betterOnBedrock: WeaponStats[] = [
     {
@@ -74,9 +75,10 @@ export const betterOnBedrock: WeaponStats[] = [
                 sweepMap: map,
             };
         },
-        script: ({ world, sweptEntities }) => {
+        script: ({ player, world, sweptEntities }) => {
             const pvp = world.gameRules.pvp;
             sweptEntities.forEach((e) => {
+                if (isTeam(player, e)) return;
                 if (e instanceof Player && !pvp) return;
                 try {
                     const fireImmune = e?.getComponent('fire_immune')?.isValid;

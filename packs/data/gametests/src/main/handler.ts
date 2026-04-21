@@ -1,5 +1,5 @@
 // This file is used to handle crucial functions.
-const version = '2.6.0';
+const version = '2.7.0';
 const configCommand = 'sns:config';
 
 import {
@@ -20,6 +20,7 @@ import {
     Check,
     getCooldownTime,
     inventoryAddLore,
+    isTeam,
     AttackCooldownManager,
 } from './mathAndCalculations.js';
 import { clampNumber } from './minecraft-math.js';
@@ -362,7 +363,7 @@ system.runInterval(() => {
         // If the player has shield up, run delay check
         // Crucial for making sure the attacker does not get knocked back
         if (!(Check.shield(player) && !status.holdInteract)) {
-            status.lastShieldTime = currentTick;
+            player.setLastShieldTime(currentTick);
         }
         const shieldTime = currentTick - status.lastShieldTime;
         status.shieldValid = shieldTime >= 5 || shieldTime == 1;
@@ -378,7 +379,7 @@ system.runInterval(() => {
                 const cooldownComp = item.getComponent('cooldown');
                 cooldownComp?.startCooldown(player);
             }
-            player.runAttackCooldown(currentTick);
+            player.setAttackCooldown(currentTick);
         }
 
         status.lastSelectedSlot = player.selectedSlotIndex;
@@ -622,7 +623,7 @@ world.afterEvents.playerSwingStart.subscribe(({ player, swingSource }) => {
 
     const shieldCooldown = player.getItemCooldown('minecraft:shield');
     player.startItemCooldown('minecraft:shield', shieldCooldown ? shieldCooldown : 5);
-    status.lastShieldTime = system.currentTick;
+    player.setLastShieldTime(system.currentTick);
 
     // if (status.leftClick == true) {
     //     status.leftClick = false;
@@ -679,8 +680,8 @@ world.afterEvents.entityHitBlock.subscribe(({ damagingEntity: player }) => {
     if (player.getGameMode() === GameMode.Creative) return;
 
     const status = player.getStatus();
-    status.lastShieldTime = system.currentTick;
-    player.runAttackCooldown(system.currentTick);
+    player.setLastShieldTime(system.currentTick);
+    player.setAttackCooldown(system.currentTick);
     //status.leftClick = true;
 });
 
@@ -694,9 +695,12 @@ world.afterEvents.projectileHitEntity.subscribe((event) => {
     if (!player || !target) return;
     if (world.getDynamicProperty('addon_toggle') == false) return;
 
+    if (isTeam(player, target)) return;
+
     const configCheck = player.getDynamicProperty('bowHitSound') == true;
     if (
         configCheck &&
+        player instanceof Player &&
         target instanceof Player &&
         player !== target &&
         projectile.typeId === 'minecraft:arrow'
@@ -724,7 +728,7 @@ world.afterEvents.entitySpawn.subscribe(({ cause, entity }) => {
 
 world.afterEvents.playerSpawn.subscribe(({ player }) => {
     const status = player.getStatus();
-    player.runAttackCooldown(system.currentTick);
+    player.setAttackCooldown(system.currentTick);
 });
 
 world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity: target }) => {
@@ -743,16 +747,8 @@ world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity
 
     status.leftClick = true;
 
-    function isTeam(playerA, playerB) {
-        const prefix = 'ae_je:team:';
-        const tagsA = playerA.getTags().filter((tag) => tag.startsWith(prefix));
-        const tagsB = playerB.getTags().filter((tag) => tag.startsWith(prefix));
-
-        return tagsA.some((tag) => tagsB.includes(tag));
-    }
-
     if (isTeam(player, target)) {
-        status.lastAttackTime = currentTick;
+        //status.lastAttackTime = currentTick;
         return;
     }
 
@@ -807,5 +803,19 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
             damage: damage,
             time: currentTick,
         };
+    }
+});
+
+world.beforeEvents.entityHurt.subscribe((ev) => {
+    if (world.getDynamicProperty('addon_toggle') == false) return;
+
+    const { damageSource, hurtEntity } = ev;
+    const damagingEntity = damageSource?.damagingEntity;
+
+    if (!damagingEntity || !hurtEntity?.isValid) return;
+
+    if (isTeam(damagingEntity, hurtEntity)) {
+        ev.cancel = true;
+        return;
     }
 });

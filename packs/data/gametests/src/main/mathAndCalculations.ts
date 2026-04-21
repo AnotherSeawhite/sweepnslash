@@ -103,7 +103,7 @@ function calculateAngle(v1, v2) {
  * @param {number} num / Represents the chance%
  * @returns {boolean} If the roll is larger than the number specified, return true
  */
-export function rng(num) {
+export function rng(num: number) {
     let min = 0;
     let max = 100;
     const math = Math.floor(Math.random() * (max - min) + min);
@@ -419,9 +419,22 @@ export function getCooldownTime(player: Player, baseAttackSpeed = 4) {
     return { ticks, baseSpeed };
 }
 
-Player.prototype.runAttackCooldown = function (currentTick: number) {
+export function isTeam(playerA: Entity, playerB: Entity) {
+    const prefix = 'ae_je:team:';
+    const tagsA = playerA.getTags().filter((tag) => tag.startsWith(prefix));
+    const tagsB = playerB.getTags().filter((tag) => tag.startsWith(prefix));
+
+    return tagsA.some((tag) => tagsB.includes(tag));
+}
+
+Player.prototype.setAttackCooldown = function (currentTick: number) {
     const status = this.getStatus();
     status.lastAttackTime = currentTick;
+};
+
+Player.prototype.setLastShieldTime = function (currentTick: number) {
+    const status = this.getStatus();
+    status.lastShieldTime = currentTick;
 };
 
 // Return the stats of the weapon from player's weapon.
@@ -640,6 +653,7 @@ export class Check {
     static durability(player, equippableComp, item, stats) {
         if (player.getGameMode() === GameMode.Creative) return;
         const durabilityComp = item?.getComponent('durability');
+        if (durabilityComp?.unbreakable === true) return;
         if (!durabilityComp || !stats) return;
 
         const unbreakingLevel = this.enchantLevel(item, 'unbreaking');
@@ -853,6 +867,7 @@ export class Check {
         );
 
         commonEntities.forEach((e) => {
+            if (isTeam(player, e)) return;
             let dmgType = this.shieldBlock(currentTick, player, e, stats, {
                 disable: true,
             })
@@ -1213,6 +1228,6 @@ export class AttackCooldownManager {
     }
 
     private applyMiss() {
-        this.player.runAttackCooldown(system.currentTick);
+        this.player.setAttackCooldown(system.currentTick);
     }
 }
