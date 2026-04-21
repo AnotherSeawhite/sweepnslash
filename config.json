@@ -94,6 +94,20 @@
                     }
                 ]
             },
+            "release-gametest": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "profile": "base"
+                    },
+                    {
+                        "profile": "scripts-gametest"
+                    }
+                ]
+            },
             "scripts": {
                 "export": {
                     "readOnly": false,
@@ -117,6 +131,30 @@
                     }
                 ]
             },
+            "scripts-gametest": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "filter": "gametests",
+                        "settings": {
+                            "buildOptions": {
+                                "dropLabels": ["DEBUG", "LOGGING"],
+                                "bundle": true,
+                                "minify": true
+                            },
+                            "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
+                            "modules": [
+                                "@minecraft/server@2.7.0-beta",
+                                "@minecraft/server-gametest@1.0.0-beta",
+                                "@minecraft/server-ui@2.0.0"
+                            ]
+                        }
+                    }
+                ]
+            },
             "scripts-dev": {
                 "export": {
                     "readOnly": false,
@@ -134,6 +172,7 @@
                             "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
                             "modules": [
                                 "@minecraft/server@2.7.0-beta",
+                                "@minecraft/server-gametest@1.0.0-beta",
                                 "@minecraft/server-ui@2.0.0"
                             ]
                         }
