@@ -1,7 +1,6 @@
-// packs/data/gametests/src/stats/item.ts
 import { Entity, EquipmentSlot, ItemStack } from '@minecraft/server';
-import { WeaponStats } from '../importStats.js';
-import { weaponStats } from './loader.js';
+import { WeaponStats } from '../importStats.ts';
+import { weaponStats } from './loader.ts';
 
 const keyMap: Record<string, keyof WeaponStats> = {
     damage: 'damage',
@@ -47,11 +46,13 @@ export function getItemStats(
         }
     }
 
-    const statsToReturn =
-        Object.keys(mergedStats).length ? (mergedStats as WeaponStats)
-        : jsStats && Object.keys(jsStats).length ? jsStats
-        : Object.keys(jsonStats).length ? (jsonStats as WeaponStats)
-        : undefined;
+    const statsToReturn = Object.keys(mergedStats).length
+        ? (mergedStats as WeaponStats)
+        : jsStats && Object.keys(jsStats).length
+          ? jsStats
+          : Object.keys(jsonStats).length
+            ? (jsonStats as WeaponStats)
+            : undefined;
 
     return { equippableComp, item, stats: statsToReturn };
 }

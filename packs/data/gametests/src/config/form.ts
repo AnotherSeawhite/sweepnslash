@@ -1,4 +1,3 @@
-// packs/data/gametests/src/config/form.ts
 import {
     CustomCommandSource,
     CustomCommandStatus,
@@ -8,8 +7,8 @@ import {
     world,
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
-import { clampNumber } from '../minecraft-math.js';
-import { Sounds } from '../Files.js';
+import { clampNumber } from '../minecraft-math.ts';
+import { Sounds } from '../Files.d';
 
 const configCommand = 'sns:config';
 
@@ -173,7 +172,11 @@ export function configForm(player: Player): void {
         }
 
         const properties = [
-            { object: world, dynamicProperty: 'addon_toggle', condition: tag && !world.isHardcore },
+            {
+                object: world,
+                dynamicProperty: 'addon_toggle',
+                condition: tag && !world.isHardcore,
+            },
             { object: world, dynamicProperty: 'debug_mode', condition: tag },
             { object: world, dynamicProperty: 'shieldBreakSpecial', condition: op },
             { object: world, dynamicProperty: 'saturationHealing', condition: op },
@@ -192,7 +195,10 @@ export function configForm(player: Player): void {
 
         properties.forEach(valuePush);
 
-        system.sendScriptEvent('sweep-and-slash:toggle', `${world.getDynamicProperty('addon_toggle')}`);
+        system.sendScriptEvent(
+            'sweep-and-slash:toggle',
+            `${world.getDynamicProperty('addon_toggle')}`,
+        );
     });
 }
 

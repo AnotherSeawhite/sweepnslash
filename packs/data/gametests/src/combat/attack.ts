@@ -1,21 +1,26 @@
-// packs/data/gametests/src/combat/attack.ts
 import { EntityDamageCause, GameMode, Player, world } from '@minecraft/server';
 import * as mc from '@minecraft/server';
 import { system } from '@minecraft/server';
-import { debug } from '../shared/math.js';
-import { getStatus, setAttackCooldown, setLastShieldTime } from '../shared/status.js';
-import { isTeam } from '../shared/team.js';
-import { getItemStats, hasItemFlag, itemHasFlag } from '../stats/item.js';
-import { getEntityStats } from '../stats/entity.js';
-import { getHunger, getSaturation, getExhaustion, setExhaustion } from '../food/accessors.js';
-import { spawnSelectiveParticle } from '../ui/particles.js';
-import { applyAttackKnockback } from './knockback.js';
-import { criticalHit, sprintKnockback as sprintKnockbackCheck, specialValid, inanimate, enchantLevel, durability } from './checks.js';
-import { finalDamageCalculation, getCooldownTime } from './damage.js';
-import { sweep } from './sweep.js';
-import { shieldBlock } from './shields.js';
-import { isFasterThanWalk } from './checks.js';
-import { Sounds, Particles } from '../Files.js';
+import { debug } from '../shared/math.ts';
+import { getStatus, setAttackCooldown, setLastShieldTime } from '../shared/status.ts';
+import { isTeam } from '../shared/team.ts';
+import { getItemStats, hasItemFlag } from '../stats/item.ts';
+import { getEntityStats } from '../stats/entity.ts';
+import { getHunger, getSaturation, getExhaustion, setExhaustion } from '../food/accessors.ts';
+import { spawnSelectiveParticle } from '../ui/particles.ts';
+import { applyAttackKnockback } from './knockback.ts';
+import {
+    criticalHit,
+    sprintKnockback as sprintKnockbackCheck,
+    specialValid,
+    inanimate,
+    enchantLevel,
+    durability,
+} from './checks.ts';
+import { finalDamageCalculation, getCooldownTime } from './damage.ts';
+import { sweep } from './sweep.ts';
+import { shieldBlock } from './shields.ts';
+import { Sounds } from '../Files.d';
 
 export class CombatManager {
     static attack(eventData: { player: Player; target: mc.Entity; currentTick: number }) {
@@ -41,7 +46,9 @@ export class CombatManager {
         let hit = false;
         let dmg = baseDamage;
         let crit = criticalHit(currentTick, player, target, stats);
-        let sprintKB = sprintKnockbackCheck(currentTick, player, target, stats, { noEffect: true });
+        let sprintKB = sprintKnockbackCheck(currentTick, player, target, stats, {
+            noEffect: true,
+        });
         let swp = sweep(currentTick, player, target, stats);
         const specialCheck = specialValid(currentTick, player, stats);
 
@@ -63,17 +70,28 @@ export class CombatManager {
 
         const beforeEffect =
             stats?.beforeEffect?.({
-                mc, system, world, player, target, item: item!,
-                dmg, specialCheck,
+                mc,
+                system,
+                world,
+                player,
+                target,
+                item: item!,
+                dmg,
+                specialCheck,
                 sweptEntities: swp?.commonEntities,
-                crit, sprintKnockback: sprintKB, cooldown,
-                iframes: !timeValid, utils,
+                crit,
+                sprintKnockback: sprintKB,
+                cooldown,
+                iframes: !timeValid,
+                utils,
             }) || {};
 
         regularKBDistance = (beforeEffect as any)?.regularKnockback ?? regularKBDistance;
         enchantedKBDistance = (beforeEffect as any)?.enchantedKnockback ?? enchantedKBDistance;
-        regularVerticalKBHeight = (beforeEffect as any)?.regularVerticalKnockback ?? regularVerticalKBHeight;
-        enchantedVerticalKBHeight = (beforeEffect as any)?.enchantedVerticalKnockback ?? enchantedVerticalKBHeight;
+        regularVerticalKBHeight =
+            (beforeEffect as any)?.regularVerticalKnockback ?? regularVerticalKBHeight;
+        enchantedVerticalKBHeight =
+            (beforeEffect as any)?.enchantedVerticalKnockback ?? enchantedVerticalKBHeight;
 
         const dmgResult = finalDamageCalculation(currentTick, player, target, item, stats, {
             damage: (beforeEffect as any)?.dmg,
@@ -99,15 +117,16 @@ export class CombatManager {
 
         const fireAspect = enchantLevel(item, 'fire_aspect');
         const inanimateTarget = inanimate(target, { excludeTypes: ['minecraft:armor_stand'] });
-        const knockback =
-            (enchantLevel(item, 'knockback') ?? 0) + (sprintKB ? 1 : 0);
+        const knockback = (enchantLevel(item, 'knockback') ?? 0) + (sprintKB ? 1 : 0);
 
         setLastShieldTime(player, currentTick);
         player.startItemCooldown(
             'minecraft:shield',
             player.getItemCooldown('minecraft:shield') || 1,
         );
-        const shieldBlocked = shieldBlock(currentTick, player, target, stats, { disable: true });
+        const shieldBlocked = shieldBlock(currentTick, player, target, stats, {
+            disable: true,
+        });
         const dmgType = shieldBlocked
             ? EntityDamageCause.entityExplosion
             : EntityDamageCause.entityAttack;
@@ -129,12 +148,18 @@ export class CombatManager {
             const length = Math.sqrt(dirX ** 2 + dirZ ** 2) || 1;
             const knockbackY = target.isOnGround
                 ? knockbackValid
-                    ? enchantedVerticalKBHeight * (targetStats?.enchantedKnockbackTakeMultiplier ?? 1)
-                    : regularVerticalKBHeight * (targetStats?.regularKnockbackTakeMultiplier ?? 1)
+                    ? enchantedVerticalKBHeight *
+                      (targetStats?.enchantedKnockbackTakeMultiplier ?? 1)
+                    : regularVerticalKBHeight *
+                      (targetStats?.regularKnockbackTakeMultiplier ?? 1)
                 : 0;
             applyAttackKnockback(
                 target,
-                { x: tLoc.x + (dirX / length) * knockbackX, y: tLoc.y, z: tLoc.z + (dirZ / length) * knockbackX },
+                {
+                    x: tLoc.x + (dirX / length) * knockbackX,
+                    y: tLoc.y,
+                    z: tLoc.z + (dirZ / length) * knockbackX,
+                },
                 knockbackY,
             );
         };
@@ -157,13 +182,17 @@ export class CombatManager {
                 });
             }
             if (critHit) {
-                sounds.push({ id: (beforeEffect as any)?.critSound ?? Sounds.EntityPlayerAttackCrit });
+                sounds.push({
+                    id: (beforeEffect as any)?.critSound ?? Sounds.EntityPlayerAttackCrit,
+                });
             }
             for (const s of sounds) {
                 player.dimension.playSound(s.id, loc2, s.soundOptions);
             }
             if (sprintKB) {
-                player.dimension.playSound(Sounds.EntityPlayerAttackKnockback, loc2, { volume: 0.7 });
+                player.dimension.playSound(Sounds.EntityPlayerAttackKnockback, loc2, {
+                    volume: 0.7,
+                });
             }
         };
 
@@ -171,14 +200,20 @@ export class CombatManager {
         (target as any).__playerHit = true;
 
         const iframes =
-            (timeValid || (dmgResult.raw > lastAttack.rawDamage && dmgResult.final > lastAttack.damage)) &&
+            (timeValid ||
+                (dmgResult.raw > lastAttack.rawDamage &&
+                    dmgResult.final > lastAttack.damage)) &&
             !(target instanceof Player && target.getGameMode() == GameMode.Creative);
 
         if (iframes) {
             swp = sweep(
-                currentTick, player, target, stats,
+                currentTick,
+                player,
+                target,
+                stats,
                 {
-                    fireAspect, damage: dmgResult.final,
+                    fireAspect,
+                    damage: dmgResult.final,
                     level: (beforeEffect as any)?.sweepLevel,
                     forced: (beforeEffect as any)?.sweep,
                     location: (beforeEffect as any)?.sweepLocation,
@@ -195,7 +230,11 @@ export class CombatManager {
                 if (crit) {
                     const tHead = target.getHeadLocation();
                     const tLoc2 = target.location;
-                    const entityOffset = getEntityStats(target)?.centerOffset ?? { x: 0, y: 0, z: 0 };
+                    const entityOffset = getEntityStats(target)?.centerOffset ?? {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    };
                     const center = {
                         x: tLoc2.x + entityOffset.x,
                         y: (tLoc2.y + tHead.y) / 2 + 1 + entityOffset.y,
@@ -204,7 +243,8 @@ export class CombatManager {
                     spawnSelectiveParticle(
                         target,
                         (beforeEffect as any)?.critParticle ?? 'minecraft:critical_hit_emitter',
-                        center, 'criticalHit',
+                        center,
+                        'criticalHit',
                         (beforeEffect as any)?.critOffset ?? { x: 0, y: 0, z: 0 },
                         (beforeEffect as any)?.critMap,
                     );
@@ -212,14 +252,21 @@ export class CombatManager {
                 if (dmgResult.enchantedHit) {
                     const tHead = target.getHeadLocation();
                     const tLoc2 = target.location;
-                    const entityOffset = getEntityStats(target)?.centerOffset ?? { x: 0, y: 0, z: 0 };
+                    const entityOffset = getEntityStats(target)?.centerOffset ?? {
+                        x: 0,
+                        y: 0,
+                        z: 0,
+                    };
                     const center = {
                         x: tLoc2.x + entityOffset.x,
                         y: (tLoc2.y + tHead.y) / 2 + 1 + entityOffset.y,
                         z: tLoc2.z + entityOffset.z,
                     };
                     spawnSelectiveParticle(
-                        target, 'sweepnslash:magic_critical_hit_emitter', center, 'enchantedHit',
+                        target,
+                        'sweepnslash:magic_critical_hit_emitter',
+                        center,
+                        'enchantedHit',
                     );
                 }
                 hitSound(specialCheck, swp?.swept, crit, loc);
@@ -228,7 +275,10 @@ export class CombatManager {
             const damageValid =
                 status.mace === true && player.isFalling
                     ? false
-                    : target.applyDamage(dmgResult.final, { cause: dmgType, damagingEntity: player });
+                    : target.applyDamage(dmgResult.final, {
+                          cause: dmgType,
+                          damagingEntity: player,
+                      });
             hit = damageValid;
 
             loc = player.location;
@@ -239,7 +289,10 @@ export class CombatManager {
                     const exhaustion = getExhaustion(player) ?? 0;
                     setExhaustion(player, exhaustion + 0.1);
                 }
-                if (!(beforeEffect as any)?.cancelDurability && targetStats?.damageItem !== false)
+                if (
+                    !(beforeEffect as any)?.cancelDurability &&
+                    targetStats?.damageItem !== false
+                )
                     durability(player, equippableComp, item!, stats);
             }
 
@@ -252,7 +305,8 @@ export class CombatManager {
                         target.applyKnockback({ x: vel.x, z: vel.z }, vel.y);
                     }
                 } catch (e) {
-                    if (debugMode) debug('Error during knockback: ' + e + ', knockback skipped');
+                    if (debugMode)
+                        debug('Error during knockback: ' + e + ', knockback skipped');
                 }
             }
         } else {
@@ -260,7 +314,9 @@ export class CombatManager {
         }
 
         if (debugMode) {
-            debug(`${player.name}'s §pDamage result:\n§f- Attacked with:§e ${item?.typeId ?? 'hand'} ${stats || item == undefined ? '' : '§c(Weapon stats not found)'}\n§f- Attempted damage: §e${dmgResult.final.toFixed(2)} (${(cooldown * 100).toFixed(0)}%) ${specialCheck ? '§a+' : ''} ${iframes ? '' : '(iframes immunity)'}\n§f- Ticks since last attack: §e${currentTick - status.lastAttackTime}`);
+            debug(
+                `${player.name}'s §pDamage result:\n§f- Attacked with:§e ${item?.typeId ?? 'hand'} ${stats || item == undefined ? '' : '§c(Weapon stats not found)'}\n§f- Attempted damage: §e${dmgResult.final.toFixed(2)} (${(cooldown * 100).toFixed(0)}%) ${specialCheck ? '§a+' : ''} ${iframes ? '' : '(iframes immunity)'}\n§f- Ticks since last attack: §e${currentTick - status.lastAttackTime}`,
+            );
         }
 
         if (dmgResult.final >= 0) setAttackCooldown(player, currentTick);
@@ -268,11 +324,22 @@ export class CombatManager {
         if (stats?.script) {
             system.run(() => {
                 stats!.script!({
-                    mc, system, world, player, target, item: item!,
+                    mc,
+                    system,
+                    world,
+                    player,
+                    target,
+                    item: item!,
                     sweptEntities: swp?.commonEntities,
-                    dmg: dmgResult.final, hit, shieldBlock: shieldBlocked,
-                    specialCheck, crit, sprintKnockback: sprintKB,
-                    inanimate: inanimateTarget, cooldown, utils,
+                    dmg: dmgResult.final,
+                    hit,
+                    shieldBlock: shieldBlocked,
+                    specialCheck,
+                    crit,
+                    sprintKnockback: sprintKB,
+                    inanimate: inanimateTarget,
+                    cooldown,
+                    utils,
                 });
             });
         }

@@ -1,11 +1,10 @@
-// packs/data/gametests/src/ui/indicator.ts
 import { Player, system, world } from '@minecraft/server';
-import { clampNumber } from '../minecraft-math.js';
-import { getStatus, setLastShieldTime } from '../shared/status.js';
-import { getItemStats, hasItemFlag, itemHasFlag } from '../stats/item.js';
-import { getCooldownTime } from '../combat/damage.js';
-import { view, specialValid } from '../combat/checks.js';
-import { shield } from '../combat/shields.js';
+import { clampNumber } from '../minecraft-math.ts';
+import { getStatus, setLastShieldTime } from '../shared/status.ts';
+import { getItemStats, hasItemFlag, itemHasFlag } from '../stats/item.ts';
+import { getCooldownTime } from '../combat/damage.ts';
+import { view, specialValid } from '../combat/checks.ts';
+import { shield } from '../combat/shields.ts';
 
 export function tickIndicator(player: Player, currentTick: number, addonToggle: boolean): void {
     const status = getStatus(player);
@@ -118,7 +117,9 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
     if (!addonToggle || barStyle === 3) {
         if (status.showBar) {
             player.onScreenDisplay.setTitle('_sweepnslash:non', {
-                fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 0,
+                fadeInDuration: 0,
+                fadeOutDuration: 0,
+                stayDuration: 0,
             });
             status.showBar = false;
         }
@@ -134,13 +135,17 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
                       { fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 0 },
                   )
                 : player.onScreenDisplay.setTitle(' ', {
-                      fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 10,
+                      fadeInDuration: 0,
+                      fadeOutDuration: 0,
+                      stayDuration: 10,
                       subtitle: `${cooldownSubtitle}`,
                   });
             status.attackReady = false;
         } else if (curCD <= 0 && status.attackReady == false) {
             player.onScreenDisplay.setTitle('_sweepnslash:non', {
-                fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 0,
+                fadeInDuration: 0,
+                fadeOutDuration: 0,
+                stayDuration: 0,
             });
             status.attackReady = true;
         }

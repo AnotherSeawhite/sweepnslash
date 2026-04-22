@@ -1,8 +1,13 @@
-// packs/data/gametests/src/food/index.ts
 import { GameMode, Player } from '@minecraft/server';
-import { clampNumber } from '../minecraft-math.js';
-import { getStatus } from '../shared/status.js';
-import { getHunger, getSaturation, getExhaustion, setSaturation, setExhaustion } from './accessors.js';
+import { clampNumber } from '../minecraft-math.ts';
+import { getStatus } from '../shared/status.ts';
+import {
+    getHunger,
+    getSaturation,
+    getExhaustion,
+    setSaturation,
+    setExhaustion,
+} from './accessors.ts';
 
 export function tickFood(
     player: Player,
@@ -34,7 +39,11 @@ export function tickFood(
     if (saturationHealing && isPeaceful && currentTick % 20 === 0) {
         setSaturation(
             player,
-            clampNumber(saturation! + 1, saturationComp!.effectiveMin, saturationComp!.effectiveMax),
+            clampNumber(
+                saturation! + 1,
+                saturationComp!.effectiveMin,
+                saturationComp!.effectiveMax,
+            ),
         );
         health.setCurrentValue(
             clampNumber(health.currentValue + 1, health.effectiveMin, health.effectiveMax),
@@ -68,7 +77,11 @@ export function tickFood(
 
             setExhaustion(player, (exhaustion ?? 0) + exhaustionToAdd);
             health.setCurrentValue(
-                clampNumber(health.currentValue + healAmount, health.effectiveMin, health.effectiveMax),
+                clampNumber(
+                    health.currentValue + healAmount,
+                    health.effectiveMin,
+                    health.effectiveMax,
+                ),
             );
             status.foodTickTimer = 0;
         }

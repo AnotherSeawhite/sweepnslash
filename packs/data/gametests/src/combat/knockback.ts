@@ -1,7 +1,6 @@
-// packs/data/gametests/src/combat/knockback.ts
 import { Entity, world } from '@minecraft/server';
-import { lambertW0, lambertWm1 } from '../lambertw.js';
-import { sub, debug } from '../shared/math.js';
+import { lambertW0, lambertWm1 } from '../lambertw.ts';
+import { sub, debug } from '../shared/math.ts';
 
 export function applyAttackKnockback(
     entity: Entity,

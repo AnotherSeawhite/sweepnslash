@@ -1,7 +1,7 @@
 import { PROTO } from 'mcbe-ipc';
-import { FunctionSerializer } from './function.js';
+import { FunctionSerializer } from './function.ts';
 
-// V1 — no functions, basic fields only. Unchanged.
+// V1 - no functions, basic fields only. Unchanged.
 export const WeaponStatsSerializer = PROTO.Object({
     id: PROTO.String,
     attackSpeed: PROTO.Optional(PROTO.Float64),
@@ -39,7 +39,7 @@ interface StatsData {
     script?: Function;
 }
 
-// V2 — frozen. Bugs preserved intentionally to avoid changing existing behavior.
+// V2 - frozen. Bugs preserved intentionally to avoid changing existing behavior.
 export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
     *serialize(value, stream) {
         yield* PROTO.Optional(PROTO.String).serialize(value.formatVersion, stream);
@@ -53,7 +53,10 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
         yield* PROTO.Optional(PROTO.Float64).serialize(value.regularKnockback, stream);
         yield* PROTO.Optional(PROTO.Float64).serialize(value.enchantedKnockback, stream);
         yield* PROTO.Optional(PROTO.Float64).serialize(value.regularVerticalKnockback, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.enchantedVerticalKnockback, stream);
+        yield* PROTO.Optional(PROTO.Float64).serialize(
+            value.enchantedVerticalKnockback,
+            stream,
+        );
         yield* PROTO.Optional(PROTO.Boolean).serialize(value.noInherit, stream);
         if (value.formatVersion === '2.4.0') {
             yield* PROTO.Optional(PROTO.Float64).serialize(value.reach, stream);
@@ -75,8 +78,12 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
         const skipLore = yield* PROTO.Optional(PROTO.Boolean).deserialize(stream);
         const regularKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
         const enchantedKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const regularVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const enchantedVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
+        const regularVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(
+            stream,
+        );
+        const enchantedVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(
+            stream,
+        );
         const noInherit = yield* PROTO.Optional(PROTO.Boolean).deserialize(stream);
         let flags: string[] = [];
         if (formatVersion === '2.4.0') {
@@ -87,16 +94,26 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
         const beforeEffect = yield* PROTO.Optional(FunctionSerializer).deserialize(stream);
         const script = yield* PROTO.Optional(FunctionSerializer).deserialize(stream);
         return {
-            id, attackSpeed, damage, isWeapon, sweep, disableShield, skipLore,
-            regularKnockback, enchantedKnockback, regularVerticalKnockback,
-            enchantedVerticalKnockback, noInherit,
+            id,
+            attackSpeed,
+            damage,
+            isWeapon,
+            sweep,
+            disableShield,
+            skipLore,
+            regularKnockback,
+            enchantedKnockback,
+            regularVerticalKnockback,
+            enchantedVerticalKnockback,
+            noInherit,
             flags: [] as string[], // BUG preserved: reach also not returned
-            beforeEffect, script,
+            beforeEffect,
+            script,
         };
     },
 };
 
-// V3 — fixes reach and flags bugs. Clean, flat serialize/deserialize, no formatVersion branching.
+// V3 - fixes reach and flags bugs. Clean, flat serialize/deserialize, no formatVersion branching.
 export const WeaponStatsSerializerV3: PROTO.Serializable<StatsData> = {
     *serialize(value, stream) {
         yield* PROTO.String.serialize(value.id, stream);
@@ -109,7 +126,10 @@ export const WeaponStatsSerializerV3: PROTO.Serializable<StatsData> = {
         yield* PROTO.Optional(PROTO.Float64).serialize(value.regularKnockback, stream);
         yield* PROTO.Optional(PROTO.Float64).serialize(value.enchantedKnockback, stream);
         yield* PROTO.Optional(PROTO.Float64).serialize(value.regularVerticalKnockback, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.enchantedVerticalKnockback, stream);
+        yield* PROTO.Optional(PROTO.Float64).serialize(
+            value.enchantedVerticalKnockback,
+            stream,
+        );
         yield* PROTO.Optional(PROTO.Boolean).serialize(value.noInherit, stream);
         yield* PROTO.Optional(PROTO.Float64).serialize(value.reach, stream);
         const flagsSet: Set<string> = new Set(value.flags || []);
@@ -127,8 +147,12 @@ export const WeaponStatsSerializerV3: PROTO.Serializable<StatsData> = {
         const skipLore = yield* PROTO.Optional(PROTO.Boolean).deserialize(stream);
         const regularKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
         const enchantedKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const regularVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const enchantedVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
+        const regularVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(
+            stream,
+        );
+        const enchantedVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(
+            stream,
+        );
         const noInherit = yield* PROTO.Optional(PROTO.Boolean).deserialize(stream);
         const reach = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
         const flagsSet = yield* PROTO.Optional(PROTO.Set(PROTO.String)).deserialize(stream);
@@ -136,9 +160,22 @@ export const WeaponStatsSerializerV3: PROTO.Serializable<StatsData> = {
         const beforeEffect = yield* PROTO.Optional(FunctionSerializer).deserialize(stream);
         const script = yield* PROTO.Optional(FunctionSerializer).deserialize(stream);
         return {
-            id, attackSpeed, damage, isWeapon, sweep, disableShield, skipLore,
-            regularKnockback, enchantedKnockback, regularVerticalKnockback,
-            enchantedVerticalKnockback, noInherit, reach, flags, beforeEffect, script,
+            id,
+            attackSpeed,
+            damage,
+            isWeapon,
+            sweep,
+            disableShield,
+            skipLore,
+            regularKnockback,
+            enchantedKnockback,
+            regularVerticalKnockback,
+            enchantedVerticalKnockback,
+            noInherit,
+            reach,
+            flags,
+            beforeEffect,
+            script,
         };
     },
 };

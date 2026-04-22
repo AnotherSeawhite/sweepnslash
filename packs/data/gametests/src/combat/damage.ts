@@ -1,10 +1,8 @@
-// packs/data/gametests/src/combat/damage.ts
 import { Entity, ItemStack, Player } from '@minecraft/server';
-import { getStatus } from '../shared/status.js';
-import { getEntityStats } from '../stats/entity.js';
-import { itemHasFlag } from '../stats/item.js';
-// circular with checks.ts — fine in ESM, all cross-boundary references are inside function bodies
-import { effect, criticalHit, inanimate, enchantLevel } from './checks.js';
+import { getStatus } from '../shared/status.ts';
+import { getEntityStats } from '../stats/entity.ts';
+import { itemHasFlag } from '../stats/item.ts';
+import { effect, criticalHit, inanimate, enchantLevel } from './checks.ts';
 
 export const biomeArray = [
     'minecraft:frozen_ocean',
@@ -132,9 +130,13 @@ export function calculateDamage(
         enchantBonus > 0 &&
         !inanimate(target, {
             excludeTypes: [
-                'minecraft:armor_stand', 'minecraft:boat', 'minecraft:chest_boat',
-                'minecraft:minecart', 'minecraft:command_block_minecart',
-                'minecraft:hopper_minecart', 'minecraft:tnt_minecart',
+                'minecraft:armor_stand',
+                'minecraft:boat',
+                'minecraft:chest_boat',
+                'minecraft:minecart',
+                'minecraft:command_block_minecart',
+                'minecraft:hopper_minecart',
+                'minecraft:tnt_minecart',
             ],
         })
     ) {
@@ -170,8 +172,15 @@ export function finalDamageCalculation(
     const timeSinceLastAttack = currentTick - status.lastAttackTime;
 
     const result = calculateDamage(
-        player, target, item, stats, currentTick, timeSinceLastAttack,
-        baseDamage, attackSpeed, { critAttack, critMul, cancel },
+        player,
+        target,
+        item,
+        stats,
+        currentTick,
+        timeSinceLastAttack,
+        baseDamage,
+        attackSpeed,
+        { critAttack, critMul, cancel },
     );
 
     return {

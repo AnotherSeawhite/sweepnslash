@@ -1,6 +1,5 @@
-// packs/data/gametests/src/ui/sounds.ts
 import { Entity, PlayerSoundOptions, world } from '@minecraft/server';
-import { debug } from '../shared/math.js';
+import { debug } from '../shared/math.ts';
 
 export function playSelectiveSound(
     entity: Entity,

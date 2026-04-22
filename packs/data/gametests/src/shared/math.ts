@@ -1,5 +1,4 @@
-// packs/data/gametests/src/shared/math.ts
-import { clampNumber } from '../minecraft-math.js';
+import { clampNumber } from '../minecraft-math.ts';
 
 export function debug(message: string) {
     if (message) console.log(`\n§3Sweep §f'N §6Slash §fDebug Info\n${message}`);

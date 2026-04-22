@@ -1,4 +1,3 @@
-// packs/data/gametests/src/shared/team.ts
 import { Entity } from '@minecraft/server';
 
 export function isTeam(playerA: Entity, playerB: Entity): boolean {

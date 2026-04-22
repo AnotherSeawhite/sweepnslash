@@ -1,6 +1,5 @@
-// packs/data/gametests/src/shared/lore.ts
 import { Player } from '@minecraft/server';
-import { getItemStats, hasItemFlag } from '../stats/item.js';
+import { getItemStats, hasItemFlag } from '../stats/item.ts';
 
 function stringifyRawMessage(msg: any): string {
     if (!msg) return '';

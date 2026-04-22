@@ -42,7 +42,7 @@ export const importEntityStats: { items: EntityStats[]; moduleName: string }[] =
 ];
 
 export type SnsUtils = {
-    getStatus(entity: Entity): import('./shared/status.js').PlayerStatus;
+    getStatus(entity: Entity): import('./shared/status.ts').PlayerStatus;
     getItemStats(
         entity: Entity,
         itemStack?: ItemStack,

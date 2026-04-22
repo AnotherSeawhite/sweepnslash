@@ -1,13 +1,12 @@
-// packs/data/gametests/src/stats/loader.ts
 import { world } from '@minecraft/server';
-import { debug } from '../shared/math.js';
+import { debug } from '../shared/math.ts';
 import {
     WeaponStatsSerializer,
     WeaponStatsSerializerVersioned,
     WeaponStatsSerializerV3,
-} from '../ipc/weapon_stats.js';
+} from '../ipc/weapon_stats.ts';
 import { IPC, PROTO } from 'mcbe-ipc';
-import { importStats, importEntityStats, WeaponStats, EntityStats } from '../importStats.js';
+import { importStats, importEntityStats, WeaponStats, EntityStats } from '../importStats.ts';
 
 export const weaponStats: WeaponStats[] = [];
 export const entityStats: EntityStats[] = [];
@@ -68,7 +67,8 @@ function registerWeaponStats(weaponStat: WeaponStats) {
     const existingIndex = weaponStats.findIndex((weapon) => weapon.id === weaponStat.id);
     if (existingIndex !== -1) {
         weaponStats[existingIndex] = fixedWeaponStat;
-        if (debugMode) debug(`IPC Receiver:\n${weaponStats[existingIndex].id} has been overwritten`);
+        if (debugMode)
+            debug(`IPC Receiver:\n${weaponStats[existingIndex].id} has been overwritten`);
     } else {
         weaponStats.push(fixedWeaponStat);
         if (debugMode) debug(`IPC Receiver:\n${weaponStat.id} has been added in the stats`);

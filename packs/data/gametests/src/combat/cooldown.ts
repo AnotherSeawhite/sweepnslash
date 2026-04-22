@@ -1,7 +1,6 @@
-// packs/data/gametests/src/combat/cooldown.ts
 import { Entity, Player, system } from '@minecraft/server';
-import { setAttackCooldown } from '../shared/status.js';
-import { CombatManager } from './attack.js';
+import { setAttackCooldown } from '../shared/status.ts';
+import { CombatManager } from './attack.ts';
 
 export class AttackCooldownManager {
     static playerMap = new Map<Player, AttackCooldownManager>();

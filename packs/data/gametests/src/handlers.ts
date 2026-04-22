@@ -1,5 +1,4 @@
-// packs/data/gametests/src/handlers.ts
-const version = '2.7.0';
+const VERSION = '2.7.0';
 
 import {
     Difficulty,
@@ -9,21 +8,21 @@ import {
     system,
     world,
 } from '@minecraft/server';
-import { initWorldProperties, initPlayerProperties } from './config/init.js';
-import { registerConfigCommand } from './config/form.js';
-import { inventoryAddLore } from './shared/lore.js';
-import { isTeam } from './shared/team.js';
-import { getStatus, setAttackCooldown, setLastShieldTime } from './shared/status.js';
-import { getItemStats, itemHasFlag } from './stats/item.js';
-import { debug } from './shared/math.js';
-import { damageTest } from './combat/checks.js';
-import { healthParticle } from './ui/particles.js';
-import { tickIndicator } from './ui/indicator.js';
-import { tickFood } from './food/index.js';
-import { AttackCooldownManager } from './combat/cooldown.js';
-import { shieldBlock } from './combat/shields.js';
-import { applyImpulseAsKnockback } from './combat/knockback.js';
-import { Sounds } from './Files.js';
+import { initWorldProperties, initPlayerProperties } from './config/init.ts';
+import { registerConfigCommand } from './config/form.ts';
+import { inventoryAddLore } from './shared/lore.ts';
+import { isTeam } from './shared/team.ts';
+import { getStatus, setAttackCooldown, setLastShieldTime } from './shared/status.ts';
+import { getItemStats, itemHasFlag } from './stats/item.ts';
+import { debug } from './shared/math.ts';
+import { damageTest } from './combat/checks.ts';
+import { healthParticle } from './ui/particles.ts';
+import { tickIndicator } from './ui/indicator.ts';
+import { tickFood } from './food/index.ts';
+import { AttackCooldownManager } from './combat/cooldown.ts';
+import { shieldBlock } from './combat/shields.ts';
+import { applyImpulseAsKnockback } from './combat/knockback.ts';
+import { Sounds } from './Files.d';
 
 // Gametest module import
 let SimulatedPlayer: any;
@@ -50,7 +49,7 @@ system.beforeEvents.startup.subscribe((init) => {
 world.afterEvents.worldLoad.subscribe(() => {
     system.run(() =>
         console.log(
-            `\n§3Sweep §f'N §6Slash §fhas been loaded!\nVersion: v${version}${gametest ? '-gametest' : ''}`,
+            `\n§3Sweep §f'N §6Slash §fhas been loaded!\nVersion: v${VERSION}${gametest ? '-gametest' : ''}`,
         ),
     );
     initWorldProperties();
@@ -73,7 +72,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
                     { text: '\n' },
                     {
                         translate: 'sweepnslash.currentversion',
-                        with: [`v${version}${gametest ? '-gametest' : ''}`],
+                        with: [`v${VERSION}${gametest ? '-gametest' : ''}`],
                     },
                 ],
             });
@@ -178,7 +177,8 @@ world.afterEvents.projectileHitEntity.subscribe((event) => {
     if (world.getDynamicProperty('addon_toggle') == false) return;
     if (isTeam(player, target)) return;
 
-    const configCheck = player instanceof Player && player.getDynamicProperty('bowHitSound') == true;
+    const configCheck =
+        player instanceof Player && player.getDynamicProperty('bowHitSound') == true;
     if (
         configCheck &&
         target instanceof Player &&

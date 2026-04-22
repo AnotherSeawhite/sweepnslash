@@ -1,4 +1,3 @@
-// packs/data/gametests/src/config/init.ts
 import { Player, world } from '@minecraft/server';
 
 export function initWorldProperties(): void {

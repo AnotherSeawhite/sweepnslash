@@ -1,10 +1,9 @@
-// packs/data/gametests/src/combat/checks.ts
 import { Entity, GameMode, ItemStack, Player, world } from '@minecraft/server';
-import { debug } from '../shared/math.js';
-import { getStatus } from '../shared/status.js';
-import { getItemStats, itemHasFlag } from '../stats/item.js';
-import { calculateDamage, getCooldownTime } from './damage.js';
-import { shieldBlock } from './shields.js';
+import { debug } from '../shared/math.ts';
+import { getStatus } from '../shared/status.ts';
+import { getItemStats, itemHasFlag } from '../stats/item.ts';
+import { calculateDamage, getCooldownTime } from './damage.ts';
+import { shieldBlock } from './shields.ts';
 
 export function inanimate(
     entity: Entity,
@@ -21,10 +20,11 @@ export function inanimate(
     ];
     if (excludeTypes.includes(entity.typeId)) return false;
     return (
-        entity.getComponent('type_family')?.hasTypeFamily('inanimate') ||
-        entity.getComponent('type_family')?.hasTypeFamily('ignore') ||
-        inanimateArray.some((e) => e === entity.typeId)
-    ) ?? false;
+        (entity.getComponent('type_family')?.hasTypeFamily('inanimate') ||
+            entity.getComponent('type_family')?.hasTypeFamily('ignore') ||
+            inanimateArray.some((e) => e === entity.typeId)) ??
+        false
+    );
 }
 
 export function enchantLevel(item: ItemStack | undefined, id: string): number {
@@ -88,7 +88,11 @@ export function sprintKnockback(
     player: Player,
     target: Entity,
     stats: any,
-    { damage, noEffect, forced }: { damage?: number; noEffect?: boolean; forced?: boolean } = {},
+    {
+        damage,
+        noEffect,
+        forced,
+    }: { damage?: number; noEffect?: boolean; forced?: boolean } = {},
 ): boolean {
     if (
         inanimate(target, {
@@ -121,8 +125,17 @@ export function view(player: Player, distance = 3): Entity | null {
     const targetEntity = player.getEntitiesFromViewDirection({
         maxDistance: distance,
         excludeTypes: [
-            'item', 'xp_orb', 'arrow', 'ender_pearl', 'snowball',
-            'egg', 'painting', 'tnt', 'fishing_hook', 'falling_block', 'ender_crystal',
+            'item',
+            'xp_orb',
+            'arrow',
+            'ender_pearl',
+            'snowball',
+            'egg',
+            'painting',
+            'tnt',
+            'fishing_hook',
+            'falling_block',
+            'ender_crystal',
         ],
     })[0]?.entity;
     if (targetEntity && inanimate(targetEntity, { excludeTypes: ['minecraft:armor_stand'] })) {
@@ -174,8 +187,15 @@ export function damageTest(player: Player): void {
 
     for (let t = 0; t <= attackSpeedTicks; t++) {
         const dmg = calculateDamage(
-            player, player as any, item, stats, 0, t,
-            baseDamage, attackSpeed, { damageTest: true, attackSpeedTicks },
+            player,
+            player as any,
+            item,
+            stats,
+            0,
+            t,
+            baseDamage,
+            attackSpeed,
+            { damageTest: true, attackSpeedTicks },
         ).damage;
         damageLog.push(
             `§f[ §a${t} (${Math.round((t * 100) / attackSpeedTicks)}%) §f| §c${dmg.toFixed(2)} §f| §e${(dmg / (t / 20)).toFixed(2)} (${(dmg / Math.max(0.5, t / 20)).toFixed(2)}) §f]`,

@@ -1,9 +1,8 @@
-// packs/data/gametests/src/combat/shields.ts
 import { Entity, GameMode, Player, world } from '@minecraft/server';
-import { calculateAngle, sub } from '../shared/math.js';
-import { getStatus } from '../shared/status.js';
-import { hasItemFlag } from '../stats/item.js';
-import { specialValid } from './checks.js';
+import { calculateAngle, sub } from '../shared/math.ts';
+import { getStatus } from '../shared/status.ts';
+import { hasItemFlag } from '../stats/item.ts';
+import { specialValid } from './checks.ts';
 
 export function shield(target: Entity): boolean {
     if (!(target instanceof Player)) return false;
@@ -12,7 +11,8 @@ export function shield(target: Entity): boolean {
     const shieldCooldown = target.getItemCooldown('minecraft:shield');
 
     for (const s of slot) {
-        const shieldItem = targetEquippable?.getEquipment(s as any)?.typeId === 'minecraft:shield';
+        const shieldItem =
+            targetEquippable?.getEquipment(s as any)?.typeId === 'minecraft:shield';
         const isRiding = target.getComponent('riding')?.isValid ?? false;
         if (shieldItem && (target.isSneaking || isRiding) && shieldCooldown == 0) {
             return true;
@@ -56,7 +56,8 @@ export function shieldBlock(
     if (status.shieldValid) {
         angleResult = angle(player, target);
         if (
-            (stats?.disableShield || (player instanceof Player && hasItemFlag(player, 'disable_shield'))) &&
+            (stats?.disableShield ||
+                (player instanceof Player && hasItemFlag(player, 'disable_shield'))) &&
             angleResult &&
             specialValidResult &&
             disable

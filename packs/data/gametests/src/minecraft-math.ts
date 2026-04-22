@@ -1,11 +1,11 @@
 // @ts-nocheck
-// lib/general/clamp.js
+// lib/general/clamp.ts
 function clampNumber(val, min, max) {
     return Math.max(Math.min(val, Math.max(min, max)), Math.min(min, max));
     //return Math.min(Math.max(val, min), max);
 }
 
-// lib/vector3/coreHelpers.js
+// lib/vector3/coreHelpers.ts
 var Vector3Utils = class _Vector3Utils {
     /**
      * equals
@@ -119,17 +119,17 @@ var Vector3Utils = class _Vector3Utils {
             x: clampNumber(
                 v.x,
                 limits?.min?.x ?? Number.MIN_SAFE_INTEGER,
-                limits?.max?.x ?? Number.MAX_SAFE_INTEGER
+                limits?.max?.x ?? Number.MAX_SAFE_INTEGER,
             ),
             y: clampNumber(
                 v.y,
                 limits?.min?.y ?? Number.MIN_SAFE_INTEGER,
-                limits?.max?.y ?? Number.MAX_SAFE_INTEGER
+                limits?.max?.y ?? Number.MAX_SAFE_INTEGER,
             ),
             z: clampNumber(
                 v.z,
                 limits?.min?.z ?? Number.MIN_SAFE_INTEGER,
-                limits?.max?.z ?? Number.MAX_SAFE_INTEGER
+                limits?.max?.z ?? Number.MAX_SAFE_INTEGER,
             ),
         };
     }
@@ -243,7 +243,7 @@ var VECTOR3_SOUTH = { x: 0, y: 0, z: -1 };
 var VECTOR3_HALF = { x: 0.5, y: 0.5, z: 0.5 };
 var VECTOR3_NEGATIVE_ONE = { x: -1, y: -1, z: -1 };
 
-// lib/vector3/vectorWrapper.js
+// lib/vector3/vectorWrapper.ts
 var Vector3Builder = class {
     x;
     y;
@@ -453,4 +453,4 @@ export {
     Vector3Utils,
     clampNumber,
 };
-//# sourceMappingURL=minecraft-math.js.map
+//# sourceMappingURL=minecraft-math.ts.map

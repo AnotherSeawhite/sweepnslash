@@ -2,7 +2,7 @@
 
 import { MolangVariableMap, Player, TicksPerSecond } from '@minecraft/server';
 import { WeaponStats } from '../importStats';
-import { isTeam } from '../shared/team.js';
+import { isTeam } from '../shared/team.ts';
 
 export const betterOnBedrock: WeaponStats[] = [
     {

@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "module": "ES2020",
-        "moduleResolution": "node",
         "forceConsistentCasingInFileNames": false,
         "allowSyntheticDefaultImports": true,
         "target": "ES2020",
@@ -12,7 +11,8 @@
         "strict": true,
         "noImplicitReturns": true,
         "allowJs": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "allowImportingTsExtensions": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/__tests__/*"]

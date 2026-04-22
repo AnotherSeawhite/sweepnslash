@@ -1,7 +1,6 @@
-// packs/data/gametests/src/stats/entity.ts
 import { Entity } from '@minecraft/server';
-import { EntityStats } from '../importStats.js';
-import { entityStats } from './loader.js';
+import { EntityStats } from '../importStats.ts';
+import { entityStats } from './loader.ts';
 
 export function getEntityStats(entity: Entity): EntityStats | undefined {
     return entityStats.find((ent) => ent.id === entity?.typeId);

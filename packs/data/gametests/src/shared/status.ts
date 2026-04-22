@@ -1,4 +1,3 @@
-// packs/data/gametests/src/shared/status.ts
 import { Entity, Player } from '@minecraft/server';
 
 export interface PlayerStatus {

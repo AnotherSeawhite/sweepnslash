@@ -1,4 +1,3 @@
-// packs/data/gametests/src/food/accessors.ts
 import { Player } from '@minecraft/server';
 
 export function getHunger(player: Player): number | undefined {

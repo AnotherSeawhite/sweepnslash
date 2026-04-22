@@ -1,13 +1,12 @@
-// packs/data/gametests/src/combat/sweep.ts
 import { Entity, EntityDamageCause, MolangVariableMap, Player, world } from '@minecraft/server';
-import { sub } from '../shared/math.js';
-import { Particles } from '../Files.js';
-import { getStatus } from '../shared/status.js';
-import { isTeam } from '../shared/team.js';
-import { hasItemFlag } from '../stats/item.js';
-import { spawnSelectiveParticle, toColor } from '../ui/particles.js';
-import { inanimate, specialValid, view } from './checks.js';
-import { shieldBlock } from './shields.js';
+import { sub } from '../shared/math.ts';
+import { Particles } from '../Files.d';
+import { getStatus } from '../shared/status.ts';
+import { isTeam } from '../shared/team.ts';
+import { hasItemFlag } from '../stats/item.ts';
+import { spawnSelectiveParticle, toColor } from '../ui/particles.ts';
+import { inanimate, specialValid, view } from './checks.ts';
+import { shieldBlock } from './shields.ts';
 
 export function sweep(
     currentTick: number,
@@ -70,9 +69,14 @@ export function sweep(
     if (
         inanimate(target, {
             excludeTypes: [
-                'minecraft:ender_crystal', 'minecraft:armor_stand', 'minecraft:boat',
-                'minecraft:chest_boat', 'minecraft:minecart', 'minecraft:command_block_minecart',
-                'minecraft:hopper_minecart', 'minecraft:tnt_minecart',
+                'minecraft:ender_crystal',
+                'minecraft:armor_stand',
+                'minecraft:boat',
+                'minecraft:chest_boat',
+                'minecraft:minecart',
+                'minecraft:command_block_minecart',
+                'minecraft:hopper_minecart',
+                'minecraft:tnt_minecart',
             ],
         })
     )
@@ -112,9 +116,9 @@ export function sweep(
     if (damage <= 0) return { swept: false, commonEntities: [] };
 
     const rgb = toColor({
-        x: player.getDynamicProperty('sweepR') as number ?? 255,
-        y: player.getDynamicProperty('sweepG') as number ?? 255,
-        z: player.getDynamicProperty('sweepB') as number ?? 255,
+        x: (player.getDynamicProperty('sweepR') as number) ?? 255,
+        y: (player.getDynamicProperty('sweepG') as number) ?? 255,
+        z: (player.getDynamicProperty('sweepB') as number) ?? 255,
     });
     if (!map) {
         map = new MolangVariableMap();
@@ -142,7 +146,14 @@ export function sweep(
             z: pLoc.z + unitDirection.z * dist,
         };
     }
-    spawnSelectiveParticle(player, particle, location || particleLocation, 'sweep', offset, map);
+    spawnSelectiveParticle(
+        player,
+        particle,
+        location || particleLocation,
+        'sweep',
+        offset,
+        map,
+    );
 
     commonEntities.forEach((e) => {
         if (isTeam(player, e)) return;

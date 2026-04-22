@@ -26,8 +26,8 @@ export const exampleArray: WeaponStats[] = [
         skipLore: false,
         regularKnockback: 1.552,
         enchantedKnockback: 2.586,
-		regularVerticalKnockback: 0.7955,
-		enchantedVerticalKnockback: 1,
+        regularVerticalKnockback: 0.7955,
+        enchantedVerticalKnockback: 1,
         beforeEffect: ({
             mc,
             world,

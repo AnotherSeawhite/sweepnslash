@@ -1,9 +1,8 @@
-// packs/data/gametests/src/ui/particles.ts
 import { Entity, MolangVariableMap, world } from '@minecraft/server';
-import { clampNumber } from '../minecraft-math.js';
-import { Particles } from '../Files.js';
-import { debug } from '../shared/math.js';
-import { getEntityStats } from '../stats/entity.js';
+import { clampNumber } from '../minecraft-math.ts';
+import { Particles } from '../Files.d';
+import { debug } from '../shared/math.ts';
+import { getEntityStats } from '../stats/entity.ts';
 
 export function toColor(vector3: { x: number; y: number; z: number }) {
     const { x, y, z } = vector3;
