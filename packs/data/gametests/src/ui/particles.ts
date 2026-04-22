@@ -1,6 +1,7 @@
 // packs/data/gametests/src/ui/particles.ts
 import { Entity, MolangVariableMap, world } from '@minecraft/server';
 import { clampNumber } from '../minecraft-math.js';
+import { Particles } from '../Files.js';
 import { debug } from '../shared/math.js';
 import { getEntityStats } from '../stats/entity.js';
 
@@ -61,7 +62,7 @@ export function healthParticle(entity: Entity, damage: number): void {
     map.setFloat('variable.amount', amount);
     spawnSelectiveParticle(
         entity,
-        'sweepnslash:damage_indicator_emitter',
+        Particles.DamageIndicatorEmitter,
         center,
         'damageIndicator',
         undefined,

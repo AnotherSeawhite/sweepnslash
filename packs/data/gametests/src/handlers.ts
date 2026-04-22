@@ -23,6 +23,7 @@ import { tickFood } from './food/index.js';
 import { AttackCooldownManager } from './combat/cooldown.js';
 import { shieldBlock } from './combat/shields.js';
 import { applyImpulseAsKnockback } from './combat/knockback.js';
+import { Sounds } from './Files.js';
 
 // Gametest module import
 let SimulatedPlayer: any;
@@ -184,7 +185,7 @@ world.afterEvents.projectileHitEntity.subscribe((event) => {
         player !== target &&
         projectile.typeId === 'minecraft:arrow'
     ) {
-        (player as Player).playSound('game.player.bow.ding', { pitch: 0.5 });
+        (player as Player).playSound(Sounds.GamePlayerBowDing, { pitch: 0.5 });
     }
 });
 

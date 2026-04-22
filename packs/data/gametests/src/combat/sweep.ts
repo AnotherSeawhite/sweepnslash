@@ -1,6 +1,7 @@
 // packs/data/gametests/src/combat/sweep.ts
 import { Entity, EntityDamageCause, MolangVariableMap, Player, world } from '@minecraft/server';
 import { sub } from '../shared/math.js';
+import { Particles } from '../Files.js';
 import { getStatus } from '../shared/status.js';
 import { isTeam } from '../shared/team.js';
 import { hasItemFlag } from '../stats/item.js';
@@ -29,7 +30,7 @@ export function sweep(
         scale?: number;
     } = {},
     {
-        particle = 'sweepnslash:sweep_particle',
+        particle = Particles.SweepParticle,
         offset = { x: 0, y: 0, z: 0 },
         map,
     }: {

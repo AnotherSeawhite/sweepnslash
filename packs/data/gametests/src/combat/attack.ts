@@ -15,6 +15,7 @@ import { finalDamageCalculation, getCooldownTime } from './damage.js';
 import { sweep } from './sweep.js';
 import { shieldBlock } from './shields.js';
 import { isFasterThanWalk } from './checks.js';
+import { Sounds, Particles } from '../Files.js';
 
 export class CombatManager {
     static attack(eventData: { player: Player; target: mc.Entity; currentTick: number }) {
@@ -142,13 +143,13 @@ export class CombatManager {
             const sounds: { id: string; soundOptions?: any }[] = [];
             if (!critHit && !swept) {
                 const id = strong
-                    ? ((beforeEffect as any)?.strongHitSound ?? 'game.player.attack.strong.se')
-                    : ((beforeEffect as any)?.weakHitSound ?? 'game.player.attack.weak.se');
+                    ? ((beforeEffect as any)?.strongHitSound ?? Sounds.GamePlayerAttackStrongSe)
+                    : ((beforeEffect as any)?.weakHitSound ?? Sounds.GamePlayerAttackWeakSe);
                 sounds.push({ id });
             }
             if (swept) {
                 sounds.push({
-                    id: (beforeEffect as any)?.sweepSound ?? 'entity.player.attack.sweep',
+                    id: (beforeEffect as any)?.sweepSound ?? Sounds.EntityPlayerAttackSweep,
                     soundOptions: {
                         pitch: (beforeEffect as any)?.sweepPitch,
                         volume: (beforeEffect as any)?.sweepVolume,
@@ -156,13 +157,13 @@ export class CombatManager {
                 });
             }
             if (critHit) {
-                sounds.push({ id: (beforeEffect as any)?.critSound ?? 'entity.player.attack.crit' });
+                sounds.push({ id: (beforeEffect as any)?.critSound ?? Sounds.EntityPlayerAttackCrit });
             }
             for (const s of sounds) {
                 player.dimension.playSound(s.id, loc2, s.soundOptions);
             }
             if (sprintKB) {
-                player.dimension.playSound('entity.player.attack.knockback', loc2, { volume: 0.7 });
+                player.dimension.playSound(Sounds.EntityPlayerAttackKnockback, loc2, { volume: 0.7 });
             }
         };
 

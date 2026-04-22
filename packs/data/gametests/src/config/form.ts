@@ -9,6 +9,7 @@ import {
 } from '@minecraft/server';
 import { ModalFormData } from '@minecraft/server-ui';
 import { clampNumber } from '../minecraft-math.js';
+import { Sounds } from '../Files.js';
 
 const configCommand = 'sns:config';
 
@@ -148,12 +149,12 @@ export function configForm(player: Player): void {
         if (response && canceled && cancelationReason === 'UserBusy') return;
 
         if (canceled) {
-            player.playSound('sns.config.canceled', { pitch: 1 });
+            player.playSound(Sounds.SnsConfigCanceled, { pitch: 1 });
             player.sendMessage({ translate: 'sweepnslash.canceled' });
             return;
         }
 
-        player.playSound('game.player.bow.ding', { pitch: 1 });
+        player.playSound(Sounds.GamePlayerBowDing, { pitch: 1 });
         player.sendMessage({ translate: 'sweepnslash.saved' });
 
         const rgbProps = ['sweepR', 'sweepG', 'sweepB'];
