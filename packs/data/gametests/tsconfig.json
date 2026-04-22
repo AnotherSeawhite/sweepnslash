@@ -10,8 +10,9 @@
         "sourceMap": false,
         "strict": true,
         "noImplicitReturns": true,
-        "allowJs": true,
+        "allowJs": false,
         "resolveJsonModule": true,
+        "noEmit": true,
         "allowImportingTsExtensions": true
     },
     "include": ["src"],
