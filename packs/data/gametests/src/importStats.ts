@@ -12,7 +12,6 @@ import {
 } from '@minecraft/server';
 import { alylicaDungeons } from './weaponStats/alylica_dungeons';
 import { betterOnBedrock } from './weaponStats/better_on_bedrock';
-import { exampleArray } from './weaponStats/example_file';
 import { copperTools } from './weaponStats/tcc/copper_expansion';
 import { flintTools } from './weaponStats/tcc/flint_tools';
 import { vanillaBattleAxes } from './weaponStats/tcc/vanilla_battle_axes';
@@ -25,7 +24,6 @@ import { vsprsSpears } from './weaponStats/vsprs_spears';
 import { vanillaEntities } from './entityStats/vanilla';
 
 export const importStats: { items: WeaponStats[]; moduleName: string }[] = [
-    { items: exampleArray, moduleName: 'example_file' },
     { items: vanilla, moduleName: 'vanilla' },
     { items: betterOnBedrock, moduleName: 'better_on_bedrock' },
     { items: vanillaKnives, moduleName: 'tcc_knives' },
@@ -42,6 +40,20 @@ export const importStats: { items: WeaponStats[]; moduleName: string }[] = [
 export const importEntityStats: { items: EntityStats[]; moduleName: string }[] = [
     { items: vanillaEntities, moduleName: 'vanilla' },
 ];
+
+export type SnsUtils = {
+    getStatus(entity: Entity): import('./shared/status.js').PlayerStatus;
+    getItemStats(
+        entity: Entity,
+        itemStack?: ItemStack,
+    ): { equippableComp: any; item: ItemStack | undefined; stats: WeaponStats | undefined };
+    hasItemFlag(entity: Entity, flag: string): boolean;
+    getEntityStats(entity: Entity): EntityStats | undefined;
+    isTeam(a: Entity, b: Entity): boolean;
+    getHunger(player: Player): number | undefined;
+    getSaturation(player: Player): number | undefined;
+    getExhaustion(player: Player): number | undefined;
+};
 
 /**
  * WeaponStats defines the structure for custom weapon stat objects used in Sweep 'N Slash.
@@ -128,6 +140,7 @@ export type WeaponStats = {
         sprintKnockback: boolean;
         cooldown: number; // 0~1, attack charge
         iframes: boolean;
+        utils: SnsUtils;
     }) => {
         /** Cancel the attack if true. */
         cancel?: boolean;
@@ -202,6 +215,7 @@ export type WeaponStats = {
         sprintKnockback: boolean;
         inanimate: boolean;
         cooldown: number; // 0~1, attack charge
+        utils: SnsUtils;
     }) => void;
 };
 
