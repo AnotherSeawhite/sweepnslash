@@ -120,17 +120,17 @@ export const alylicaDungeons: WeaponStats[] = [
         isWeapon: true,
         beforeEffect: ({ player, target, specialCheck, iframes, sprintKnockback }) => {
             let daggerHit = false;
-            target.__daggerSecondHit = target.__daggerSecondHit ?? false;
+            (target as any).__daggerSecondHit = (target as any).__daggerSecondHit ?? false;
             if (specialCheck) {
-                if (iframes && target.__daggerSecondHit) {
+                if (iframes && (target as any).__daggerSecondHit) {
                     daggerHit = true;
-                    target.__daggerSecondHit = false;
+                    (target as any).__daggerSecondHit = false;
                     player.playAnimation('animation.player.attack_daggers');
                 } else if (!iframes) {
                     player.dimension.playSound('weapon.daggers.hit', player.location, {
                         volume: 0.6,
                     });
-                    target.__daggerSecondHit = true;
+                    (target as any).__daggerSecondHit = true;
                 }
             }
 
