@@ -1,3 +1,4 @@
+// @ts-nocheck
 // lib/general/clamp.js
 function clampNumber(val, min, max) {
     return Math.max(Math.min(val, Math.max(min, max)), Math.min(min, max));

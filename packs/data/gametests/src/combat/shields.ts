@@ -6,6 +6,7 @@ import { hasItemFlag } from '../stats/item.js';
 import { specialValid } from './checks.js';
 
 export function shield(target: Entity): boolean {
+    if (!(target instanceof Player)) return false;
     const slot = ['Mainhand', 'Offhand'];
     const targetEquippable = target.getComponent('equippable');
     const shieldCooldown = target.getItemCooldown('minecraft:shield');
@@ -60,7 +61,7 @@ export function shieldBlock(
             specialValidResult &&
             disable
         ) {
-            target.startItemCooldown('minecraft:shield', 100);
+            (target as Player).startItemCooldown('minecraft:shield', 100);
             player.dimension.playSound('random.break', target.location);
         }
     }

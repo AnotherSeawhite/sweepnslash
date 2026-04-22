@@ -20,23 +20,23 @@ export const WeaponStatsSerializer = PROTO.Object({
 });
 
 interface StatsData {
-    formatVersion: string;
+    formatVersion?: string;
     id: string;
-    attackSpeed: number;
-    damage: number;
-    isWeapon: boolean;
-    sweep: boolean;
-    disableShield: boolean;
-    skipLore: boolean;
-    regularKnockback: number;
-    enchantedKnockback: number;
-    regularVerticalKnockback: number;
-    enchantedVerticalKnockback: number;
-    noInherit: boolean;
-    reach: number;
-    flags: string[];
-    beforeEffect: Function;
-    script: Function;
+    attackSpeed?: number;
+    damage?: number;
+    isWeapon?: boolean;
+    sweep?: boolean;
+    disableShield?: boolean;
+    skipLore?: boolean;
+    regularKnockback?: number;
+    enchantedKnockback?: number;
+    regularVerticalKnockback?: number;
+    enchantedVerticalKnockback?: number;
+    noInherit?: boolean;
+    reach?: number;
+    flags?: string[];
+    beforeEffect?: Function;
+    script?: Function;
 }
 
 // V2 — frozen. Bugs preserved intentionally to avoid changing existing behavior.
@@ -90,7 +90,7 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
             id, attackSpeed, damage, isWeapon, sweep, disableShield, skipLore,
             regularKnockback, enchantedKnockback, regularVerticalKnockback,
             enchantedVerticalKnockback, noInherit,
-            flags: [], // BUG preserved: reach also not returned
+            flags: [] as string[], // BUG preserved: reach also not returned
             beforeEffect, script,
         };
     },

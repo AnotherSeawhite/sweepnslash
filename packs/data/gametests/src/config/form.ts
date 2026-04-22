@@ -135,7 +135,7 @@ export function configForm(player: Player): void {
     form.slider('§9B', 0, 255, { defaultValue: dp(player, { id: 'sweepB' }) ?? 255 });
     form.submitButton({ translate: 'sweepnslash.saveconfig' });
 
-    form.show(player).then((response) => {
+    form.show(player as any).then((response) => {
         const { canceled, formValues, cancelationReason } = response;
         (player as any).__configLastClosed = system.currentTick;
 

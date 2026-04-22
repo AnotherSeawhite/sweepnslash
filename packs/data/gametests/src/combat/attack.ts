@@ -62,7 +62,7 @@ export class CombatManager {
 
         const beforeEffect =
             stats?.beforeEffect?.({
-                mc, system, world, player, target, item,
+                mc, system, world, player, target, item: item!,
                 dmg, specialCheck,
                 sweptEntities: swp?.commonEntities,
                 crit, sprintKnockback: sprintKB, cooldown,
@@ -267,9 +267,9 @@ export class CombatManager {
         if (stats?.script) {
             system.run(() => {
                 stats!.script!({
-                    mc, system, world, player, target, item,
+                    mc, system, world, player, target, item: item!,
                     sweptEntities: swp?.commonEntities,
-                    dmg: dmgResult, hit, shieldBlock: shieldBlocked,
+                    dmg: dmgResult.final, hit, shieldBlock: shieldBlocked,
                     specialCheck, crit, sprintKnockback: sprintKB,
                     inanimate: inanimateTarget, cooldown, utils,
                 });

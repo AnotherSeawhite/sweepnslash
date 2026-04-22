@@ -1,6 +1,6 @@
 // https://www.curseforge.com/minecraft-bedrock/addons/better-on-bedrock
 
-import { MolangVariableMap, TicksPerSecond } from '@minecraft/server';
+import { MolangVariableMap, Player, TicksPerSecond } from '@minecraft/server';
 import { WeaponStats } from '../importStats';
 import { isTeam } from '../main/mathAndCalculations';
 
