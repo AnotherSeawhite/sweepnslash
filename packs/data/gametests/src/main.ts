@@ -1,1 +1,2 @@
-import './main/handler.js';
+import './handlers.js';
+import './stats/loader.js';
