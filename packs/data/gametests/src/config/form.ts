@@ -10,6 +10,8 @@ import { FormCancelationReason, ModalFormData } from '@minecraft/server-ui';
 import { clampNumber } from '../minecraft-math.ts';
 import { Sounds } from '../Files.d';
 
+const configLastClosedMap = new Map<string, number>();
+
 const configCommand = 'sns:config';
 
 export function configFormOpener({ sourceEntity: player, sourceType }: any) {
@@ -24,7 +26,7 @@ export function configFormOpener({ sourceEntity: player, sourceType }: any) {
 }
 
 export function configForm(player: Player): void {
-    if (((player as any).__configLastClosed || 0) + 20 > system.currentTick) return;
+    if ((configLastClosedMap.get(player.id) ?? 0) + 20 > system.currentTick) return;
 
     const tag = player.hasTag('sweepnslash.config');
     const op = player.playerPermissionLevel == PlayerPermissionLevel.Operator;
@@ -137,7 +139,7 @@ export function configForm(player: Player): void {
 
     form.show(player as any).then((response) => {
         const { canceled, formValues, cancelationReason } = response;
-        (player as any).__configLastClosed = system.currentTick;
+        configLastClosedMap.set(player.id, system.currentTick);
 
         function n(value: any) {
             const num = Number(value);
