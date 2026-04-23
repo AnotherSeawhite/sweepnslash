@@ -23,6 +23,7 @@ import { AttackCooldownManager } from './combat/cooldown.ts';
 import { shieldBlock } from './combat/shields.ts';
 import { applyImpulseAsKnockback } from './combat/knockback.ts';
 import { Sounds } from './Files.d';
+import { playerHitMap, lastAttackMap, rawDamageMap } from './shared/entityState.ts';
 
 // Gametest module import
 let SimulatedPlayer: any;
@@ -237,7 +238,7 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
 
     if (!player && damageSource.cause !== EntityDamageCause.override && damage >= 0) {
         try {
-            if (!(hurtEntity as any).__playerHit)
+            if (!playerHitMap.get(hurtEntity.id))
                 hurtEntity.applyKnockback({ x: 0, z: 0 }, hurtEntity.getVelocity().y);
         } catch (e) {
             const debugMode = world.getDynamicProperty('debug_mode');
@@ -245,23 +246,23 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
         }
     }
 
-    (hurtEntity as any).__playerHit = false;
+    playerHitMap.set(hurtEntity.id, false);
 
     if (player instanceof Player) {
         if (damageSource.cause === EntityDamageCause.entityAttack) {
-            (hurtEntity as any).__lastAttack = {
-                rawDamage: (player as any).__rawDamage,
+            lastAttackMap.set(hurtEntity.id, {
+                rawDamage: rawDamageMap.get(player.id) ?? damage,
                 damage,
                 time: currentTick,
-            };
+            });
             healthParticle(hurtEntity, damage);
         } else if (damageSource.cause === EntityDamageCause.maceSmash) {
             healthParticle(hurtEntity, damage);
         } else {
-            (hurtEntity as any).__lastAttack = { rawDamage: damage, damage, time: currentTick };
+            lastAttackMap.set(hurtEntity.id, { rawDamage: damage, damage, time: currentTick });
         }
     } else {
-        (hurtEntity as any).__lastAttack = { rawDamage: damage, damage, time: currentTick };
+        lastAttackMap.set(hurtEntity.id, { rawDamage: damage, damage, time: currentTick });
     }
 });
 
