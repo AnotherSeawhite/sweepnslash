@@ -2,51 +2,52 @@ pack.name=§3Sweep §f'N §6Slash §f- Gói Tài Nguyên
 pack.description=Chuyển đổi hệ thống chiến đấu của Bedrock Edition sang giống với Java Edition 1.9+.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Khi ở tay chính:
-sweepnslash.attribute.name.attack_damage=Sức tấn công
-sweepnslash.attribute.name.attack_speed=Tốc độ tấn công
+sweepnslash.item.mainhand=Khi ở tay chính:
+sweepnslash.attribute.attack_damage=Sức tấn công
+sweepnslash.attribute.attack_speed=Tốc độ tấn công
 
-sweepnslash.tipmessage=§fGõ §e%s §fđể mở menu cấu hình §3Sweep §f'N §6Slash§f
-sweepnslash.currentversion=Phiên bản hiện tại:§e %s
+sweepnslash.tip.message=§fGõ §e%s §fđể mở menu cấu hình §3Sweep §f'N §6Slash§f
+sweepnslash.tip.version=Phiên bản hiện tại:§e %s
 
-sweepnslash.commanddescription=Mở menu cấu hình cho Sweep 'N Slash.
-sweepnslash.configmenutitle=Cấu Hình Sweep 'N Slash
+sweepnslash.config.command.description=Mở menu cấu hình cho Sweep 'N Slash.
+sweepnslash.config.menu.title=Cấu Hình Sweep 'N Slash
 
 ## Advanced Operator Toggles
-sweepnslash.operatortoggleheader=Tùy Chọn Nâng Cao Cho Người Điều Hành
-sweepnslash.toggleaddon=Bật/Tắt Add-On
-sweepnslash.toggledebugmode=Bật/Tắt Chế Độ Gỡ Lỗi
-sweepnslash.toggledebugmode.tooltip=Chế độ gỡ lỗi dành cho nhà phát triển và người sáng tạo. Hiển thị thông tin trong Content Log, và kích hoạt trình kiểm tra DPS (sự kiện script 'sns:testdamage').
+sweepnslash.config.operator.header=Tùy Chọn Nâng Cao Cho Người Điều Hành
+sweepnslash.config.operator.addon=Bật/Tắt Add-On
+sweepnslash.config.operator.debug=Bật/Tắt Chế Độ Gỡ Lỗi
+sweepnslash.config.operator.debug.tooltip=Chế độ gỡ lỗi dành cho nhà phát triển và người sáng tạo. Hiển thị thông tin trong Content Log, và kích hoạt trình kiểm tra DPS (sự kiện script 'sns:testdamage').
 
 ## Server Toggles
-sweepnslash.servertoggleheader=Tùy Chọn Máy Chủ
-sweepnslash.shieldbreakspecial=Yêu Cầu Hồi Chiêu Cho Rìu Để Phá Khiên
-sweepnslash.shieldbreakspecial.tooltip=Nếu bật, rìu chỉ phá khiên khi hồi chiêu được 84.8%%.
-sweepnslash.saturationhealing=Hồi Máu Bằng Độ Bão Hoà
-sweepnslash.saturationhealing.tooltip=Nếu bật, độ bão hoà sẽ được tiêu hao nhanh hơn để hồi máu. Điều này sẽ buộc gamerule Hồi Máu Tự Nhiên bị tắt.
+sweepnslash.config.server.header=Tùy Chọn Máy Chủ
+sweepnslash.config.server.shieldbreak=Yêu Cầu Hồi Chiêu Cho Rìu Để Phá Khiên
+sweepnslash.config.server.shieldbreak.tooltip=Nếu bật, rìu chỉ phá khiên khi hồi chiêu được 84.8%%.
+sweepnslash.config.server.saturation=Hồi Máu Bằng Độ Bão Hoà
+sweepnslash.config.server.saturation.tooltip=Nếu bật, độ bão hoà sẽ được tiêu hao nhanh hơn để hồi máu. Điều này sẽ buộc gamerule Hồi Máu Tự Nhiên bị tắt.
 
 ## General Toggles
-sweepnslash.generaltoggleheader=Tùy Chọn Chung
-sweepnslash.excludepetfromsweep=Không Gây Sát Thương Cho Thú Cừng Bởi Quét Cạnh
-sweepnslash.excludepetfromsweep.tooltip=Nếu bật, các đòn quét cạnh sẽ không gây sát thương cho thú cưng đã thuần hóa.
-sweepnslash.tipmessagetoggle=Hiển Thị Tin Nhắn Gợi Ý Khi Tham Gia
+sweepnslash.config.general.header=Tùy Chọn Chung
+sweepnslash.config.general.excludepet=Không Gây Sát Thương Cho Thú Cừng Bởi Quét Cạnh
+sweepnslash.config.general.excludepet.tooltip=Nếu bật, các đòn quét cạnh sẽ không gây sát thương cho thú cưng đã thuần hóa.
+sweepnslash.config.general.tipmessage=Hiển Thị Tin Nhắn Gợi Ý Khi Tham Gia
 
 ## Personal Settings
-sweepnslash.personaltoggleheader=Cài Đặt Cá Nhân
-sweepnslash.indicatorstyle=Kiểu hồi chiêu
-sweepnslash.indicatorstyle.tooltip=Thay đổi kiểu hồi chiêu. Nếu bạn gặp sự cố với UI của addon, hãy thử sử dụng hồi chiêu kiểu Bedrock.
-sweepnslash.crosshair=Tâm
-sweepnslash.hotbar=Thanh Công Cụ
-sweepnslash.geyser=Kiểu Bedrock
-sweepnslash.none=Không có
-sweepnslash.bowhitsound=Âm Thanh Khi Bắn Cung Trúng Mục Tiêu
-sweepnslash.sweepparticles=Hiệu Ứng Quét Cạnh
-sweepnslash.enchantedhitparticles=Hiệu Ứng Khi Trúng Bằng Vũ Khí Phù Phép
-sweepnslash.damageindicatorparticles=Hiệu Ứng Hiển Thị Sát Thương
-sweepnslash.critparticles=Hiệu Ứng Đòn Chí Mạng
-sweepnslash.critsounds=Âm Thanh Đòn Chí Mạng
-sweepnslash.sweepRGBtitle=Màu RGB Cho Đòn Quét Cạnh
-sweepnslash.saveconfig=Lưu
+sweepnslash.config.personal.header=Cài Đặt Cá Nhân
+sweepnslash.config.personal.indicator=Kiểu hồi chiêu
+sweepnslash.config.personal.indicator.tooltip=Thay đổi kiểu hồi chiêu. Nếu bạn gặp sự cố với UI của addon, hãy thử sử dụng hồi chiêu kiểu Bedrock.
+sweepnslash.config.personal.indicator.crosshair=Tâm
+sweepnslash.config.personal.indicator.hotbar=Thanh Công Cụ
+sweepnslash.config.personal.indicator.geyser=Kiểu Bedrock
+sweepnslash.config.personal.indicator.none=Không có
+sweepnslash.config.personal.bowhitsound=Âm Thanh Khi Bắn Cung Trúng Mục Tiêu
+sweepnslash.config.personal.sweep.particles=Hiệu Ứng Quét Cạnh
+sweepnslash.config.personal.enchanted.particles=Hiệu Ứng Khi Trúng Bằng Vũ Khí Phù Phép
+sweepnslash.config.personal.damage.particles=Hiệu Ứng Hiển Thị Sát Thương
+sweepnslash.config.personal.crit.particles=Hiệu Ứng Đòn Chí Mạng
+sweepnslash.config.personal.crit.sounds=Âm Thanh Đòn Chí Mạng
+sweepnslash.config.personal.sweep.rgb=Màu RGB Cho Đòn Quét Cạnh
+sweepnslash.config.save=Lưu
 
-sweepnslash.canceled=§cĐã hủy cấu hình.
-sweepnslash.saved=§aĐã lưu cấu hình.
+sweepnslash.config.status.canceled=§cĐã hủy cấu hình.
+sweepnslash.config.status.saved=§aĐã lưu cấu hình.
+sweepnslash.config.status.nan=§cInvalid number.

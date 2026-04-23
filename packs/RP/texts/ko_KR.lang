@@ -2,51 +2,52 @@ pack.name=Sweep 'N Slash - 리소스 팩
 pack.description=자바 에디션 전투를 베드락 에디션에서 경험해보세요!
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=주로 사용하는 손에 있을 때:
-sweepnslash.attribute.name.attack_damage=공격 피해
-sweepnslash.attribute.name.attack_speed=공격 속도
+sweepnslash.item.mainhand=주로 사용하는 손에 있을 때:
+sweepnslash.attribute.attack_damage=공격 피해
+sweepnslash.attribute.attack_speed=공격 속도
 
-sweepnslash.tipmessage=§e%s §f명령어를 입력하여 §3Sweep §f'N §6Slash §f설정 화면 열기
-sweepnslash.currentversion=현재 버전:§e %s
+sweepnslash.tip.message=§e%s §f명령어를 입력하여 §3Sweep §f'N §6Slash §f설정 화면 열기
+sweepnslash.tip.version=현재 버전:§e %s
 
-sweepnslash.commanddescription=Sweep 'N Slash 설정 메뉴를 엽니다.
-sweepnslash.configmenutitle=Sweep 'N Slash 설정
+sweepnslash.config.command.description=Sweep 'N Slash 설정 메뉴를 엽니다.
+sweepnslash.config.menu.title=Sweep 'N Slash 설정
 
 ## Advanced Operator Toggles
-sweepnslash.operatortoggleheader=고급 애드온 설정
-sweepnslash.toggleaddon=애드온 활성화
-sweepnslash.toggledebugmode=디버그 모드 활성화
-sweepnslash.toggledebugmode.tooltip=개발자를 위한 디버그 모드입니다. 콘텐츠 로그에 개발에 필요한 여러 정보를 출력하며, DPS 실험 기능을 활성화합니다. ('sns:testdamage' 스크립트 이벤트)
+sweepnslash.config.operator.header=고급 애드온 설정
+sweepnslash.config.operator.addon=애드온 활성화
+sweepnslash.config.operator.debug=디버그 모드 활성화
+sweepnslash.config.operator.debug.tooltip=개발자를 위한 디버그 모드입니다. 콘텐츠 로그에 개발에 필요한 여러 정보를 출력하며, DPS 실험 기능을 활성화합니다. ('sns:testdamage' 스크립트 이벤트)
 
 ## Server Toggles
-sweepnslash.servertoggleheader=서버 설정
-sweepnslash.shieldbreakspecial=도끼 대 방패에 쿨다운 적용
-sweepnslash.shieldbreakspecial.tooltip=도끼를 든 채로 방패를 공격할 때 공격 쿨다운이 84.8%% 이상인 경우에만 방패를 무력화하도록 합니다.
-sweepnslash.saturationhealing=포만감 회복
-sweepnslash.saturationhealing.tooltip=포만감을 사용하여 체력을 빠르게 회복합니다. 활성화 시 '자연 재생' 월드 옵션이 강제로 비활성화됩니다.
+sweepnslash.config.server.header=서버 설정
+sweepnslash.config.server.shieldbreak=도끼 대 방패에 쿨다운 적용
+sweepnslash.config.server.shieldbreak.tooltip=도끼를 든 채로 방패를 공격할 때 공격 쿨다운이 84.8%% 이상인 경우에만 방패를 무력화하도록 합니다.
+sweepnslash.config.server.saturation=포만감 회복
+sweepnslash.config.server.saturation.tooltip=포만감을 사용하여 체력을 빠르게 회복합니다. 활성화 시 '자연 재생' 월드 옵션이 강제로 비활성화됩니다.
 
 ## General Toggles
-sweepnslash.generaltoggleheader=일반 설정
-sweepnslash.excludepetfromsweep=휩쓸기 공격에서 길들여진 몹 무시
-sweepnslash.excludepetfromsweep.tooltip=길들여진 몹이 휩쓸기 공격에 피해를 받지 않도록 합니다.
-sweepnslash.tipmessagetoggle=세계 입장 시 팁 메세지 표시
+sweepnslash.config.general.header=일반 설정
+sweepnslash.config.general.excludepet=휩쓸기 공격에서 길들여진 몹 무시
+sweepnslash.config.general.excludepet.tooltip=길들여진 몹이 휩쓸기 공격에 피해를 받지 않도록 합니다.
+sweepnslash.config.general.tipmessage=세계 입장 시 팁 메세지 표시
 
 ## Personal Settings
-sweepnslash.personaltoggleheader=개인 설정
-sweepnslash.indicatorstyle=공격 지표
-sweepnslash.indicatorstyle.tooltip=공격 지표의 모양을 변경합니다. UI에 문제가 생길 경우 Geyser를 시도해보세요.
-sweepnslash.crosshair=십자선
-sweepnslash.hotbar=단축 바
-sweepnslash.geyser=Geyser
-sweepnslash.none=비활성화
-sweepnslash.bowhitsound=화살 명중 효과음
-sweepnslash.sweepparticles=휩쓸기 공격 입자
-sweepnslash.enchantedhitparticles=마법 부여 공격 입자
-sweepnslash.damageindicatorparticles=피해 입자
-sweepnslash.critparticles=치명타 공격 입자
-sweepnslash.critsounds=치명타 공격 효과음
-sweepnslash.sweepRGBtitle=휩쓸기 공격 입자 색상
-sweepnslash.saveconfig=저장
+sweepnslash.config.personal.header=개인 설정
+sweepnslash.config.personal.indicator=공격 지표
+sweepnslash.config.personal.indicator.tooltip=공격 지표의 모양을 변경합니다. UI에 문제가 생길 경우 Geyser를 시도해보세요.
+sweepnslash.config.personal.indicator.crosshair=십자선
+sweepnslash.config.personal.indicator.hotbar=단축 바
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=비활성화
+sweepnslash.config.personal.bowhitsound=화살 명중 효과음
+sweepnslash.config.personal.sweep.particles=휩쓸기 공격 입자
+sweepnslash.config.personal.enchanted.particles=마법 부여 공격 입자
+sweepnslash.config.personal.damage.particles=피해 입자
+sweepnslash.config.personal.crit.particles=치명타 공격 입자
+sweepnslash.config.personal.crit.sounds=치명타 공격 효과음
+sweepnslash.config.personal.sweep.rgb=휩쓸기 공격 입자 색상
+sweepnslash.config.save=저장
 
-sweepnslash.canceled=§c설정이 취소되었습니다.
-sweepnslash.saved=§a설정이 저장되었습니다.
+sweepnslash.config.status.canceled=§c설정이 취소되었습니다.
+sweepnslash.config.status.saved=§a설정이 저장되었습니다.
+sweepnslash.config.status.nan=§cInvalid number.
