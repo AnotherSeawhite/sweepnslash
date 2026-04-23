@@ -21,6 +21,7 @@ import { finalDamageCalculation, getCooldownTime } from './damage.ts';
 import { sweep } from './sweep.ts';
 import { shieldBlock } from './shields.ts';
 import { Sounds } from '../Files.d';
+import { lastAttackMap, playerHitMap, rawDamageMap } from '../shared/entityState.ts';
 
 export class CombatManager {
     static attack(eventData: { player: Player; target: mc.Entity; currentTick: number }) {
@@ -52,7 +53,7 @@ export class CombatManager {
         let swp = sweep(currentTick, player, target, stats);
         const specialCheck = specialValid(currentTick, player, stats);
 
-        const lastAttack = (target as any).__lastAttack || { rawDamage: 0, damage: 0, time: 0 };
+        const lastAttack = lastAttackMap.get(target.id) ?? { rawDamage: 0, damage: 0, time: 0 };
         const timeElapsed = currentTick - lastAttack.time;
         const timeValid = timeElapsed >= 10;
 
@@ -66,6 +67,7 @@ export class CombatManager {
             getHunger,
             getSaturation,
             getExhaustion,
+            getLastAttack: (entity: mc.Entity) => lastAttackMap.get(entity.id),
         };
 
         const beforeEffect =
@@ -196,8 +198,8 @@ export class CombatManager {
             }
         };
 
-        (player as any).__rawDamage = dmgResult.raw;
-        (target as any).__playerHit = true;
+        rawDamageMap.set(player.id, dmgResult.raw);
+        playerHitMap.set(target.id, true);
 
         const iframes =
             (timeValid ||
