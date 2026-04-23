@@ -32,7 +32,7 @@ export function configForm(player: Player): void {
     const op = player.playerPermissionLevel == PlayerPermissionLevel.Operator;
     let formValuesPush = 0;
 
-    let form = new ModalFormData().title({ translate: 'sweepnslash.configmenutitle' });
+    let form = new ModalFormData().title({ translate: 'sweepnslash.config.menu.title' });
 
     function dp(object: any, { id, value }: { id: string; value?: any } = { id: '' }) {
         if (value !== undefined) object.setDynamicProperty(id, value);
@@ -40,38 +40,38 @@ export function configForm(player: Player): void {
     }
 
     if (tag == true) {
-        form.label({ translate: 'sweepnslash.operatortoggleheader' });
+        form.label({ translate: 'sweepnslash.config.operator.header' });
         if (!world.isHardcore)
             form.toggle(
-                { translate: 'sweepnslash.toggleaddon' },
+                { translate: 'sweepnslash.config.operator.addon' },
                 { defaultValue: dp(world, { id: 'addon_toggle' }) },
             );
         form.toggle(
-            { translate: 'sweepnslash.toggledebugmode' },
+            { translate: 'sweepnslash.config.operator.debug' },
             {
                 defaultValue: dp(world, { id: 'debug_mode' }),
-                tooltip: { translate: 'sweepnslash.toggledebugmode.tooltip' },
+                tooltip: { translate: 'sweepnslash.config.operator.debug.tooltip' },
             },
         );
         form.divider();
     }
 
     if (op == true) {
-        form.label({ translate: 'sweepnslash.servertoggleheader' });
+        form.label({ translate: 'sweepnslash.config.server.header' });
         form.toggle(
-            { translate: 'sweepnslash.shieldbreakspecial' },
+            { translate: 'sweepnslash.config.server.shieldbreak' },
             {
                 defaultValue: dp(world, { id: 'shieldBreakSpecial' }),
-                tooltip: { translate: 'sweepnslash.shieldbreakspecial.tooltip' },
+                tooltip: { translate: 'sweepnslash.config.server.shieldbreak.tooltip' },
             },
         );
         form.toggle(
-            { translate: 'sweepnslash.saturationhealing' },
+            { translate: 'sweepnslash.config.server.saturation' },
             {
                 defaultValue: dp(world, { id: 'saturationHealing' }),
                 tooltip: {
                     rawtext: [
-                        { translate: 'sweepnslash.saturationhealing.tooltip' },
+                        { translate: 'sweepnslash.config.server.saturation.tooltip' },
                         { text: '\n\n' },
                         { translate: 'createWorldScreen.naturalregeneration' },
                         { text: ': ' },
@@ -83,59 +83,59 @@ export function configForm(player: Player): void {
         form.divider();
     }
 
-    form.label({ translate: 'sweepnslash.generaltoggleheader' });
+    form.label({ translate: 'sweepnslash.config.general.header' });
     form.toggle(
-        { translate: 'sweepnslash.excludepetfromsweep' },
+        { translate: 'sweepnslash.config.general.excludepet' },
         {
             defaultValue: dp(player, { id: 'excludePetFromSweep' }) ?? false,
-            tooltip: { translate: 'sweepnslash.excludepetfromsweep.tooltip' },
+            tooltip: { translate: 'sweepnslash.config.general.excludepet.tooltip' },
         },
     );
     form.toggle(
-        { translate: 'sweepnslash.tipmessagetoggle' },
+        { translate: 'sweepnslash.config.general.tipmessage' },
         { defaultValue: dp(player, { id: 'tipMessage' }) ?? false },
     );
     form.divider();
-    form.label({ translate: 'sweepnslash.personaltoggleheader' });
+    form.label({ translate: 'sweepnslash.config.personal.header' });
     form.dropdown(
-        { translate: 'sweepnslash.indicatorstyle' },
+        { translate: 'sweepnslash.config.personal.indicator' },
         [
-            { translate: 'sweepnslash.crosshair' },
-            { translate: 'sweepnslash.hotbar' },
-            { translate: 'sweepnslash.geyser' },
-            { translate: 'sweepnslash.none' },
+            { translate: 'sweepnslash.config.personal.indicator.crosshair' },
+            { translate: 'sweepnslash.config.personal.indicator.hotbar' },
+            { translate: 'sweepnslash.config.personal.indicator.geyser' },
+            { translate: 'sweepnslash.config.personal.indicator.none' },
         ],
         {
             defaultValueIndex: dp(player, { id: 'cooldownStyle' }),
-            tooltip: { translate: 'sweepnslash.indicatorstyle.tooltip' },
+            tooltip: { translate: 'sweepnslash.config.personal.indicator.tooltip' },
         },
     );
     form.toggle(
-        { translate: 'sweepnslash.bowhitsound' },
+        { translate: 'sweepnslash.config.personal.bowhitsound' },
         { defaultValue: dp(player, { id: 'bowHitSound' }) ?? false },
     );
     form.toggle(
-        { translate: 'sweepnslash.sweepparticles' },
+        { translate: 'sweepnslash.config.personal.sweep.particles' },
         { defaultValue: dp(player, { id: 'sweep' }) ?? false },
     );
     form.toggle(
-        { translate: 'sweepnslash.enchantedhitparticles' },
+        { translate: 'sweepnslash.config.personal.enchanted.particles' },
         { defaultValue: dp(player, { id: 'enchantedHit' }) ?? false },
     );
     form.toggle(
-        { translate: 'sweepnslash.damageindicatorparticles' },
+        { translate: 'sweepnslash.config.personal.damage.particles' },
         { defaultValue: dp(player, { id: 'damageIndicator' }) ?? false },
     );
     form.toggle(
-        { translate: 'sweepnslash.critparticles' },
+        { translate: 'sweepnslash.config.personal.crit.particles' },
         { defaultValue: dp(player, { id: 'criticalHit' }) ?? false },
     );
     form.divider();
-    form.label({ translate: 'sweepnslash.sweepRGBtitle' });
+    form.label({ translate: 'sweepnslash.config.personal.sweep.rgb' });
     form.slider('§cR', 0, 255, { defaultValue: dp(player, { id: 'sweepR' }) ?? 255 });
     form.slider('§aG', 0, 255, { defaultValue: dp(player, { id: 'sweepG' }) ?? 255 });
     form.slider('§9B', 0, 255, { defaultValue: dp(player, { id: 'sweepB' }) ?? 255 });
-    form.submitButton({ translate: 'sweepnslash.saveconfig' });
+    form.submitButton({ translate: 'sweepnslash.config.save' });
 
     form.show(player as any).then((response) => {
         const { canceled, formValues, cancelationReason } = response;
@@ -143,7 +143,7 @@ export function configForm(player: Player): void {
 
         function n(value: any) {
             const num = Number(value);
-            if (isNaN(value)) player.sendMessage({ translate: 'sweepnslash.nan' });
+            if (isNaN(value)) player.sendMessage({ translate: 'sweepnslash.config.status.nan' });
             return isNaN(num) ? 0 : num;
         }
 
@@ -152,12 +152,12 @@ export function configForm(player: Player): void {
 
         if (canceled) {
             player.playSound(Sounds.SnsConfigCanceled);
-            player.sendMessage({ translate: 'sweepnslash.canceled' });
+            player.sendMessage({ translate: 'sweepnslash.config.status.canceled' });
             return;
         }
 
         player.playSound(Sounds.GamePlayerBowDing);
-        player.sendMessage({ translate: 'sweepnslash.saved' });
+        player.sendMessage({ translate: 'sweepnslash.config.status.saved' });
 
         const rgbProps = ['sweepR', 'sweepG', 'sweepB'];
 
@@ -209,7 +209,7 @@ export function registerConfigCommand(init: any): void {
     init.customCommandRegistry.registerCommand(
         {
             name: configCommand,
-            description: 'sweepnslash.commanddescription',
+            description: 'sweepnslash.config.command.description',
             permissionLevel: 0,
             cheatsRequired: false,
         },

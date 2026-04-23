@@ -69,10 +69,10 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         )
             player.sendMessage({
                 rawtext: [
-                    { translate: 'sweepnslash.tipmessage', with: ['/sns:config'] },
+                    { translate: 'sweepnslash.tip.message', with: ['/sns:config'] },
                     { text: '\n' },
                     {
-                        translate: 'sweepnslash.currentversion',
+                        translate: 'sweepnslash.tip.version',
                         with: [`v${VERSION}${gametest ? '-gametest' : ''}`],
                     },
                 ],
