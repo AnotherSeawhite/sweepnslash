@@ -50,4 +50,4 @@ sweepnslash.config.save=Lưu
 
 sweepnslash.config.status.canceled=§cĐã hủy cấu hình.
 sweepnslash.config.status.saved=§aĐã lưu cấu hình.
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§cSố không hợp lệ.

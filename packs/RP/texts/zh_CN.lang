@@ -50,4 +50,4 @@ sweepnslash.config.save=保存
 
 sweepnslash.config.status.canceled=§c已取消保存
 sweepnslash.config.status.saved=§a已保存设置
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§c无效数字。

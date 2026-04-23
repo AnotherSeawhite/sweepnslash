@@ -50,4 +50,4 @@ sweepnslash.config.save=Salvare
 
 sweepnslash.config.status.canceled=§cConfigurație anulată.
 sweepnslash.config.status.saved=§aConfigurație salvată.
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§cNumăr invalid.

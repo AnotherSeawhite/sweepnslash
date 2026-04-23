@@ -50,4 +50,4 @@ sweepnslash.config.save=Сохранить
 
 sweepnslash.config.status.canceled=§cКонфигурация отменена.
 sweepnslash.config.status.saved=§aКонфигурация сохранена.
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§cНеверное число.

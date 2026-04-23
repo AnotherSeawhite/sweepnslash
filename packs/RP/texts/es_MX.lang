@@ -6,45 +6,45 @@ sweepnslash.item.mainhand=En la mano principal:
 sweepnslash.attribute.attack_damage=Daño por golpe
 sweepnslash.attribute.attack_speed=Velocidad de ataque
 
-sweepnslash.tip.message=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.tip.version=Current version:§e %s
+sweepnslash.tip.message=§fEscribe §e%s §fpara abrir el menú de §3Sweep §f'N §6Slash §fconfiguración
+sweepnslash.tip.version=Versión actual:§e %s
 
 sweepnslash.config.command.description=Abre el menú de configuración de Sweep 'N Slash.
-sweepnslash.config.menu.title=Sweep 'N Slash Configuration
+sweepnslash.config.menu.title=Sweep 'N Slash Configuración
 
-sweepnslash.config.operator.header=Advanced Operator Toggles
-sweepnslash.config.operator.addon=Toggle Add-On
-sweepnslash.config.operator.debug=Toggle Debug Mode
-sweepnslash.config.operator.debug.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Opciones avanzadas de operador
+sweepnslash.config.operator.addon=Activar/desactivar complemento
+sweepnslash.config.operator.debug=Activar/desactivar modo de depuración
+sweepnslash.config.operator.debug.tooltip=Activa el modo de depuración para desarrolladores y creadores. Imprime diversas informaciones en el registro de contenido, y habilita el probador de DPS (evento de script 'sns:testdamage').
 
-sweepnslash.config.server.header=Server Toggles
-sweepnslash.config.server.shieldbreak=Require Charged Axes to Break Shields
-sweepnslash.config.server.shieldbreak.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.config.server.saturation=Saturation Healing
-sweepnslash.config.server.saturation.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Opciones del servidor
+sweepnslash.config.server.shieldbreak=Requerir hachas cargadas para romper escudos
+sweepnslash.config.server.shieldbreak.tooltip=Si está activado, las hachas desactivan los escudos solo si la carga de enfriamiento del atacante está por encima del 84,8%%.
+sweepnslash.config.server.saturation=Curación por saturación
+sweepnslash.config.server.saturation.tooltip=Si está activado, la saturación se usará más rápidamente para curar. Esto forzará la desactivación de la regla de juego de Regeneración natural.
 
-sweepnslash.config.general.header=General Toggles
-sweepnslash.config.general.excludepet=Ignore Tamed Pets On Sweep
-sweepnslash.config.general.excludepet.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.config.general.tipmessage=Tip Message Upon Joining
+sweepnslash.config.general.header=Opciones generales
+sweepnslash.config.general.excludepet=Ignorar mascotas domesticadas en el barrido
+sweepnslash.config.general.excludepet.tooltip=Si está activado, los ataques de barrido no dañarán a las mascotas domesticadas.
+sweepnslash.config.general.tipmessage=Mensaje de consejo al unirse
 
-sweepnslash.config.personal.header=Personal Settings
-sweepnslash.config.personal.indicator=Attack Indicator
-sweepnslash.config.personal.indicator.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.config.personal.indicator.crosshair=Crosshair
-sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.header=Configuración personal
+sweepnslash.config.personal.indicator=Indicador de ataque
+sweepnslash.config.personal.indicator.tooltip=Cambia la interfaz del indicador de ataque. Si tienes problemas con la interfaz del complemento, prueba a usar Geyser.
+sweepnslash.config.personal.indicator.crosshair=Punto de mira
+sweepnslash.config.personal.indicator.hotbar=Barra de acceso rápido
 sweepnslash.config.personal.indicator.geyser=Geyser
-sweepnslash.config.personal.indicator.none=None
-sweepnslash.config.personal.bowhitsound=Bow Hit Sound
-sweepnslash.config.personal.sweep.particles=Sweep Particles
-sweepnslash.config.personal.enchanted.particles=Enchanted Hit Particles
-sweepnslash.config.personal.damage.particles=Damage Indicator Particles
-sweepnslash.config.personal.crit.particles=Critical Hit Particles
-sweepnslash.config.personal.crit.sounds=Critical Hit Sounds
-sweepnslash.config.personal.sweep.rgb=Sweep RGB Color
-sweepnslash.config.save=Save
+sweepnslash.config.personal.indicator.none=Ninguno
+sweepnslash.config.personal.bowhitsound=Sonido de impacto de arco
+sweepnslash.config.personal.sweep.particles=Partículas de barrido
+sweepnslash.config.personal.enchanted.particles=Partículas de golpe encantado
+sweepnslash.config.personal.damage.particles=Partículas de indicador de daño
+sweepnslash.config.personal.crit.particles=Partículas de golpe crítico
+sweepnslash.config.personal.crit.sounds=Sonidos de golpe crítico
+sweepnslash.config.personal.sweep.rgb=Color RGB del barrido
+sweepnslash.config.save=Guardar
 
-sweepnslash.config.status.canceled=§cConfiguration canceled.
-sweepnslash.config.status.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cConfiguración cancelada.
+sweepnslash.config.status.saved=§aConfiguración guardada.
 
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§cNúmero inválido.

@@ -6,45 +6,45 @@ sweepnslash.item.mainhand=Když v dominantní ruce:
 sweepnslash.attribute.attack_damage=Síla útoku
 sweepnslash.attribute.attack_speed=Rychlost útoku
 
-sweepnslash.tip.message=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.tip.version=Current version:§e %s
+sweepnslash.tip.message=§fNapište §e%s §fk otevření §3Sweep §f'N §6Slash §fkonfiguračního menu
+sweepnslash.tip.version=Aktuální verze:§e %s
 
-sweepnslash.config.menu.title=Sweep 'N Slash Configuration
+sweepnslash.config.menu.title=Sweep 'N Slash Konfigurace
 sweepnslash.config.command.description=Otevře konfigurační nabídku pro Sweep 'N Slash.
 
-sweepnslash.config.operator.header=Advanced Operator Toggles
-sweepnslash.config.operator.addon=Toggle Add-On
-sweepnslash.config.operator.debug=Toggle Debug Mode
-sweepnslash.config.operator.debug.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Pokročilé přepínače operátora
+sweepnslash.config.operator.addon=Přepnout doplněk
+sweepnslash.config.operator.debug=Přepnout režim ladění
+sweepnslash.config.operator.debug.tooltip=Přepínač režimu ladění pro vývojáře a tvůrce. Vypisuje různé informace do protokolu obsahu a povoluje tester DPS (skriptová událost 'sns:testdamage').
 
-sweepnslash.config.server.header=Server Toggles
-sweepnslash.config.server.shieldbreak=Require Charged Axes to Break Shields
-sweepnslash.config.server.shieldbreak.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.config.server.saturation=Saturation Healing
-sweepnslash.config.server.saturation.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Přepínače serveru
+sweepnslash.config.server.shieldbreak=Vyžadovat nabitou sekeru k rozbití štítu
+sweepnslash.config.server.shieldbreak.tooltip=Pokud je povoleno, sekery vyřazují štíty pouze tehdy, když je nabití útočníka nad 84.8%%.
+sweepnslash.config.server.saturation=Léčení nasycením
+sweepnslash.config.server.saturation.tooltip=Pokud je povoleno, nasycení bude rychleji využíváno k léčení. Tím se vynutí vypnutí herního pravidla přirozené regenerace.
 
-sweepnslash.config.general.header=General Toggles
-sweepnslash.config.general.excludepet=Ignore Tamed Pets On Sweep
-sweepnslash.config.general.excludepet.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.config.general.tipmessage=Tip Message Upon Joining
+sweepnslash.config.general.header=Obecné přepínače
+sweepnslash.config.general.excludepet=Ignorovat zkrocená zvířata při rozsahu útoku
+sweepnslash.config.general.excludepet.tooltip=Pokud je povoleno, rozsahové útoky nezraní zkrocená zvířata.
+sweepnslash.config.general.tipmessage=Uvítací zpráva po připojení
 
-sweepnslash.config.personal.header=Personal Settings
-sweepnslash.config.personal.indicator=Attack Indicator
-sweepnslash.config.personal.indicator.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.config.personal.indicator.crosshair=Crosshair
-sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.header=Osobní nastavení
+sweepnslash.config.personal.indicator=Ukazatel útoku
+sweepnslash.config.personal.indicator.tooltip=Mění rozhraní ukazatele útoku. Pokud máte problémy s rozhraním doplňku, zkuste použít Geyser.
+sweepnslash.config.personal.indicator.crosshair=Zaměřovač
+sweepnslash.config.personal.indicator.hotbar=Panel akcí
 sweepnslash.config.personal.indicator.geyser=Geyser
-sweepnslash.config.personal.indicator.none=None
-sweepnslash.config.personal.bowhitsound=Bow Hit Sound
-sweepnslash.config.personal.sweep.particles=Sweep Particles
-sweepnslash.config.personal.enchanted.particles=Enchanted Hit Particles
-sweepnslash.config.personal.damage.particles=Damage Indicator Particles
-sweepnslash.config.personal.crit.particles=Critical Hit Particles
-sweepnslash.config.personal.crit.sounds=Critical Hit Sounds
-sweepnslash.config.personal.sweep.rgb=Sweep RGB Color
-sweepnslash.config.save=Save
+sweepnslash.config.personal.indicator.none=Žádný
+sweepnslash.config.personal.bowhitsound=Zvuk zásahu lukem
+sweepnslash.config.personal.sweep.particles=Částice rozsahu útoku
+sweepnslash.config.personal.enchanted.particles=Částice okouzleného zásahu
+sweepnslash.config.personal.damage.particles=Částice ukazatele poškození
+sweepnslash.config.personal.crit.particles=Částice kritického zásahu
+sweepnslash.config.personal.crit.sounds=Zvuky kritického zásahu
+sweepnslash.config.personal.sweep.rgb=RGB barva rozsahu útoku
+sweepnslash.config.save=Uložit
 
-sweepnslash.config.status.canceled=§cConfiguration canceled.
-sweepnslash.config.status.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfigurace zrušena.
+sweepnslash.config.status.saved=§aKonfigurace uložena.
 
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§cNeplatné číslo.

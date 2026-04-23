@@ -50,4 +50,4 @@ sweepnslash.config.save=저장
 
 sweepnslash.config.status.canceled=§c설정이 취소되었습니다.
 sweepnslash.config.status.saved=§a설정이 저장되었습니다.
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§c유효하지 않은 숫자입니다.

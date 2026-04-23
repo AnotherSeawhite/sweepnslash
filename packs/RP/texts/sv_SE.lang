@@ -6,45 +6,45 @@ sweepnslash.item.mainhand=I primära handen:
 sweepnslash.attribute.attack_damage=attackskada
 sweepnslash.attribute.attack_speed=attackhastighet
 
-sweepnslash.tip.message=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.tip.version=Current version:§e %s
+sweepnslash.tip.message=§fSkriv §e%s §fför att öppna §3Sweep §f'N §6Slash §fkonfigurationsmenyn
+sweepnslash.tip.version=Aktuell version:§e %s
 
 sweepnslash.config.command.description=Öppnar konfigurationsmenyn för Sweep 'N Slash.
-sweepnslash.config.menu.title=Sweep 'N Slash Configuration
+sweepnslash.config.menu.title=Sweep 'N Slash Konfiguration
 
-sweepnslash.config.operator.header=Advanced Operator Toggles
-sweepnslash.config.operator.addon=Toggle Add-On
-sweepnslash.config.operator.debug=Toggle Debug Mode
-sweepnslash.config.operator.debug.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Avancerade Operatorinställningar
+sweepnslash.config.operator.addon=Aktivera/inaktivera Add-On
+sweepnslash.config.operator.debug=Aktivera/inaktivera felsökningsläge
+sweepnslash.config.operator.debug.tooltip=Felsökningsläge för utvecklare och skapare. Skriver ut diverse information i innehållsloggen och aktiverar DPS-testaren ('sns:testdamage' skripthändelse).
 
-sweepnslash.config.server.header=Server Toggles
-sweepnslash.config.server.shieldbreak=Require Charged Axes to Break Shields
-sweepnslash.config.server.shieldbreak.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.config.server.saturation=Saturation Healing
-sweepnslash.config.server.saturation.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Serverinställningar
+sweepnslash.config.server.shieldbreak=Kräv laddad yxattack för att bryta sköldar
+sweepnslash.config.server.shieldbreak.tooltip=Om aktiverat, deaktiverar yxor sköldar bara om angreparens avkylningstid är över 84,8%%.
+sweepnslash.config.server.saturation=Mättnadsläkning
+sweepnslash.config.server.saturation.tooltip=Om aktiverat, förbrukas mättnad snabbare för läkning. Detta tvingar spelregeln Naturlig Regeneration av.
 
-sweepnslash.config.general.header=General Toggles
-sweepnslash.config.general.excludepet=Ignore Tamed Pets On Sweep
-sweepnslash.config.general.excludepet.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.config.general.tipmessage=Tip Message Upon Joining
+sweepnslash.config.general.header=Allmänna Inställningar
+sweepnslash.config.general.excludepet=Ignorera tama husdjur vid svepattack
+sweepnslash.config.general.excludepet.tooltip=Om aktiverat, skadar svepattacker inte tama husdjur.
+sweepnslash.config.general.tipmessage=Tipsmeddelande vid inloggning
 
-sweepnslash.config.personal.header=Personal Settings
-sweepnslash.config.personal.indicator=Attack Indicator
-sweepnslash.config.personal.indicator.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.config.personal.indicator.crosshair=Crosshair
+sweepnslash.config.personal.header=Personliga Inställningar
+sweepnslash.config.personal.indicator=Attackindikator
+sweepnslash.config.personal.indicator.tooltip=Ändrar attackindikator-UI. Om du har problem med add-onets UI, prova att använda Geyser.
+sweepnslash.config.personal.indicator.crosshair=Hårkors
 sweepnslash.config.personal.indicator.hotbar=Hotbar
 sweepnslash.config.personal.indicator.geyser=Geyser
-sweepnslash.config.personal.indicator.none=None
-sweepnslash.config.personal.bowhitsound=Bow Hit Sound
-sweepnslash.config.personal.sweep.particles=Sweep Particles
-sweepnslash.config.personal.enchanted.particles=Enchanted Hit Particles
-sweepnslash.config.personal.damage.particles=Damage Indicator Particles
-sweepnslash.config.personal.crit.particles=Critical Hit Particles
-sweepnslash.config.personal.crit.sounds=Critical Hit Sounds
-sweepnslash.config.personal.sweep.rgb=Sweep RGB Color
-sweepnslash.config.save=Save
+sweepnslash.config.personal.indicator.none=Ingen
+sweepnslash.config.personal.bowhitsound=Bågträffljud
+sweepnslash.config.personal.sweep.particles=Svepattack-partiklar
+sweepnslash.config.personal.enchanted.particles=Förtrollad träff-partiklar
+sweepnslash.config.personal.damage.particles=Skadeindikator-partiklar
+sweepnslash.config.personal.crit.particles=Kritisk träff-partiklar
+sweepnslash.config.personal.crit.sounds=Kritisk träff-ljud
+sweepnslash.config.personal.sweep.rgb=Svepattack RGB-färg
+sweepnslash.config.save=Spara
 
-sweepnslash.config.status.canceled=§cConfiguration canceled.
-sweepnslash.config.status.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfiguration avbröts.
+sweepnslash.config.status.saved=§aKonfiguration sparad.
 
-sweepnslash.config.status.nan=§cInvalid number.
+sweepnslash.config.status.nan=§cOgiltigt tal.
