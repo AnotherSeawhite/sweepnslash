@@ -68,7 +68,7 @@ export const alylicaDungeons: WeaponStats[] = [
                     volume: 0.2,
                     pitch: 1.5,
                 });
-                player.playSound('random.orb', { volume: 0.6, pitch: 1 });
+                player.playSound('random.orb', { volume: 0.6 });
                 doCrit = true;
             }
 

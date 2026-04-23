@@ -6,7 +6,7 @@ import {
     system,
     world,
 } from '@minecraft/server';
-import { ModalFormData } from '@minecraft/server-ui';
+import { FormCancelationReason, ModalFormData } from '@minecraft/server-ui';
 import { clampNumber } from '../minecraft-math.ts';
 import { Sounds } from '../Files.d';
 
@@ -145,15 +145,16 @@ export function configForm(player: Player): void {
             return isNaN(num) ? 0 : num;
         }
 
-        if (response && canceled && cancelationReason === 'UserBusy') return;
+        if (response && canceled && cancelationReason === FormCancelationReason.UserBusy)
+            return;
 
         if (canceled) {
-            player.playSound(Sounds.SnsConfigCanceled, { pitch: 1 });
+            player.playSound(Sounds.SnsConfigCanceled);
             player.sendMessage({ translate: 'sweepnslash.canceled' });
             return;
         }
 
-        player.playSound(Sounds.GamePlayerBowDing, { pitch: 1 });
+        player.playSound(Sounds.GamePlayerBowDing);
         player.sendMessage({ translate: 'sweepnslash.saved' });
 
         const rgbProps = ['sweepR', 'sweepG', 'sweepB'];
