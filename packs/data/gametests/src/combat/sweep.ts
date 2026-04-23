@@ -1,6 +1,6 @@
 import { Entity, EntityDamageCause, MolangVariableMap, Player, world } from '@minecraft/server';
 import { sub } from '../shared/math.ts';
-import { Particles } from '../Files.d';
+import { Particles } from '../Files.ts';
 import { getStatus } from '../shared/status.ts';
 import { isTeam } from '../shared/team.ts';
 import { hasItemFlag } from '../stats/item.ts';

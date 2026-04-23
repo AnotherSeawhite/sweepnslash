@@ -20,7 +20,7 @@ import {
 import { finalDamageCalculation, getCooldownTime } from './damage.ts';
 import { sweep } from './sweep.ts';
 import { shieldBlock } from './shields.ts';
-import { Sounds } from '../Files.d';
+import { Sounds } from '../Files.ts';
 import { lastAttackMap, playerHitMap, rawDamageMap } from '../shared/entityState.ts';
 
 export class CombatManager {

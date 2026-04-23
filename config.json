@@ -14,7 +14,7 @@
             },
             "shush": {
                 "url": "github.com/azurite-bedrock/regolith-filters",
-                "version": "HEAD"
+                "version": "0.1.0"
             },
             "marathon": {
                 "url": "github.com/azurite-bedrock/regolith-filters",
@@ -26,7 +26,7 @@
             },
             "type_gen": {
                 "url": "github.com/Bedrock-OSS/regolith-filters",
-                "version": "1.0.1"
+                "version": "1.4.0"
             }
         },
         "formatVersion": "1.4.0",

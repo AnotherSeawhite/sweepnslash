@@ -8,7 +8,7 @@ import {
 } from '@minecraft/server';
 import { FormCancelationReason, ModalFormData } from '@minecraft/server-ui';
 import { clampNumber } from '../minecraft-math.ts';
-import { Sounds } from '../Files.d';
+import { Sounds } from '../Files.ts';
 
 const configLastClosedMap = new Map<string, number>();
 
@@ -143,7 +143,8 @@ export function configForm(player: Player): void {
 
         function n(value: any) {
             const num = Number(value);
-            if (isNaN(value)) player.sendMessage({ translate: 'sweepnslash.config.status.nan' });
+            if (isNaN(value))
+                player.sendMessage({ translate: 'sweepnslash.config.status.nan' });
             return isNaN(num) ? 0 : num;
         }
 

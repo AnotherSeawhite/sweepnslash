@@ -22,7 +22,7 @@ import { tickFood } from './food/index.ts';
 import { AttackCooldownManager } from './combat/cooldown.ts';
 import { shieldBlock } from './combat/shields.ts';
 import { applyImpulseAsKnockback } from './combat/knockback.ts';
-import { Sounds } from './Files.d';
+import { Sounds } from './Files.ts';
 import { playerHitMap, lastAttackMap, rawDamageMap } from './shared/entityState.ts';
 
 // Gametest module import
