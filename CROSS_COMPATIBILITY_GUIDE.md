@@ -109,6 +109,7 @@ type SnsUtils = {
     getHunger(player: Player): number | undefined;
     getSaturation(player: Player): number | undefined;
     getExhaustion(player: Player): number | undefined;
+    getLastAttack(entity: Entity): { rawDamage: number; damage: number; time: number } | undefined;
 };
 ```
 
@@ -142,3 +143,8 @@ As of 2.8.0, Sweep 'N Slash **no longer mutates `@minecraft/server` prototypes**
 | `entity.getRidingOn()` | `entity.getComponent('riding')?.entityRidingOn` |
 | `entity.getRiders()` | `entity.getComponent('rideable')?.getRiders()` |
 | `entity.isRiding` | `entity.getComponent('riding')?.isValid ?? false` |
+| `entity.__playerHit` | Internal only (`playerHitMap`) |
+| `entity.__lastAttack` | `utils.getLastAttack(entity)` in callbacks |
+| `player.__rawDamage` | Internal only (`rawDamageMap`) |
+| `entity.__daggerSecondHit` | Internal only (`daggerSecondHitMap`) |
+| `player.__configLastClosed` | Internal only (`configLastClosedMap`) |
