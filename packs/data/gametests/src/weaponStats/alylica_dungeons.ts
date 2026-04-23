@@ -1,5 +1,7 @@
 import { WeaponStats } from '../importStats';
 
+const daggerSecondHitMap = new Map<string, boolean>();
+
 export const alylicaDungeons: WeaponStats[] = [
     {
         id: 'dungeons:sword',
@@ -120,17 +122,16 @@ export const alylicaDungeons: WeaponStats[] = [
         isWeapon: true,
         beforeEffect: ({ player, target, specialCheck, iframes, sprintKnockback }) => {
             let daggerHit = false;
-            (target as any).__daggerSecondHit = (target as any).__daggerSecondHit ?? false;
             if (specialCheck) {
-                if (iframes && (target as any).__daggerSecondHit) {
+                if (iframes && (daggerSecondHitMap.get(target.id) ?? false)) {
                     daggerHit = true;
-                    (target as any).__daggerSecondHit = false;
+                    daggerSecondHitMap.set(target.id, false);
                     player.playAnimation('animation.player.attack_daggers');
                 } else if (!iframes) {
                     player.dimension.playSound('weapon.daggers.hit', player.location, {
                         volume: 0.6,
                     });
-                    (target as any).__daggerSecondHit = true;
+                    daggerSecondHitMap.set(target.id, true);
                 }
             }
 
