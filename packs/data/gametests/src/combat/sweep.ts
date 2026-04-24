@@ -129,7 +129,6 @@ export function sweep(
     let particleLocation: { x: number; y: number; z: number };
     const inView = view(player) === target;
     if (inView || player.inputInfo.lastInputModeUsed !== 'Touch') {
-        // viewRotation inlined: dist=1, height=0.15
         const rot = player.getRotation();
         particleLocation = {
             x: pLoc.x - Math.sin(rot.y * (Math.PI / 180)) * dist,

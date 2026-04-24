@@ -28,13 +28,11 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
             const cooldownComp = item.getComponent('cooldown');
             cooldownComp?.startCooldown(player);
         }
-        // setAttackCooldown inline (avoids re-import cycle)
         status.lastAttackTime = currentTick;
     }
 
     status.lastSelectedSlot = player.selectedSlotIndex;
     status.lastSelectedItem = item?.typeId;
-    // Bug fix: remove duplicate assignment that was on line 388-389 of handler.ts
 
     // Sprint check
     const isSprinting = player.isSprinting;
