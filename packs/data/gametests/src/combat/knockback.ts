@@ -1,13 +1,14 @@
 import { Entity, world } from '@minecraft/server';
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { lambertW0, lambertWm1 } from '../lambertw.ts';
-import { sub, debug } from '../shared/math.ts';
+import { debug } from '../shared/math.ts';
 
 export function applyAttackKnockback(
     entity: Entity,
     location: { x: number; y: number; z: number },
     max_height = 1,
 ): void {
-    const delta = sub(location, entity.location);
+    const delta = Vec3.from(location).subtract(entity.location);
     const y_max = Math.max(max_height, delta.y + max_height);
     const a = 0.08;
     const d = 0.02;

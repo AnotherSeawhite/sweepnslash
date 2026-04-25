@@ -1,5 +1,5 @@
 import { Entity, EntityDamageCause, MolangVariableMap, Player, world } from '@minecraft/server';
-import { sub } from '../shared/math.ts';
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { Particles } from '../Files.ts';
 import { getStatus } from '../shared/status.ts';
 import { isTeam } from '../shared/team.ts';
@@ -136,8 +136,8 @@ export function sweep(
             z: pLoc.z + Math.cos(rot.y * (Math.PI / 180)) * dist,
         };
     } else {
-        const direction = sub(tLoc, pLoc);
-        const mag = Math.sqrt(direction.x ** 2 + direction.z ** 2);
+        const direction = Vec3.from(tLoc).subtract(pLoc).setY(0);
+        const mag = direction.length(); // sqrt(x²+z²) since y=0
         const unitDirection = { x: direction.x / mag, z: direction.z / mag };
         particleLocation = {
             x: pLoc.x + unitDirection.x * dist,
