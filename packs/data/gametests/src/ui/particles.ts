@@ -1,5 +1,5 @@
 import { Entity, MolangVariableMap, world } from '@minecraft/server';
-import { clampNumber } from '../minecraft-math.ts';
+import { clampNumber } from '../shared/math.ts';
 import { Particles } from '../Files.ts';
 import { debug } from '../shared/math.ts';
 import { getEntityStats } from '../stats/entity.ts';

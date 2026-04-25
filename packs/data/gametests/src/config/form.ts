@@ -7,7 +7,7 @@ import {
     world,
 } from '@minecraft/server';
 import { FormCancelationReason, ModalFormData } from '@minecraft/server-ui';
-import { clampNumber } from '../minecraft-math.ts';
+import { clampNumber } from '../shared/math.ts';
 import { Sounds } from '../Files.ts';
 
 const configLastClosedMap = new Map<string, number>();

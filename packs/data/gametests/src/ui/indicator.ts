@@ -1,5 +1,5 @@
 import { Player, system, world } from '@minecraft/server';
-import { clampNumber } from '../minecraft-math.ts';
+import { clampNumber } from '../shared/math.ts';
 import { getStatus, setLastShieldTime } from '../shared/status.ts';
 import { getItemStats, hasItemFlag, itemHasFlag } from '../stats/item.ts';
 import { getCooldownTime } from '../combat/damage.ts';

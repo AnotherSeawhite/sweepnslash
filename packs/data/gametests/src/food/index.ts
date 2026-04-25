@@ -1,5 +1,5 @@
 import { GameMode, Player } from '@minecraft/server';
-import { clampNumber } from '../minecraft-math.ts';
+import { clampNumber } from '../shared/math.ts';
 import { getStatus } from '../shared/status.ts';
 import {
     getHunger,
