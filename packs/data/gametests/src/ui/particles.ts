@@ -20,7 +20,7 @@ export function spawnSelectiveParticle(
     effectName: string,
     location: Vec3,
     dynamicProperty: string,
-    offset: Vec3 = Vec3.from(0, 0, 0),
+    offset: Vec3 = Vec3.Zero,
     molangVariables?: MolangVariableMap,
 ): void {
     const offsetLocation = {

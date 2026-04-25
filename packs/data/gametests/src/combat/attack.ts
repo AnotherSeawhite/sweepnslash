@@ -245,7 +245,7 @@ export class CombatManager {
                         (beforeEffect as any)?.critParticle ?? 'minecraft:critical_hit_emitter',
                         center,
                         'criticalHit',
-                        (beforeEffect as any)?.critOffset ?? Vec3.from(0, 0, 0),
+                        (beforeEffect as any)?.critOffset ?? Vec3.Zero,
                         (beforeEffect as any)?.critMap,
                     );
                 }

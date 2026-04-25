@@ -31,7 +31,7 @@ export function sweep(
     } = {},
     {
         particle = Particles.SweepParticle,
-        offset = Vec3.from(0, 0, 0),
+        offset = Vec3.Zero,
         map,
     }: {
         particle?: string;
