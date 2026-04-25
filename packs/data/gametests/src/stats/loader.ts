@@ -1,12 +1,32 @@
 import { world } from '@minecraft/server';
-import { Debug } from '../shared/debug.ts';
+import { Debug, logger } from '../shared/debug.ts';
 import {
     WeaponStatsSerializer,
     WeaponStatsSerializerVersioned,
     WeaponStatsSerializerV3,
 } from '../ipc/weapon_stats.ts';
 import { IPC, PROTO } from 'mcbe-ipc';
+import { TypeBuilder } from '@bedrock-oss/bedrock-boost';
 import { importStats, importEntityStats, WeaponStats, EntityStats } from '../importStats.ts';
+
+const WeaponStatsSchema = TypeBuilder.object('WeaponStats')
+    .property('id', TypeBuilder.string())
+    .property('formatVersion', TypeBuilder.string().optional())
+    .property('attackSpeed', TypeBuilder.number().optional())
+    .property('damage', TypeBuilder.number().optional())
+    .property('isWeapon', TypeBuilder.boolean().optional())
+    .property('sweep', TypeBuilder.boolean().optional())
+    .property('disableShield', TypeBuilder.boolean().optional())
+    .property('skipLore', TypeBuilder.boolean().optional())
+    .property('noInherit', TypeBuilder.boolean().optional())
+    .property('regularKnockback', TypeBuilder.number().optional())
+    .property('enchantedKnockback', TypeBuilder.number().optional())
+    .property('regularVerticalKnockback', TypeBuilder.number().optional())
+    .property('enchantedVerticalKnockback', TypeBuilder.number().optional())
+    .property('reach', TypeBuilder.number().optional())
+    .property('flags', TypeBuilder.array(TypeBuilder.string()).optional())
+    .allowUnknown()
+    .build();
 
 export const weaponStats: WeaponStats[] = [];
 export const entityStats: EntityStats[] = [];
@@ -18,6 +38,14 @@ world.afterEvents.worldLoad.subscribe(async () => {
     for (const stat of importStats) {
         try {
             stat.items.forEach((item) => {
+                const result = WeaponStatsSchema.safeParse(item);
+                if (!result.success) {
+                    const issues = result.errors.map((i) => `${i.path}: ${i.message}`).join(', ');
+                    logger.error(
+                        `[stats/loader] Invalid stats for "${(item as any)?.id ?? 'unknown'}" in module "${stat.moduleName}": ${issues}`,
+                    );
+                    return;
+                }
                 const index = weaponStats.findIndex((weapon) => weapon.id === item.id);
                 if (index > -1) weaponStats[index] = item;
                 else weaponStats.push(item);
@@ -57,6 +85,14 @@ world.afterEvents.worldLoad.subscribe(async () => {
 });
 
 function registerWeaponStats(weaponStat: WeaponStats) {
+    const result = WeaponStatsSchema.safeParse(weaponStat);
+    if (!result.success) {
+        const issues = result.errors.map((i) => `${i.path}: ${i.message}`).join(', ');
+        logger.error(
+            `[IPC] Invalid stats for "${weaponStat?.id ?? 'unknown'}": ${issues}`,
+        );
+        return;
+    }
     const fixedWeaponStat = {
         ...weaponStat,
         beforeEffect: weaponStat.beforeEffect as WeaponStats['beforeEffect'],
