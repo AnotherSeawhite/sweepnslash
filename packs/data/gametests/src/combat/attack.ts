@@ -293,7 +293,8 @@ export class CombatManager {
                     !(beforeEffect as any)?.cancelDurability &&
                     targetStats?.damageItem !== false
                 ) {
-                    const durabilityValue = stats?.isWeapon || itemHasFlag(item!, 'is_weapon') ? 1 : 2;
+                    const durabilityValue =
+                        stats?.isWeapon || itemHasFlag(item!, 'is_weapon') ? 1 : 2;
                     ItemUtils.consumeDurability(player, { value: durabilityValue });
                 }
             }
@@ -317,7 +318,7 @@ export class CombatManager {
         Debug.ifEnabled(() =>
             Debug.info(
                 `${player.name}'s §pDamage result:\n§f- Attacked with:§e ${item?.typeId ?? 'hand'} ${stats || item == undefined ? '' : '§c(Weapon stats not found)'}\n§f- Attempted damage: §e${dmgResult.final.toFixed(2)} (${(cooldown * 100).toFixed(0)}%) ${specialCheck ? '§a+' : ''} ${iframes ? '' : '(iframes immunity)'}\n§f- Ticks since last attack: §e${currentTick - status.lastAttackTime}`,
-            )
+            ),
         );
 
         if (dmgResult.final >= 0) setAttackCooldown(player, currentTick);

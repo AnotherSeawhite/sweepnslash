@@ -57,10 +57,7 @@
     },
     "cooldown_crosshair": {
         "type": "panel",
-        "size": [
-            16,
-            8
-        ],
+        "size": [16, 8],
         "anchor_from": "bottom_middle",
         "anchor_to": "top_middle",
         "$prefix_string": "crs",
@@ -104,14 +101,8 @@
     },
     "cooldown_hotbar": {
         "type": "panel",
-        "size": [
-            16,
-            16
-        ],
-        "offset": [
-            4,
-            0
-        ],
+        "size": [16, 16],
+        "offset": [4, 0],
         "anchor_from": "right_middle",
         "anchor_to": "left_middle",
         "$prefix_string": "htb",
@@ -144,10 +135,7 @@
     "cooldown_ui": {
         "type": "panel",
         "$update_string": "_sweepnslash:",
-        "size": [
-            "100%",
-            "100%"
-        ],
+        "size": ["100%", "100%"],
         "controls": [
             {
                 "cooldown_crosshair@sweepnslash.cooldown_crosshair": {}
@@ -156,10 +144,7 @@
     },
     "data_control": {
         "type": "panel",
-        "size": [
-            0,
-            0
-        ],
+        "size": [0, 0],
         "bindings": [
             {
                 "binding_name": "#hud_title_text_string"

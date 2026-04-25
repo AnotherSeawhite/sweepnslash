@@ -53,7 +53,9 @@ export type SnsUtils = {
     getHunger(player: Player): number | undefined;
     getSaturation(player: Player): number | undefined;
     getExhaustion(player: Player): number | undefined;
-    getLastAttack(entity: Entity): { rawDamage: number; damage: number; time: number } | undefined;
+    getLastAttack(
+        entity: Entity,
+    ): { rawDamage: number; damage: number; time: number } | undefined;
 };
 
 /**

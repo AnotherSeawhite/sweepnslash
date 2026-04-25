@@ -175,6 +175,6 @@ export function damageTest(player: Player): void {
     Debug.ifEnabled(() =>
         Debug.info(
             `${item?.typeId || 'hand'} ${stats || item == undefined ? '' : '§c(Weapon stats not found)§f'}\n[ §aTicks §f| §cDamage §f| §eDPS (with iframes) §f]\n§e${damageLog.join('\n')}`,
-        )
+        ),
     );
 }

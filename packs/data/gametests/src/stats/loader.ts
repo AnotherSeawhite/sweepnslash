@@ -40,7 +40,9 @@ world.afterEvents.worldLoad.subscribe(async () => {
             stat.items.forEach((item) => {
                 const result = WeaponStatsSchema.safeParse(item);
                 if (!result.success) {
-                    const issues = result.errors.map((i) => `${i.path}: ${i.message}`).join(', ');
+                    const issues = result.errors
+                        .map((i) => `${i.path}: ${i.message}`)
+                        .join(', ');
                     logger.error(
                         `[stats/loader] Invalid stats for "${(item as any)?.id ?? 'unknown'}" in module "${stat.moduleName}": ${issues}`,
                     );
@@ -88,9 +90,7 @@ function registerWeaponStats(weaponStat: WeaponStats) {
     const result = WeaponStatsSchema.safeParse(weaponStat);
     if (!result.success) {
         const issues = result.errors.map((i) => `${i.path}: ${i.message}`).join(', ');
-        logger.error(
-            `[IPC] Invalid stats for "${weaponStat?.id ?? 'unknown'}": ${issues}`,
-        );
+        logger.error(`[IPC] Invalid stats for "${weaponStat?.id ?? 'unknown'}": ${issues}`);
         return;
     }
     const fixedWeaponStat = {

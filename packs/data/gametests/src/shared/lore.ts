@@ -63,10 +63,7 @@ export function inventoryAddLore({ source, slot }: { source: Player; slot: numbe
         const newLore: any[] = [];
         if (damageStr || atkSpeedStr) {
             newLore.push({
-                rawtext: [
-                    { text: '§r§7' },
-                    { translate: 'sweepnslash.item.mainhand' },
-                ],
+                rawtext: [{ text: '§r§7' }, { translate: 'sweepnslash.item.mainhand' }],
             });
             if (damageStr) newLore.push(damageStr);
             if (atkSpeedStr) newLore.push(atkSpeedStr);

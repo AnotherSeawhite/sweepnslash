@@ -34,23 +34,25 @@ import { world } from '@minecraft/server';
 And then, paste this into the stats file:
 
 - Script v1
+
 ```javascript
 world.afterEvents.worldInitialize.subscribe((event) => {
     IPC.send(
         'sweep-and-slash:register-weapons',
         PROTO.Array(WeaponStatsSerializer),
-        weaponStats
+        weaponStats,
     );
 });
 ```
 
 - Script v2
+
 ```javascript
 world.afterEvents.worldLoad.subscribe((event) => {
     IPC.send(
         'sweep-and-slash:register-weapons',
         PROTO.Array(WeaponStatsSerializer),
-        weaponStats
+        weaponStats,
     );
 });
 ```
@@ -76,17 +78,22 @@ If the stats are not importing, turn on Debug Mode and reload the world to see i
 ## IPC Channels
 
 ### `sweep-and-slash:register-weapons`
+
 Uses `WeaponStatsSerializer`. Supports basic fields only (no `reach`, no `flags`, no functions). Unchanged.
 
 ### `sweep-and-slash:register-weapons-versioned`
+
 Uses `WeaponStatsSerializerVersioned`. **Frozen** — bugs are preserved to avoid breaking existing callers:
+
 - `reach` is parsed from the stream but **not included** in the returned object.
 - `flags` is **always returned as `[]`** regardless of what was serialized.
 
 Use the V3 channel if you need `reach` or `flags` to work correctly.
 
-### `sweep-and-slash:register-weapons@3` *(new in 2.8.0)*
+### `sweep-and-slash:register-weapons@3` _(new in 2.8.0)_
+
 Uses `WeaponStatsSerializerV3`. Fixes the bugs in the versioned channel:
+
 - `reach` is correctly stored in the deserialized return object.
 - `flags` is correctly deserialized from the serialized `flagsSet`.
 - No `formatVersion` branching — always serializes all fields.
@@ -102,14 +109,19 @@ Both callback types now receive a `utils` field. This gives callbacks clean acce
 ```ts
 type SnsUtils = {
     getStatus(entity: Entity): PlayerStatus;
-    getItemStats(entity: Entity, itemStack?: ItemStack): { equippableComp: any; item: ItemStack | undefined; stats: WeaponStats | undefined };
+    getItemStats(
+        entity: Entity,
+        itemStack?: ItemStack,
+    ): { equippableComp: any; item: ItemStack | undefined; stats: WeaponStats | undefined };
     hasItemFlag(entity: Entity, flag: string): boolean;
     getEntityStats(entity: Entity): EntityStats | undefined;
     isTeam(a: Entity, b: Entity): boolean;
     getHunger(player: Player): number | undefined;
     getSaturation(player: Player): number | undefined;
     getExhaustion(player: Player): number | undefined;
-    getLastAttack(entity: Entity): { rawDamage: number; damage: number; time: number } | undefined;
+    getLastAttack(
+        entity: Entity,
+    ): { rawDamage: number; damage: number; time: number } | undefined;
 };
 ```
 
@@ -121,30 +133,30 @@ Existing callbacks that do not destructure `utils` are **unaffected** — this i
 
 As of 2.8.0, Sweep 'N Slash **no longer mutates `@minecraft/server` prototypes**. The following prototype extensions no longer exist:
 
-| Removed extension | Replacement |
-|---|---|
-| `entity.getStatus()` | `utils.getStatus(entity)` in callbacks; `getStatus(entity)` internally |
-| `player.setAttackCooldown(tick)` | Internal only |
-| `player.setLastShieldTime(tick)` | Internal only |
-| `entity.getItemStats(item?)` | `utils.getItemStats(entity, item?)` in callbacks |
-| `entity.hasItemFlag(flag)` | `utils.hasItemFlag(entity, flag)` in callbacks |
-| `ItemStack.hasFlag(flag)` | Internal only |
-| `entity.getStats()` | `utils.getEntityStats(entity)` in callbacks |
-| `entity.applyAttackKnockback(loc, h)` | Internal only |
-| `entity.applyImpulseAsKnockback(vec)` | Internal only |
-| `entity.spawnSelectiveParticle(...)` | Internal only |
-| `entity.playSelectiveSound(...)` | Internal only |
-| `entity.healthParticle(dmg)` | Internal only |
-| `entity.isFasterThanWalk` | Internal only |
-| `player.getHunger/setHunger` etc. | `utils.getHunger(player)` etc. in callbacks |
-| `entity.center(offset?)` | Inlined at call sites |
-| `entity.viewRotation(dist, height)` | Inlined at call sites |
-| `entity.isTamed(opts)` | `entity.getComponent('is_tamed')?.isValid` |
-| `entity.getRidingOn()` | `entity.getComponent('riding')?.entityRidingOn` |
-| `entity.getRiders()` | `entity.getComponent('rideable')?.getRiders()` |
-| `entity.isRiding` | `entity.getComponent('riding')?.isValid ?? false` |
-| `entity.__playerHit` | Internal only (`playerHitMap`) |
-| `entity.__lastAttack` | `utils.getLastAttack(entity)` in callbacks |
-| `player.__rawDamage` | Internal only (`rawDamageMap`) |
-| `entity.__daggerSecondHit` | Internal only (`daggerSecondHitMap`) |
-| `player.__configLastClosed` | Internal only (`configLastClosedMap`) |
+| Removed extension                     | Replacement                                                            |
+| ------------------------------------- | ---------------------------------------------------------------------- |
+| `entity.getStatus()`                  | `utils.getStatus(entity)` in callbacks; `getStatus(entity)` internally |
+| `player.setAttackCooldown(tick)`      | Internal only                                                          |
+| `player.setLastShieldTime(tick)`      | Internal only                                                          |
+| `entity.getItemStats(item?)`          | `utils.getItemStats(entity, item?)` in callbacks                       |
+| `entity.hasItemFlag(flag)`            | `utils.hasItemFlag(entity, flag)` in callbacks                         |
+| `ItemStack.hasFlag(flag)`             | Internal only                                                          |
+| `entity.getStats()`                   | `utils.getEntityStats(entity)` in callbacks                            |
+| `entity.applyAttackKnockback(loc, h)` | Internal only                                                          |
+| `entity.applyImpulseAsKnockback(vec)` | Internal only                                                          |
+| `entity.spawnSelectiveParticle(...)`  | Internal only                                                          |
+| `entity.playSelectiveSound(...)`      | Internal only                                                          |
+| `entity.healthParticle(dmg)`          | Internal only                                                          |
+| `entity.isFasterThanWalk`             | Internal only                                                          |
+| `player.getHunger/setHunger` etc.     | `utils.getHunger(player)` etc. in callbacks                            |
+| `entity.center(offset?)`              | Inlined at call sites                                                  |
+| `entity.viewRotation(dist, height)`   | Inlined at call sites                                                  |
+| `entity.isTamed(opts)`                | `entity.getComponent('is_tamed')?.isValid`                             |
+| `entity.getRidingOn()`                | `entity.getComponent('riding')?.entityRidingOn`                        |
+| `entity.getRiders()`                  | `entity.getComponent('rideable')?.getRiders()`                         |
+| `entity.isRiding`                     | `entity.getComponent('riding')?.isValid ?? false`                      |
+| `entity.__playerHit`                  | Internal only (`playerHitMap`)                                         |
+| `entity.__lastAttack`                 | `utils.getLastAttack(entity)` in callbacks                             |
+| `player.__rawDamage`                  | Internal only (`rawDamageMap`)                                         |
+| `entity.__daggerSecondHit`            | Internal only (`daggerSecondHitMap`)                                   |
+| `player.__configLastClosed`           | Internal only (`configLastClosedMap`)                                  |

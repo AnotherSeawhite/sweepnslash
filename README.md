@@ -1,10 +1,11 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/AnotherSeawhite/sweepnslash/master/sweepnslash_logo.png" alt="Image" width="425" height="226" />
 
-  [![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1104407_downloads.svg)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash)
-  [![Minecraft - Version](https://img.shields.io/badge/Minecraft-v26.10_(Bedrock)-e04e14?label=Available%20For&labelColor=2d2d2d&color=e04e14)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash/files/all)
-  [![GitHub License](https://img.shields.io/github/license/AnotherSeawhite/sweepnslash)](https://github.com/AnotherSeawhite/sweepnslash/blob/main/LICENSE)
-  [![Discord](https://badgen.net/discord/members/dAcghG992N?icon=discord)](https://discord.gg/dAcghG992N)
+[![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1104407_downloads.svg)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash)
+[![Minecraft - Version](<https://img.shields.io/badge/Minecraft-v26.10_(Bedrock)-e04e14?label=Available%20For&labelColor=2d2d2d&color=e04e14>)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash/files/all)
+[![GitHub License](https://img.shields.io/github/license/AnotherSeawhite/sweepnslash)](https://github.com/AnotherSeawhite/sweepnslash/blob/main/LICENSE)
+[![Discord](https://badgen.net/discord/members/dAcghG992N?icon=discord)](https://discord.gg/dAcghG992N)
+
 </div>
 
 **Sweep 'N Slash** is a total conversion add-on that introduces some of the combat aspects from Java Edition's 1.9 Combat Update into Bedrock Edition.
