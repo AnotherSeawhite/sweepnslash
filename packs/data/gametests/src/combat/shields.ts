@@ -1,5 +1,5 @@
 import { Entity, GameMode, Player, world } from '@minecraft/server';
-import { calculateAngle, sub } from '../shared/math.ts';
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { getStatus } from '../shared/status.ts';
 import { hasItemFlag } from '../stats/item.ts';
 import { specialValid } from './checks.ts';
@@ -22,16 +22,12 @@ export function shield(target: Entity): boolean {
 }
 
 export function angle(player: Entity, target: Entity): boolean {
-    const viewDir = target.getViewDirection();
-    viewDir.y = 0;
+    const viewDir = Vec3.from(target.getViewDirection()).setY(0);
     const pLoc = target.location;
     const entities = target.dimension.getEntities({ location: target.location });
     const inViewEntities = entities.filter((entity) => {
-        const eLoc = entity.location;
-        const toEntityVec = sub(eLoc, pLoc);
-        toEntityVec.y = 0;
-        const ang = calculateAngle(viewDir, toEntityVec);
-        return ang >= -90 && ang <= 90;
+        const toEntityVec = Vec3.from(entity.location).subtract(pLoc).setY(0);
+        return viewDir.angleBetween(toEntityVec) <= Math.PI / 2;
     });
     return inViewEntities.some((e) => player === e);
 }
