@@ -1,3 +1,4 @@
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { WeaponStats } from '../importStats';
 
 const daggerSecondHitMap = new Map<string, boolean>();
@@ -145,7 +146,7 @@ export const alylicaDungeons: WeaponStats[] = [
 
                 critParticle: daggerHit ? 'dungeons:daggers_strike' : undefined,
                 critSound: daggerHit ? 'weapon.daggers.hit' : undefined,
-                critOffset: daggerHit ? { x: 0, y: -1, z: 0 } : undefined,
+                critOffset: daggerHit ? Vec3.from(0, -1, 0) : undefined,
             };
         },
     },
@@ -182,10 +183,10 @@ export const alylicaDungeons: WeaponStats[] = [
         sweep: true,
         beforeEffect: ({ player }) => {
             return {
-                sweepLocation: player.location,
+                sweepLocation: Vec3.from(player.location),
                 sweepSound: 'weapon.enchant.swirling',
                 sweepParticle: 'dungeons:swirling',
-                sweepOffset: { x: 0, y: 1, z: 0 },
+                sweepOffset: Vec3.from(0, 1, 0),
             };
         },
     },
@@ -212,10 +213,10 @@ export const alylicaDungeons: WeaponStats[] = [
                 });
             }
             return {
-                sweepLocation: player.location,
+                sweepLocation: Vec3.from(player.location),
                 sweepSound: 'weapon.enchant.swirling',
                 sweepParticle: 'dungeons:swirling',
-                sweepOffset: { x: 0, y: 1, z: 0 },
+                sweepOffset: Vec3.from(0, 1, 0),
             };
         },
     },
@@ -227,10 +228,10 @@ export const alylicaDungeons: WeaponStats[] = [
         sweep: true,
         beforeEffect: ({ player }) => {
             return {
-                sweepLocation: player.location,
+                sweepLocation: Vec3.from(player.location),
                 sweepSound: 'weapon.enchant.swirling',
                 sweepParticle: 'dungeons:swirling',
-                sweepOffset: { x: 0, y: 1, z: 0 },
+                sweepOffset: Vec3.from(0, 1, 0),
             };
         },
     },

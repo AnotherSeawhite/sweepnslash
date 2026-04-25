@@ -26,16 +26,16 @@ export function sweep(
         damage?: number;
         level?: number;
         forced?: boolean;
-        location?: { x: number; y: number; z: number };
+        location?: Vec3;
         scale?: number;
     } = {},
     {
         particle = Particles.SweepParticle,
-        offset = { x: 0, y: 0, z: 0 },
+        offset = Vec3.from(0, 0, 0),
         map,
     }: {
         particle?: string;
-        offset?: { x: number; y: number; z: number };
+        offset?: Vec3;
         map?: MolangVariableMap;
     } = {},
 ): { swept: boolean; commonEntities: Entity[] } {
@@ -115,35 +115,35 @@ export function sweep(
     if (damage == undefined) return { swept: false, commonEntities };
     if (damage <= 0) return { swept: false, commonEntities: [] };
 
-    const rgb = toColor({
-        x: (player.getDynamicProperty('sweepR') as number) ?? 255,
-        y: (player.getDynamicProperty('sweepG') as number) ?? 255,
-        z: (player.getDynamicProperty('sweepB') as number) ?? 255,
-    });
+    const rgb = toColor(Vec3.from(
+        (player.getDynamicProperty('sweepR') as number) ?? 255,
+        (player.getDynamicProperty('sweepG') as number) ?? 255,
+        (player.getDynamicProperty('sweepB') as number) ?? 255,
+    ));
     if (!map) {
         map = new MolangVariableMap();
         map.setFloat('variable.size', 1.0);
         map.setColorRGB('variable.color', rgb);
     }
 
-    let particleLocation: { x: number; y: number; z: number };
+    let particleLocation: Vec3;
     const inView = view(player) === target;
     if (inView || player.inputInfo.lastInputModeUsed !== 'Touch') {
         const rot = player.getRotation();
-        particleLocation = {
-            x: pLoc.x - Math.sin(rot.y * (Math.PI / 180)) * dist,
-            y: (pLoc.y + headLoc.y) / 2 + height,
-            z: pLoc.z + Math.cos(rot.y * (Math.PI / 180)) * dist,
-        };
+        particleLocation = Vec3.from(
+            pLoc.x - Math.sin(rot.y * (Math.PI / 180)) * dist,
+            (pLoc.y + headLoc.y) / 2 + height,
+            pLoc.z + Math.cos(rot.y * (Math.PI / 180)) * dist,
+        );
     } else {
         const direction = Vec3.from(tLoc).subtract(pLoc).setY(0);
         const mag = direction.length(); // sqrt(x²+z²) since y=0
         const unitDirection = { x: direction.x / mag, z: direction.z / mag };
-        particleLocation = {
-            x: pLoc.x + unitDirection.x * dist,
-            y: (pLoc.y + headLoc.y) / 2 + height,
-            z: pLoc.z + unitDirection.z * dist,
-        };
+        particleLocation = Vec3.from(
+            pLoc.x + unitDirection.x * dist,
+            (pLoc.y + headLoc.y) / 2 + height,
+            pLoc.z + unitDirection.z * dist,
+        );
     }
     spawnSelectiveParticle(
         player,

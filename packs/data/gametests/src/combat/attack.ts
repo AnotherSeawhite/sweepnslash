@@ -1,5 +1,5 @@
 import { EntityDamageCause, GameMode, Player, world } from '@minecraft/server';
-import { ItemUtils } from '@bedrock-oss/bedrock-boost';
+import { ItemUtils, Vec3 } from '@bedrock-oss/bedrock-boost';
 import * as mc from '@minecraft/server';
 import { system } from '@minecraft/server';
 import { Debug } from '../shared/debug.ts';
@@ -155,11 +155,11 @@ export class CombatManager {
                 : 0;
             applyAttackKnockback(
                 target,
-                {
-                    x: tLoc.x + (dirX / length) * knockbackX,
-                    y: tLoc.y,
-                    z: tLoc.z + (dirZ / length) * knockbackX,
-                },
+                Vec3.from(
+                    tLoc.x + (dirX / length) * knockbackX,
+                    tLoc.y,
+                    tLoc.z + (dirZ / length) * knockbackX,
+                ),
                 knockbackY,
             );
         };
@@ -235,17 +235,17 @@ export class CombatManager {
                         y: 0,
                         z: 0,
                     };
-                    const center = {
-                        x: tLoc2.x + entityOffset.x,
-                        y: (tLoc2.y + tHead.y) / 2 + 1 + entityOffset.y,
-                        z: tLoc2.z + entityOffset.z,
-                    };
+                    const center = Vec3.from(
+                        tLoc2.x + entityOffset.x,
+                        (tLoc2.y + tHead.y) / 2 + 1 + entityOffset.y,
+                        tLoc2.z + entityOffset.z,
+                    );
                     spawnSelectiveParticle(
                         target,
                         (beforeEffect as any)?.critParticle ?? 'minecraft:critical_hit_emitter',
                         center,
                         'criticalHit',
-                        (beforeEffect as any)?.critOffset ?? { x: 0, y: 0, z: 0 },
+                        (beforeEffect as any)?.critOffset ?? Vec3.from(0, 0, 0),
                         (beforeEffect as any)?.critMap,
                     );
                 }
@@ -257,11 +257,11 @@ export class CombatManager {
                         y: 0,
                         z: 0,
                     };
-                    const center = {
-                        x: tLoc2.x + entityOffset.x,
-                        y: (tLoc2.y + tHead.y) / 2 + 1 + entityOffset.y,
-                        z: tLoc2.z + entityOffset.z,
-                    };
+                    const center = Vec3.from(
+                        tLoc2.x + entityOffset.x,
+                        (tLoc2.y + tHead.y) / 2 + 1 + entityOffset.y,
+                        tLoc2.z + entityOffset.z,
+                    );
                     spawnSelectiveParticle(
                         target,
                         'sweepnslash:magic_critical_hit_emitter',

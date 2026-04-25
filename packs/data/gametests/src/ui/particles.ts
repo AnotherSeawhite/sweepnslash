@@ -1,10 +1,11 @@
 import { Entity, MolangVariableMap, world } from '@minecraft/server';
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { clampNumber } from '../shared/math.ts';
 import { Debug } from '../shared/debug.ts';
 import { Particles } from '../Files.ts';
 import { getEntityStats } from '../stats/entity.ts';
 
-export function toColor(vector3: { x: number; y: number; z: number }) {
+export function toColor(vector3: Vec3) {
     const { x, y, z } = vector3;
     const rand = Math.random() * 0.6 + 0.4;
     return {
@@ -17,9 +18,9 @@ export function toColor(vector3: { x: number; y: number; z: number }) {
 export function spawnSelectiveParticle(
     entity: Entity,
     effectName: string,
-    location: { x: number; y: number; z: number },
+    location: Vec3,
     dynamicProperty: string,
-    offset: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 },
+    offset: Vec3 = Vec3.from(0, 0, 0),
     molangVariables?: MolangVariableMap,
 ): void {
     const offsetLocation = {
@@ -47,11 +48,11 @@ export function healthParticle(entity: Entity, damage: number): void {
     const loc = entity.location;
     const head = entity.getHeadLocation();
     const entityOffset = getEntityStats(entity)?.centerOffset ?? { x: 0, y: 0, z: 0 };
-    const center = {
-        x: loc.x + entityOffset.x,
-        y: (loc.y + head.y) / 2 + 0.5 + entityOffset.y,
-        z: loc.z + entityOffset.z,
-    };
+    const center = Vec3.from(
+        loc.x + entityOffset.x,
+        (loc.y + head.y) / 2 + 0.5 + entityOffset.y,
+        loc.z + entityOffset.z,
+    );
 
     const hp = entity.getComponent('health');
     const dmg = clampNumber(damage, hp!.effectiveMin, hp!.effectiveMax) / 2;

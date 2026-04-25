@@ -10,6 +10,7 @@ import {
     Vector3,
     World,
 } from '@minecraft/server';
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { alylicaDungeons } from './weaponStats/alylica_dungeons';
 import { betterOnBedrock } from './weaponStats/better_on_bedrock';
 import { copperTools } from './weaponStats/tcc/copper_expansion';
@@ -170,7 +171,7 @@ export type WeaponStats = {
         /** Override vertical enchanted attack knockback value, distance in blocks. */
         enchantedVerticalKnockback?: number;
         /** Override sweep attack location (default: target's location). */
-        sweepLocation?: { x: number; y: number; z: number };
+        sweepLocation?: Vec3;
         /** Override sweep attack radius (in blocks). */
         sweepRadius?: number;
         /** Custom sweep particle name. */
@@ -194,9 +195,9 @@ export type WeaponStats = {
         /** MolangVariableMap for crit particle. */
         critMap?: MolangVariableMap;
         /** Offset for sweep particle. */
-        sweepOffset?: { x: number; y: number; z: number };
+        sweepOffset?: Vec3;
         /** Offset for crit particle. */
-        critOffset?: { x: number; y: number; z: number };
+        critOffset?: Vec3;
     } | void;
     /**
      * Optional function to run after the attack logic.

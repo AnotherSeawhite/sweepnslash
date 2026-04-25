@@ -1,6 +1,7 @@
 // Based on The Minecraft Wiki info
 // https://minecraft.wiki/w/Damage
 
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { WeaponStats } from '../importStats';
 
 // Refer to CROSS_COMPATIBILITY_GUIDE.txt for exporting stats
@@ -67,7 +68,7 @@ export const exampleArray: WeaponStats[] = [
                 cancelDurability: true,
                 regularKnockback: 1.552,
                 enchantedKnockback: 2.586,
-                sweepLocation: target.location,
+                sweepLocation: Vec3.from(target.location),
                 sweepRadius: 3,
 
                 sweepParticle: undefined,

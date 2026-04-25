@@ -5,7 +5,7 @@ import { Debug } from '../shared/debug.ts';
 
 export function applyAttackKnockback(
     entity: Entity,
-    location: { x: number; y: number; z: number },
+    location: Vec3,
     max_height = 1,
 ): void {
     const delta = Vec3.from(location).subtract(entity.location);
@@ -28,12 +28,12 @@ export function applyAttackKnockback(
     const multiplier = (m0 - 1) * Math.pow((66 - Math.min(time, 66)) / 66, 2) + 1;
     const vx = delta.x * 0.33 * multiplier;
     const vz = delta.z * 0.33 * multiplier;
-    applyImpulseAsKnockback(entity, { x: vx, y: vy, z: vz });
+    applyImpulseAsKnockback(entity, Vec3.from(vx, vy, vz));
 }
 
 export function applyImpulseAsKnockback(
     entity: Entity,
-    vector3: { x: number; y: number; z: number },
+    vector3: Vec3,
 ): void {
     const { x, y, z } = vector3;
     const horizontalStrength = Math.sqrt(x * x + z * z);
