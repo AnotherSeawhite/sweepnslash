@@ -1,7 +1,6 @@
 import { Entity, MolangVariableMap, world } from '@minecraft/server';
-import { clampNumber } from '../shared/math.ts';
+import { clampNumber, debug } from '../shared/math.ts';
 import { Particles } from '../Files.ts';
-import { debug } from '../shared/math.ts';
 import { getEntityStats } from '../stats/entity.ts';
 
 export function toColor(vector3: { x: number; y: number; z: number }) {
