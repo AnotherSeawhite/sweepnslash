@@ -1,10 +1,11 @@
 import { EntityDamageCause, GameMode, Player, world } from '@minecraft/server';
+import { ItemUtils } from '@bedrock-oss/bedrock-boost';
 import * as mc from '@minecraft/server';
 import { system } from '@minecraft/server';
 import { Debug } from '../shared/debug.ts';
 import { getStatus, setAttackCooldown, setLastShieldTime } from '../shared/status.ts';
 import { isTeam } from '../shared/team.ts';
-import { getItemStats, hasItemFlag } from '../stats/item.ts';
+import { getItemStats, hasItemFlag, itemHasFlag } from '../stats/item.ts';
 import { getEntityStats } from '../stats/entity.ts';
 import { getHunger, getSaturation, getExhaustion, setExhaustion } from '../food/accessors.ts';
 import { spawnSelectiveParticle } from '../ui/particles.ts';
@@ -15,7 +16,6 @@ import {
     specialValid,
     inanimate,
     enchantLevel,
-    durability,
 } from './checks.ts';
 import { finalDamageCalculation, getCooldownTime } from './damage.ts';
 import { sweep } from './sweep.ts';
@@ -292,8 +292,10 @@ export class CombatManager {
                 if (
                     !(beforeEffect as any)?.cancelDurability &&
                     targetStats?.damageItem !== false
-                )
-                    durability(player, equippableComp, item!, stats);
+                ) {
+                    const durabilityValue = stats?.isWeapon || itemHasFlag(item!, 'is_weapon') ? 1 : 2;
+                    ItemUtils.consumeDurability(player, { value: durabilityValue });
+                }
             }
 
             if (damageValid && !shieldBlocked) {

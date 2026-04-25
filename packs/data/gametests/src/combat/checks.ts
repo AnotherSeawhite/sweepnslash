@@ -1,4 +1,4 @@
-import { Entity, GameMode, ItemStack, Player } from '@minecraft/server';
+import { Entity, ItemStack, Player } from '@minecraft/server';
 import { Debug } from '../shared/debug.ts';
 import { getStatus } from '../shared/status.ts';
 import { getItemStats, itemHasFlag } from '../stats/item.ts';
@@ -146,35 +146,6 @@ export function view(player: Player, distance = 3): Entity | null {
 
 export function block(player: Player) {
     return player.getBlockFromViewDirection({ maxDistance: 8, includeLiquidBlocks: false });
-}
-
-export function durability(
-    player: Player,
-    equippableComp: any,
-    item: ItemStack,
-    stats: any,
-): void {
-    if (player.getGameMode() === GameMode.Creative) return;
-    const durabilityComp = item?.getComponent('durability');
-    if ((durabilityComp as any)?.unbreakable === true) return;
-    if (!durabilityComp || !stats) return;
-
-    const unbreakingLevel = enchantLevel(item, 'unbreaking');
-    const breakChance = durabilityComp.getDamageChance(unbreakingLevel);
-    if (breakChance < Math.random() * 100) return;
-
-    const durabilityModifier = stats?.isWeapon || itemHasFlag(item, 'is_weapon') ? 1 : 2;
-    durabilityComp.damage = Math.min(
-        durabilityComp.damage + durabilityModifier,
-        durabilityComp.maxDurability,
-    );
-
-    if (durabilityComp.damage >= durabilityComp.maxDurability) {
-        player.dimension.playSound('random.break', player.location);
-        equippableComp.setEquipment('Mainhand', undefined);
-    } else {
-        equippableComp.setEquipment('Mainhand', item);
-    }
 }
 
 export function damageTest(player: Player): void {
