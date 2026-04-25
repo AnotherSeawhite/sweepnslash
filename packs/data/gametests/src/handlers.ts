@@ -14,7 +14,7 @@ import { inventoryAddLore } from './shared/lore.ts';
 import { isTeam } from './shared/team.ts';
 import { getStatus, setAttackCooldown, setLastShieldTime } from './shared/status.ts';
 import { getItemStats, itemHasFlag } from './stats/item.ts';
-import { debug } from './shared/math.ts';
+import { Debug } from './shared/debug.ts';
 import { damageTest } from './combat/checks.ts';
 import { healthParticle } from './ui/particles.ts';
 import { tickIndicator } from './ui/indicator.ts';
@@ -241,8 +241,7 @@ world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) =>
             if (!playerHitMap.get(hurtEntity.id))
                 hurtEntity.applyKnockback({ x: 0, z: 0 }, hurtEntity.getVelocity().y);
         } catch (e) {
-            const debugMode = world.getDynamicProperty('debug_mode');
-            if (debugMode) debug('Error during knockback: ' + e + ', knockback skipped');
+            Debug.error('Error during knockback:', e);
         }
     }
 

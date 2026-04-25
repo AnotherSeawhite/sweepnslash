@@ -1,5 +1,5 @@
-import { Entity, GameMode, ItemStack, Player, world } from '@minecraft/server';
-import { debug } from '../shared/math.ts';
+import { Entity, GameMode, ItemStack, Player } from '@minecraft/server';
+import { Debug } from '../shared/debug.ts';
 import { getStatus } from '../shared/status.ts';
 import { getItemStats, itemHasFlag } from '../stats/item.ts';
 import { calculateDamage, getCooldownTime } from './damage.ts';
@@ -178,7 +178,6 @@ export function durability(
 }
 
 export function damageTest(player: Player): void {
-    const debugMode = world.getDynamicProperty('debug_mode');
     const { item, stats } = getItemStats(player);
     const baseDamage = stats?.damage || 1;
     const attackSpeed = stats?.attackSpeed || 4;
@@ -202,8 +201,9 @@ export function damageTest(player: Player): void {
         );
     }
 
-    if (debugMode)
-        debug(
+    Debug.ifEnabled(() =>
+        Debug.info(
             `${item?.typeId || 'hand'} ${stats || item == undefined ? '' : '§c(Weapon stats not found)§f'}\n[ §aTicks §f| §cDamage §f| §eDPS (with iframes) §f]\n§e${damageLog.join('\n')}`,
-        );
+        )
+    );
 }

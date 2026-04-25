@@ -1,5 +1,5 @@
 import { Entity, PlayerSoundOptions, world } from '@minecraft/server';
-import { debug } from '../shared/math.ts';
+import { Debug } from '../shared/debug.ts';
 
 export function playSelectiveSound(
     entity: Entity,
@@ -7,7 +7,6 @@ export function playSelectiveSound(
     dynamicProperty: string,
     soundOptions?: PlayerSoundOptions,
 ): void {
-    const debugMode = world.getDynamicProperty('debug_mode');
     for (const p of world.getAllPlayers()) {
         try {
             if (
@@ -17,7 +16,7 @@ export function playSelectiveSound(
                 p.playSound(soundId, soundOptions);
             }
         } catch (e) {
-            if (debugMode) debug(String(e));
+            Debug.error(e);
         }
     }
 }

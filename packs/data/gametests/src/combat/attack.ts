@@ -1,7 +1,7 @@
 import { EntityDamageCause, GameMode, Player, world } from '@minecraft/server';
 import * as mc from '@minecraft/server';
 import { system } from '@minecraft/server';
-import { debug } from '../shared/math.ts';
+import { Debug } from '../shared/debug.ts';
 import { getStatus, setAttackCooldown, setLastShieldTime } from '../shared/status.ts';
 import { isTeam } from '../shared/team.ts';
 import { getItemStats, hasItemFlag } from '../stats/item.ts';
@@ -26,8 +26,6 @@ import { lastAttackMap, playerHitMap, rawDamageMap } from '../shared/entityState
 export class CombatManager {
     static attack(eventData: { player: Player; target: mc.Entity; currentTick: number }) {
         const { player, target, currentTick } = eventData;
-
-        const debugMode = world.getDynamicProperty('debug_mode');
 
         const status = getStatus(player);
         const targetStats = getEntityStats(target);
@@ -307,19 +305,18 @@ export class CombatManager {
                         target.applyKnockback({ x: vel.x, z: vel.z }, vel.y);
                     }
                 } catch (e) {
-                    if (debugMode)
-                        debug('Error during knockback: ' + e + ', knockback skipped');
+                    Debug.error('Error during knockback:', e);
                 }
             }
         } else {
             if (dmgResult.final > 0) hitSound(false, false, false, loc);
         }
 
-        if (debugMode) {
-            debug(
+        Debug.ifEnabled(() =>
+            Debug.info(
                 `${player.name}'s §pDamage result:\n§f- Attacked with:§e ${item?.typeId ?? 'hand'} ${stats || item == undefined ? '' : '§c(Weapon stats not found)'}\n§f- Attempted damage: §e${dmgResult.final.toFixed(2)} (${(cooldown * 100).toFixed(0)}%) ${specialCheck ? '§a+' : ''} ${iframes ? '' : '(iframes immunity)'}\n§f- Ticks since last attack: §e${currentTick - status.lastAttackTime}`,
-            );
-        }
+            )
+        );
 
         if (dmgResult.final >= 0) setAttackCooldown(player, currentTick);
 

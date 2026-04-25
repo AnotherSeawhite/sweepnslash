@@ -1,5 +1,6 @@
 import { Entity, MolangVariableMap, world } from '@minecraft/server';
-import { clampNumber, debug } from '../shared/math.ts';
+import { clampNumber } from '../shared/math.ts';
+import { Debug } from '../shared/debug.ts';
 import { Particles } from '../Files.ts';
 import { getEntityStats } from '../stats/entity.ts';
 
@@ -21,7 +22,6 @@ export function spawnSelectiveParticle(
     offset: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 },
     molangVariables?: MolangVariableMap,
 ): void {
-    const debugMode = world.getDynamicProperty('debug_mode');
     const offsetLocation = {
         x: location.x + offset.x,
         y: location.y + offset.y,
@@ -38,7 +38,7 @@ export function spawnSelectiveParticle(
                     : p.spawnParticle(effectName, offsetLocation);
             }
         } catch (e) {
-            if (debugMode) debug(String(e));
+            Debug.error(e);
         }
     }
 }

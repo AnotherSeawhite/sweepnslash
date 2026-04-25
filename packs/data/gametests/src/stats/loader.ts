@@ -1,5 +1,5 @@
 import { world } from '@minecraft/server';
-import { debug } from '../shared/math.ts';
+import { Debug } from '../shared/debug.ts';
 import {
     WeaponStatsSerializer,
     WeaponStatsSerializerVersioned,
@@ -53,8 +53,7 @@ world.afterEvents.worldLoad.subscribe(async () => {
         ...entLogMessages,
     ];
 
-    const debugMode = world.getDynamicProperty('debug_mode');
-    if (debugMode) debug(`Stats File Load:\n${combinedLogMessages.join('\n')}`);
+    Debug.info(`Stats File Load:\n${combinedLogMessages.join('\n')}`);
 });
 
 function registerWeaponStats(weaponStat: WeaponStats) {
@@ -63,15 +62,13 @@ function registerWeaponStats(weaponStat: WeaponStats) {
         beforeEffect: weaponStat.beforeEffect as WeaponStats['beforeEffect'],
         script: weaponStat.script as WeaponStats['script'],
     };
-    const debugMode = world.getDynamicProperty('debug_mode');
     const existingIndex = weaponStats.findIndex((weapon) => weapon.id === weaponStat.id);
     if (existingIndex !== -1) {
         weaponStats[existingIndex] = fixedWeaponStat;
-        if (debugMode)
-            debug(`IPC Receiver:\n${weaponStats[existingIndex].id} has been overwritten`);
+        Debug.info(`IPC Receiver:\n${weaponStats[existingIndex].id} has been overwritten`);
     } else {
         weaponStats.push(fixedWeaponStat);
-        if (debugMode) debug(`IPC Receiver:\n${weaponStat.id} has been added in the stats`);
+        Debug.info(`IPC Receiver:\n${weaponStat.id} has been added in the stats`);
     }
 }
 

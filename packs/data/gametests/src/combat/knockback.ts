@@ -1,7 +1,7 @@
-import { Entity, world } from '@minecraft/server';
+import { Entity } from '@minecraft/server';
 import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { lambertW0, lambertWm1 } from '../lambertw.ts';
-import { debug } from '../shared/math.ts';
+import { Debug } from '../shared/debug.ts';
 
 export function applyAttackKnockback(
     entity: Entity,
@@ -52,7 +52,6 @@ export function applyImpulseAsKnockback(
             verticalStrength + (entity.isOnGround ? 0 : vel.y),
         );
     } catch (e) {
-        const debugMode = world.getDynamicProperty('debug_mode');
-        if (debugMode) debug('Error during knockback: ' + e + ', knockback skipped');
+        Debug.error('Error during knockback:', e);
     }
 }

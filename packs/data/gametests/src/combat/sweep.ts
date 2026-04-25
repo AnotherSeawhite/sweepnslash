@@ -1,6 +1,7 @@
 import { Entity, EntityDamageCause, MolangVariableMap, Player, world } from '@minecraft/server';
 import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { Particles } from '../Files.ts';
+import { Debug } from '../shared/debug.ts';
 import { getStatus } from '../shared/status.ts';
 import { isTeam } from '../shared/team.ts';
 import { hasItemFlag } from '../stats/item.ts';
@@ -38,7 +39,6 @@ export function sweep(
         map?: MolangVariableMap;
     } = {},
 ): { swept: boolean; commonEntities: Entity[] } {
-    const debugMode = world.getDynamicProperty('debug_mode');
     const pvp = world.gameRules.pvp;
     const status = getStatus(player);
     const isRiding = player.getComponent('riding')?.isValid ?? false;
@@ -166,7 +166,7 @@ export function sweep(
             const fireImmune = e?.getComponent('fire_immune')?.isValid;
             if (!fireImmune && fireAspect) e.setOnFire(fireAspect * 4, true);
         } catch (err) {
-            if (debugMode) console.log(String(err));
+            Debug.error(err);
         }
     });
 

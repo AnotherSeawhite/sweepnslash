@@ -1,5 +1,6 @@
 import { Player, system, world } from '@minecraft/server';
 import { clampNumber } from '../shared/math.ts';
+import { Debug } from '../shared/debug.ts';
 import { getStatus, setLastShieldTime } from '../shared/status.ts';
 import { getItemStats, hasItemFlag, itemHasFlag } from '../stats/item.ts';
 import { getCooldownTime } from '../combat/damage.ts';
@@ -149,8 +150,7 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
         }
     }
 
-    const debugMode = world.getDynamicProperty('debug_mode');
-    if (addonToggle && debugMode) {
+    if (addonToggle && Debug.isEnabled()) {
         const cooldownPercentage = Math.floor(((maxCD - curCD) / maxCD) * 100);
         const actionBarDisplay = `${Math.trunc(curCD)} (${specialCheck ? '§a' : ''}${cooldownPercentage}%§f)`;
         player.onScreenDisplay.setActionBar(actionBarDisplay);
