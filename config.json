@@ -14,7 +14,7 @@
             },
             "shush": {
                 "url": "github.com/azurite-bedrock/regolith-filters",
-                "version": "0.1.0"
+                "version": "HEAD"
             },
             "marathon": {
                 "url": "github.com/azurite-bedrock/regolith-filters",
@@ -38,7 +38,15 @@
                 },
                 "filters": [
                     {
-                        "filter": "shush"
+                        "filter": "shush",
+                        "settings": {
+                            "removeComments": true,
+                            "removeTrailingCommas": true,
+                            "minify": true,
+                            "jsonc": true,
+                            "batchSize": 20,
+                            "tabSize": 4
+                        }
                     },
                     {
                         "filter": "marathon"
