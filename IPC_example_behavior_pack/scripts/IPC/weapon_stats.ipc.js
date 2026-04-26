@@ -93,7 +93,7 @@ export const WeaponStatsSerializerVersioned = {
     },
 };
 
-// V3 - fixes reach and flags bugs. Clean, flat serialize/deserialize, no formatVersion branching.
+// V3 - fixes reach and flags bugs. Full migration from boolean to flags. Flat serialize/deserialize, no formatVersion branching.
 export const WeaponStatsSerializerV3 = {
     *serialize(value, stream) {
         yield* PROTO.String.serialize(value.id, stream);
