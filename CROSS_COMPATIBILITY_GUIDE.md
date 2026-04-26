@@ -49,8 +49,7 @@ Array of strings, used for defining specific behavior of items. Below are possib
 First, install IPC for your addon from this website:
 https://github.com/OmniacDev/MCBE-IPC
 
-Or you can use the IPC built for Sweep 'N Slash if you don't know what you're doing. (IPC.zip)
-You can also use a complete IPC pack for better understanding. (IPC_example_pack.zip)
+Or you can use the [prebuilt IPC pack](https://github.com/azurite-bedrock/Sweep-N-Slash-External-Pack-Example) for Sweep 'N Slash if you don't know what it does.
 
 Extract the zip file into scripts folder. After that, make a file or use an already existing file to define your stats on.
 
