@@ -94,53 +94,16 @@ export const WeaponStatsSerializerVersioned = {
 };
 
 // V3 - fixes reach and flags bugs. Full migration from boolean to flags. Flat serialize/deserialize, no formatVersion branching.
-export const WeaponStatsSerializerV3 = {
-    *serialize(value, stream) {
-        yield* PROTO.String.serialize(value.id, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.attackSpeed, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.damage, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.regularKnockback, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.enchantedKnockback, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.regularVerticalKnockback, stream);
-        yield* PROTO.Optional(PROTO.Float64).serialize(
-            value.enchantedVerticalKnockback,
-            stream,
-        );
-        yield* PROTO.Optional(PROTO.Float64).serialize(value.reach, stream);
-        const flagsSet = new Set(value.flags || []);
-        yield* PROTO.Optional(PROTO.Set(PROTO.String)).serialize(flagsSet, stream);
-        yield* PROTO.Optional(FunctionSerializer).serialize(value.beforeEffect, stream);
-        yield* PROTO.Optional(FunctionSerializer).serialize(value.script, stream);
-    },
-    *deserialize(stream) {
-        const id = yield* PROTO.String.deserialize(stream);
-        const attackSpeed = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const damage = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const regularKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const enchantedKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const regularVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(
-            stream,
-        );
-        const enchantedVerticalKnockback = yield* PROTO.Optional(PROTO.Float64).deserialize(
-            stream,
-        );
-        const reach = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
-        const flagsSet = yield* PROTO.Optional(PROTO.Set(PROTO.String)).deserialize(stream);
-        const flags = Array.from(flagsSet || []);
-        const beforeEffect = yield* PROTO.Optional(FunctionSerializer).deserialize(stream);
-        const script = yield* PROTO.Optional(FunctionSerializer).deserialize(stream);
-        return {
-            id,
-            attackSpeed,
-            damage,
-            regularKnockback,
-            enchantedKnockback,
-            regularVerticalKnockback,
-            enchantedVerticalKnockback,
-            reach,
-            flags,
-            beforeEffect,
-            script,
-        };
-    },
-};
+export const WeaponStatsSerializerV3 = PROTO.Object({
+    id: PROTO.String,
+    attackSpeed: PROTO.Optional(PROTO.Float64),
+    damage: PROTO.Optional(PROTO.Float64),
+    regularKnockback: PROTO.Optional(PROTO.Float64),
+    enchantedKnockback: PROTO.Optional(PROTO.Float64),
+    regularVerticalKnockback: PROTO.Optional(PROTO.Float64),
+    enchantedVerticalKnockback: PROTO.Optional(PROTO.Float64),
+    reach: PROTO.Optional(PROTO.Float64),
+    flags: PROTO.Optional(PROTO.Array(PROTO.String)),
+    beforeEffect: PROTO.Optional(FunctionSerializer),
+    script: PROTO.Optional(FunctionSerializer),
+});

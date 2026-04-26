@@ -7,10 +7,10 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@bedrock-oss/bedrock-boost": "2.0.1",
         "@minecraft/server": "2.6.0",
         "@minecraft/server-gametest": "1.0.0-beta.1.26.12-stable",
         "@minecraft/server-ui": "2.0.0",
-        "@bedrock-oss/bedrock-boost": "2.0.1",
-        "mcbe-ipc": "3.0.4"
+        "mcbe-ipc": "^3.4.0"
     }
 }
