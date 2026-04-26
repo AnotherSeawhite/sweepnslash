@@ -2,51 +2,52 @@ pack.name=Pachetul de resurse §3Sweep §f'N §6Slash §f-
 pack.description=Aduce sistemul de luptă al Ediției Java 1.9+ în Ediția Bedrock.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=În mâna principală:
-sweepnslash.attribute.name.attack_damage=Puncte de atac
-sweepnslash.attribute.name.attack_speed=Viteză de atac
+sweepnslash.item.mainhand=În mâna principală:
+sweepnslash.attribute.attack_damage=Puncte de atac
+sweepnslash.attribute.attack_speed=Viteză de atac
 
-sweepnslash.tipmessage=§fScrie §e%s §fpentru a deschide meniul de configurare al §3Sweep §f'N §6Slash §f
-sweepnslash.currentversion=Versiune curentă:§e %s
+sweepnslash.tip.message=§fScrie §e%s §fpentru a deschide meniul de configurare al §3Sweep §f'N §6Slash §f
+sweepnslash.tip.version=Versiune curentă:§e %s
 
-sweepnslash.commanddescription=Deschide meniul de configurare pentru Sweep 'N Slash.
-sweepnslash.configmenutitle=Configurare Sweep 'N Slash
+sweepnslash.config.command.description=Deschide meniul de configurare pentru Sweep 'N Slash.
+sweepnslash.config.menu.title=Configurare Sweep 'N Slash
 
 ## Advanced Operator Toggles
-sweepnslash.operatortoggleheader=Opțiuni avansate de operator
-sweepnslash.toggleaddon=Activează Add-On
-sweepnslash.toggledebugmode=Activează modul de depanare
-sweepnslash.toggledebugmode.tooltip=Opțiune mod depanare pentru dezvoltatori și creatori. Scoate diverse informații în Jurnalul de Conținut, și activează testerul DPS (evenimentul de sctipt „sns:testdamage”).
+sweepnslash.config.operator.header=Opțiuni avansate de operator
+sweepnslash.config.operator.addon=Activează Add-On
+sweepnslash.config.operator.debug=Activează modul de depanare
+sweepnslash.config.operator.debug.tooltip=Opțiune mod depanare pentru dezvoltatori și creatori. Scoate diverse informații în Jurnalul de Conținut, și activează testerul DPS (evenimentul de sctipt „sns:testdamage”).
 
 ## Server Toggles
-sweepnslash.servertoggleheader=Opțiuni avansate de server
-sweepnslash.shieldbreakspecial=Necesită topoare încărcate pentru a sparge scuturile
-sweepnslash.shieldbreakspecial.tooltip=Dacă este activată, topoarele dezactivează scuturi doar dacă încărcarea cooldown-ului atacatorului este peste 84.8%.
-sweepnslash.saturationhealing=Regenerare bazată pe saturație
-sweepnslash.saturationhealing.tooltip=Dacă este activată, saturația va fi consumată mai rapid pentru regenerare. Acest lucru va opti forțat regula de joc „Regenerare naturală”.
+sweepnslash.config.server.header=Opțiuni avansate de server
+sweepnslash.config.server.shieldbreak=Necesită topoare încărcate pentru a sparge scuturile
+sweepnslash.config.server.shieldbreak.tooltip=Dacă este activată, topoarele dezactivează scuturi doar dacă încărcarea cooldown-ului atacatorului este peste 84.8%.
+sweepnslash.config.server.saturation=Regenerare bazată pe saturație
+sweepnslash.config.server.saturation.tooltip=Dacă este activată, saturația va fi consumată mai rapid pentru regenerare. Acest lucru va opti forțat regula de joc „Regenerare naturală”.
 
 ## General Toggles
-sweepnslash.generaltoggleheader=Opțiuni generale
-sweepnslash.excludepetfromsweep=Ignoră animalele îmblânzite la sfâșiere
-sweepnslash.excludepetfromsweep.tooltip=Dacă este activată, atacurile de sfâșiere nu vor lovi animalele îmblânzite.
-sweepnslash.tipmessagetoggle=Arată mesaje sfat la intrarea în lume
+sweepnslash.config.general.header=Opțiuni generale
+sweepnslash.config.general.excludepet=Ignoră animalele îmblânzite la sfâșiere
+sweepnslash.config.general.excludepet.tooltip=Dacă este activată, atacurile de sfâșiere nu vor lovi animalele îmblânzite.
+sweepnslash.config.general.tipmessage=Arată mesaje sfat la intrarea în lume
 
 ## Personal Settings
-sweepnslash.personaltoggleheader=Setări personale
-sweepnslash.indicatorstyle=Indicator atac
-sweepnslash.indicatorstyle.tooltip=Schimbă interfața Indicatorului de atac. Dacă aveți probleme cu interfața addon-ului, încercați să folosiți Gheizer.
-sweepnslash.crosshair=Reticul
-sweepnslash.hotbar=Bară de acțiune
-sweepnslash.geyser=Geyser
-sweepnslash.none=Fără
-sweepnslash.bowhitsound=Sunet lovire arc
-sweepnslash.sweepparticles=Particule sfâșiere
-sweepnslash.enchantedhitparticles=Particule lovitură fermecată
-sweepnslash.damageindicatorparticles=Particyle indicator lovire
-sweepnslash.critparticles=Partivule lovitură critică
-sweepnslash.critsounds=Sunete lovitură critică
-sweepnslash.sweepRGBtitle=Culoare RGB sfâșiere
-sweepnslash.saveconfig=Salvare
+sweepnslash.config.personal.header=Setări personale
+sweepnslash.config.personal.indicator=Indicator atac
+sweepnslash.config.personal.indicator.tooltip=Schimbă interfața Indicatorului de atac. Dacă aveți probleme cu interfața addon-ului, încercați să folosiți Gheizer.
+sweepnslash.config.personal.indicator.crosshair=Reticul
+sweepnslash.config.personal.indicator.hotbar=Bară de acțiune
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Fără
+sweepnslash.config.personal.bowhitsound=Sunet lovire arc
+sweepnslash.config.personal.sweep.particles=Particule sfâșiere
+sweepnslash.config.personal.enchanted.particles=Particule lovitură fermecată
+sweepnslash.config.personal.damage.particles=Particyle indicator lovire
+sweepnslash.config.personal.crit.particles=Partivule lovitură critică
+sweepnslash.config.personal.crit.sounds=Sunete lovitură critică
+sweepnslash.config.personal.sweep.rgb=Culoare RGB sfâșiere
+sweepnslash.config.save=Salvare
 
-sweepnslash.canceled=§cConfigurație anulată.
-sweepnslash.saved=§aConfigurație salvată.
+sweepnslash.config.status.canceled=§cConfigurație anulată.
+sweepnslash.config.status.saved=§aConfigurație salvată.
+sweepnslash.config.status.nan=§cNumăr invalid.

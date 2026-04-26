@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Domináns kézben tartva:
-sweepnslash.attribute.name.attack_damage=sebzés
-sweepnslash.attribute.name.attack_speed=támadási sebesség
+sweepnslash.item.mainhand=Domináns kézben tartva:
+sweepnslash.attribute.attack_damage=sebzés
+sweepnslash.attribute.attack_speed=támadási sebesség
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fÍrd be: §e%s §fa §3Sweep §f'N §6Slash §fkonfigurációs menü megnyitásához
+sweepnslash.tip.version=Jelenlegi verzió:§e %s
 
-sweepnslash.commanddescription=Megnyitja a Sweep 'N Slash konfigurációs menüjét.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Megnyitja a Sweep 'N Slash konfigurációs menüjét.
+sweepnslash.config.menu.title=Sweep 'N Slash Konfiguráció
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Haladó operátori kapcsolók
+sweepnslash.config.operator.addon=Kiegészítő be-/kikapcsolása
+sweepnslash.config.operator.debug=Hibakeresési mód be-/kikapcsolása
+sweepnslash.config.operator.debug.tooltip=Hibakeresési mód kapcsoló fejlesztőknek és alkotóknak. Különböző információkat nyomtat a tartalomnaplóba, és engedélyezi a DPS-tesztelőt (az 'sns:testdamage' szkriptesemény).
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Szerver kapcsolók
+sweepnslash.config.server.shieldbreak=Töltött fejsze szükséges a pajzs töréséhez
+sweepnslash.config.server.shieldbreak.tooltip=Ha engedélyezve van, a fejszék csak akkor kapcsolják ki a pajzsokat, ha a támadó töltési szintje meghaladja a 84.8%%-ot.
+sweepnslash.config.server.saturation=Telítettség-alapú gyógyulás
+sweepnslash.config.server.saturation.tooltip=Ha engedélyezve van, a telítettség gyorsabban kerül felhasználásra a gyógyuláshoz. Ez kikényszeríti a természetes regeneráció játékszabályának kikapcsolását.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Általános kapcsolók
+sweepnslash.config.general.excludepet=Megszelídített állatok figyelmen kívül hagyása söprő csapásnál
+sweepnslash.config.general.excludepet.tooltip=Ha engedélyezve van, a söprő csapások nem sebzik meg a megszelídített állatokat.
+sweepnslash.config.general.tipmessage=Üdvözlő üzenet csatlakozáskor
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Személyes beállítások
+sweepnslash.config.personal.indicator=Támadásjelző
+sweepnslash.config.personal.indicator.tooltip=Módosítja a támadásjelző felhasználói felületét. Ha problémái vannak a kiegészítő felhasználói felületével, próbálja meg a Geysert.
+sweepnslash.config.personal.indicator.crosshair=Célkereszt
+sweepnslash.config.personal.indicator.hotbar=Eszköztár
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Nincs
+sweepnslash.config.personal.bowhitsound=Íj találati hang
+sweepnslash.config.personal.sweep.particles=Söprő csapás részecskék
+sweepnslash.config.personal.enchanted.particles=Varázslatos találat részecskék
+sweepnslash.config.personal.damage.particles=Sebzésjelző részecskék
+sweepnslash.config.personal.crit.particles=Kritikus találat részecskék
+sweepnslash.config.personal.crit.sounds=Kritikus találat hangok
+sweepnslash.config.personal.sweep.rgb=Söprő csapás RGB-szín
+sweepnslash.config.save=Mentés
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfiguráció megszakítva.
+sweepnslash.config.status.saved=§aKonfiguráció mentve.
 
+sweepnslash.config.status.nan=§cÉrvénytelen szám.

@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Kiedy w głównej ręce:
-sweepnslash.attribute.name.attack_damage=obrażeń
-sweepnslash.attribute.name.attack_speed=szybkości ataku
+sweepnslash.item.mainhand=Kiedy w głównej ręce:
+sweepnslash.attribute.attack_damage=obrażeń
+sweepnslash.attribute.attack_speed=szybkości ataku
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fWpisz §e%s §faby otworzyć §3Sweep §f'N §6Slash §fmenu konfiguracji
+sweepnslash.tip.version=Aktualna wersja:§e %s
 
-sweepnslash.commanddescription=Otwiera menu konfiguracji dla Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Otwiera menu konfiguracji dla Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Konfiguracja
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Zaawansowane przełączniki operatora
+sweepnslash.config.operator.addon=Włącz/Wyłącz dodatek
+sweepnslash.config.operator.debug=Włącz/Wyłącz tryb debugowania
+sweepnslash.config.operator.debug.tooltip=Przełącznik trybu debugowania dla deweloperów i twórców. Drukuje różne informacje w dzienniku zawartości i włącza tester DPS (zdarzenie skryptu 'sns:testdamage').
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Przełączniki serwera
+sweepnslash.config.server.shieldbreak=Wymagaj naładowanego topora do rozbicia tarczy
+sweepnslash.config.server.shieldbreak.tooltip=Jeśli włączone, topory wyłączają tarcze tylko wtedy, gdy ładunek atakującego przekracza 84.8%%.
+sweepnslash.config.server.saturation=Leczenie nasyceniem
+sweepnslash.config.server.saturation.tooltip=Jeśli włączone, nasycenie będzie zużywane szybciej w celu leczenia. Wymusi to wyłączenie reguły gry o naturalnej regeneracji.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Ogólne przełączniki
+sweepnslash.config.general.excludepet=Ignoruj oswojone zwierzęta przy zmiataniu
+sweepnslash.config.general.excludepet.tooltip=Jeśli włączone, ataki zmiatające nie będą ranić oswojonych zwierząt.
+sweepnslash.config.general.tipmessage=Wiadomość powitalna po dołączeniu
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Ustawienia osobiste
+sweepnslash.config.personal.indicator=Wskaźnik ataku
+sweepnslash.config.personal.indicator.tooltip=Zmienia interfejs wskaźnika ataku. Jeśli masz problemy z interfejsem dodatku, spróbuj użyć Geysera.
+sweepnslash.config.personal.indicator.crosshair=Celownik
+sweepnslash.config.personal.indicator.hotbar=Pasek akcji
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Brak
+sweepnslash.config.personal.bowhitsound=Dźwięk trafienia łukiem
+sweepnslash.config.personal.sweep.particles=Cząsteczki zmiatania
+sweepnslash.config.personal.enchanted.particles=Cząsteczki trafienia zaklętego
+sweepnslash.config.personal.damage.particles=Cząsteczki wskaźnika obrażeń
+sweepnslash.config.personal.crit.particles=Cząsteczki trafienia krytycznego
+sweepnslash.config.personal.crit.sounds=Dźwięki trafienia krytycznego
+sweepnslash.config.personal.sweep.rgb=Kolor RGB zmiatania
+sweepnslash.config.save=Zapisz
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfiguracja anulowana.
+sweepnslash.config.status.saved=§aKonfiguracja zapisana.
 
+sweepnslash.config.status.nan=§cNieprawidłowa liczba.

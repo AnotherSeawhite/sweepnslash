@@ -14,7 +14,7 @@
             },
             "shush": {
                 "url": "github.com/azurite-bedrock/regolith-filters",
-                "version": "HEAD"
+                "version": "1.0.0"
             },
             "marathon": {
                 "url": "github.com/azurite-bedrock/regolith-filters",
@@ -26,7 +26,7 @@
             },
             "type_gen": {
                 "url": "github.com/Bedrock-OSS/regolith-filters",
-                "version": "1.0.1"
+                "version": "1.4.0"
             }
         },
         "formatVersion": "1.4.0",
@@ -38,7 +38,15 @@
                 },
                 "filters": [
                     {
-                        "filter": "shush"
+                        "filter": "shush",
+                        "settings": {
+                            "removeComments": true,
+                            "removeTrailingCommas": true,
+                            "minify": true,
+                            "jsonc": true,
+                            "batchSize": 20,
+                            "tabSize": 4
+                        }
                     },
                     {
                         "filter": "marathon"
@@ -48,80 +56,28 @@
                     }
                 ]
             },
-            "default": {
+            "base-dev": {
                 "export": {
-                    "build": "standard",
                     "readOnly": false,
                     "target": "development"
                 },
                 "filters": [
                     {
-                        "profile": "base"
-                    },
-                    {
-                        "profile": "scripts-dev"
-                    }
-                ]
-            },
-            "pack": {
-                "export": {
-                    "readOnly": false,
-                    "target": "none"
-                },
-                "filters": [
-                    {
-                        "profile": "release"
-                    },
-                    {
-                        "filter": "packer",
+                        "filter": "shush",
                         "settings": {
-                            "output": "SweepNSlash.mcaddon"
+                            "removeComments": true,
+                            "removeTrailingCommas": true,
+                            "minify": false,
+                            "jsonc": true,
+                            "batchSize": 20,
+                            "tabSize": 4
                         }
-                    }
-                ]
-            },
-            "pack-gametest": {
-                "export": {
-                    "readOnly": false,
-                    "target": "none"
-                },
-                "filters": [
-                    {
-                        "profile": "release-gametest"
                     },
                     {
-                        "filter": "packer",
-                        "settings": {
-                            "output": "SweepNSlash-gametest.mcaddon"
-                        }
-                    }
-                ]
-            },
-            "release": {
-                "export": {
-                    "readOnly": false,
-                    "target": "development"
-                },
-                "filters": [
-                    {
-                        "profile": "base"
+                        "filter": "marathon"
                     },
                     {
-                        "profile": "scripts"
-                    }
-                ]
-            },
-            "release-gametest": {
-                "export": {
-                    "readOnly": false,
-                    "target": "development"
-                },
-                "filters": [
-                    {
-                        "profile": "base"
-                    },
-                    {
-                        "profile": "scripts-gametest"
+                        "filter": "type_gen"
                     }
                 ]
             },
@@ -140,10 +96,7 @@
                                 "minify": true
                             },
                             "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
-                            "modules": [
-                                "@minecraft/server@2.7.0-beta",
-                                "@minecraft/server-ui@2.0.0"
-                            ]
+                            "modules": ["@minecraft/server@2.6.0", "@minecraft/server-ui@2.0.0"]
                         }
                     }
                 ]
@@ -164,7 +117,7 @@
                             },
                             "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
                             "modules": [
-                                "@minecraft/server@2.7.0-beta",
+                                "@minecraft/server@2.6.0",
                                 "@minecraft/server-gametest@1.0.0-beta",
                                 "@minecraft/server-ui@2.0.0"
                             ]
@@ -187,11 +140,101 @@
                                 "minify": false
                             },
                             "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
+                            "modules": ["@minecraft/server@2.6.0", "@minecraft/server-ui@2.0.0"]
+                        }
+                    }
+                ]
+            },
+            "scripts-dev-gametest": {
+                "export": {
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "filter": "gametests",
+                        "settings": {
+                            "buildOptions": {
+                                "dropLabels": ["DEBUG", "LOGGING"],
+                                "bundle": true,
+                                "minify": false
+                            },
+                            "moduleUUID": "3e35560f-c4b0-4d51-92b4-52e07ac4a84e",
                             "modules": [
-                                "@minecraft/server@2.7.0-beta",
+                                "@minecraft/server@2.6.0",
                                 "@minecraft/server-gametest@1.0.0-beta",
                                 "@minecraft/server-ui@2.0.0"
                             ]
+                        }
+                    }
+                ]
+            },
+            "dev": {
+                "export": {
+                    "build": "standard",
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "profile": "base-dev"
+                    },
+                    {
+                        "profile": "scripts-dev"
+                    }
+                ]
+            },
+            "dev-gametest": {
+                "export": {
+                    "build": "standard",
+                    "readOnly": false,
+                    "target": "development"
+                },
+                "filters": [
+                    {
+                        "profile": "base-dev"
+                    },
+                    {
+                        "profile": "scripts-dev-gametest"
+                    }
+                ]
+            },
+            "pack": {
+                "export": {
+                    "readOnly": false,
+                    "target": "none"
+                },
+                "filters": [
+                    {
+                        "profile": "base"
+                    },
+                    {
+                        "profile": "scripts"
+                    },
+                    {
+                        "filter": "packer",
+                        "settings": {
+                            "output": "SweepNSlash.mcaddon"
+                        }
+                    }
+                ]
+            },
+            "pack-gametest": {
+                "export": {
+                    "readOnly": false,
+                    "target": "none"
+                },
+                "filters": [
+                    {
+                        "profile": "base"
+                    },
+                    {
+                        "profile": "scripts-gametest"
+                    },
+                    {
+                        "filter": "packer",
+                        "settings": {
+                            "output": "SweepNSlash-gametest.mcaddon"
                         }
                     }
                 ]

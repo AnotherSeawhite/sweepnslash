@@ -1,10 +1,11 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/AnotherSeawhite/sweepnslash/master/sweepnslash_logo.png" alt="Image" width="425" height="226" />
 
-  [![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1104407_downloads.svg)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash)
-  [![Minecraft - Version](https://img.shields.io/badge/Minecraft-v26.10_(Bedrock)-e04e14?label=Available%20For&labelColor=2d2d2d&color=e04e14)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash/files/all)
-  [![GitHub License](https://img.shields.io/github/license/AnotherSeawhite/sweepnslash)](https://github.com/AnotherSeawhite/sweepnslash/blob/main/LICENSE)
-  [![Discord](https://badgen.net/discord/members/dAcghG992N?icon=discord)](https://discord.gg/dAcghG992N)
+[![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1104407_downloads.svg)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash)
+[![Minecraft - Version](<https://img.shields.io/badge/Minecraft-v26.10_(Bedrock)-e04e14?label=Available%20For&labelColor=2d2d2d&color=e04e14>)](https://www.curseforge.com/minecraft-bedrock/addons/sweep-n-slash/files/all)
+[![GitHub License](https://img.shields.io/github/license/AnotherSeawhite/sweepnslash)](https://github.com/AnotherSeawhite/sweepnslash/blob/main/LICENSE)
+[![Discord](https://badgen.net/discord/members/dAcghG992N?icon=discord)](https://discord.gg/dAcghG992N)
+
 </div>
 
 **Sweep 'N Slash** is a total conversion add-on that introduces some of the combat aspects from Java Edition's 1.9 Combat Update into Bedrock Edition.
@@ -20,4 +21,48 @@ Also, since Bedrock's Scripting API lacks in reading/writing entity/item attribu
 
 # Cross-Compatibility
 
-This project uses [MCPE-IPC](https://github.com/OmniacDev/MCBE-IPC) for Cross-compatibility. It allows the add-on to have item stats defined by receiving scriptevents of item data from external behavior packs. This eliminates the hassle of having to modify the add-on's internal data.
+This project uses [MCBE-IPC](https://github.com/OmniacDev/MCBE-IPC) for Cross-compatibility. It allows the add-on to have item stats defined by receiving script events of item data from external behavior packs. This eliminates the hassle of having to modify the add-on's internal data.
+
+# Development
+
+This project uses [Regolith](https://github.com/Bedrock-OSS/regolith) as its build pipeline.
+
+## Prerequisites
+
+| Tool                                                         | Purpose                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------- |
+| [Regolith](https://github.com/Bedrock-OSS/regolith/releases) | Build pipeline runner                                         |
+| [Node.js](https://nodejs.org/)                               | Required by the `gametests` filter for TypeScript compilation |
+| [Deno](https://deno.com/)                                    | Required by the `marathon` and `shush` filters (from Azurite) |
+
+## Setup
+
+Install filter dependencies:
+
+```sh
+regolith install-all
+```
+
+## Profiles
+
+All profiles export to `com.mojang/development_*_packs` unless noted otherwise.
+
+| Profile         | JSON     | Scripts               | Notes                                         |
+| --------------- | -------- | --------------------- | --------------------------------------------- |
+| `dev`           | Pretty   | Bundled, not minified | Day-to-day development                        |
+| `dev-gametest`  | Pretty   | Bundled, not minified | Development with `@minecraft/server-gametest` |
+| `pack`          | Minified | Bundled, minified     | Outputs `SweepNSlash.mcaddon`                 |
+| `pack-gametest` | Minified | Bundled, minified     | Outputs `SweepNSlash-gametest.mcaddon`        |
+
+### Running a profile
+
+```sh
+regolith run <profile>
+```
+
+For example:
+
+```sh
+regolith run dev
+regolith run pack
+```

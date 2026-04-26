@@ -1,6 +1,7 @@
 // Based on The Minecraft Wiki info
 // https://minecraft.wiki/w/Damage
 
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { WeaponStats } from '../importStats';
 
 // Refer to CROSS_COMPATIBILITY_GUIDE.txt for exporting stats
@@ -20,14 +21,11 @@ export const exampleArray: WeaponStats[] = [
         id: 'namespace:example1',
         attackSpeed: 1.6,
         damage: 6,
-        isWeapon: true,
-        sweep: true,
-        disableShield: false,
-        skipLore: false,
+        flags: ['is_weapon', 'sweep'],
         regularKnockback: 1.552,
         enchantedKnockback: 2.586,
-		regularVerticalKnockback: 0.7955,
-		enchantedVerticalKnockback: 1,
+        regularVerticalKnockback: 0.7955,
+        enchantedVerticalKnockback: 1,
         beforeEffect: ({
             mc,
             world,
@@ -67,7 +65,7 @@ export const exampleArray: WeaponStats[] = [
                 cancelDurability: true,
                 regularKnockback: 1.552,
                 enchantedKnockback: 2.586,
-                sweepLocation: target.location,
+                sweepLocation: Vec3.from(target.location),
                 sweepRadius: 3,
 
                 sweepParticle: undefined,
@@ -110,7 +108,7 @@ export const exampleArray: WeaponStats[] = [
         id: 'namespace:example2',
         attackSpeed: 1.6,
         damage: 7,
-        isWeapon: true,
+        flags: ['is_weapon'],
         regularKnockback: 1.552,
         enchantedKnockback: 2.586,
         beforeEffect: ({ cooldown }) => {

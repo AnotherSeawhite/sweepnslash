@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Όταν είναι στο Κύριο Χέρι:
-sweepnslash.attribute.name.attack_damage=Ζημιά Επίθεσης
-sweepnslash.attribute.name.attack_speed=Ταχύτητα Επίθεσης
+sweepnslash.item.mainhand=Όταν είναι στο Κύριο Χέρι:
+sweepnslash.attribute.attack_damage=Ζημιά Επίθεσης
+sweepnslash.attribute.attack_speed=Ταχύτητα Επίθεσης
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fΠληκτρολογήστε §e%s §fγια να ανοίξετε το §3Sweep §f'N §6Slash §fμενού ρυθμίσεων
+sweepnslash.tip.version=Τρέχουσα έκδοση:§e %s
 
-sweepnslash.commanddescription=Ανοίγει το μενού ρύθμισης για το Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Ανοίγει το μενού ρύθμισης για το Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Ρυθμίσεις
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Προχωρημένες Επιλογές Χειριστή
+sweepnslash.config.operator.addon=Εναλλαγή Add-On
+sweepnslash.config.operator.debug=Εναλλαγή Λειτουργίας Εντοπισμού Σφαλμάτων
+sweepnslash.config.operator.debug.tooltip=Εναλλαγή λειτουργίας εντοπισμού σφαλμάτων για προγραμματιστές και δημιουργούς. Εκτυπώνει διάφορες πληροφορίες στο Content Log και ενεργοποιεί τον δοκιμαστή DPS (συμβάν σεναρίου 'sns:testdamage').
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Επιλογές Διακομιστή
+sweepnslash.config.server.shieldbreak=Απαίτηση Φορτισμένων Τσεκουριών για Σπάσιμο Ασπίδων
+sweepnslash.config.server.shieldbreak.tooltip=Εάν είναι ενεργοποιημένο, τα τσεκούρια απενεργοποιούν ασπίδες μόνο αν η φόρτιση cooldown του επιτιθέμενου είναι πάνω από 84,8%%.
+sweepnslash.config.server.saturation=Θεραπεία Κορεσμού
+sweepnslash.config.server.saturation.tooltip=Εάν είναι ενεργοποιημένο, ο κορεσμός θα χρησιμοποιείται πιο γρήγορα για θεραπεία. Αυτό θα απενεργοποιήσει τον κανόνα παιχνιδιού Φυσικής Αναγέννησης.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Γενικές Επιλογές
+sweepnslash.config.general.excludepet=Αγνόηση Εξημερωμένων Κατοικιδίων στο Σάρωμα
+sweepnslash.config.general.excludepet.tooltip=Εάν είναι ενεργοποιημένο, οι επιθέσεις σαρώματος δεν θα βλάπτουν τα εξημερωμένα κατοικίδια.
+sweepnslash.config.general.tipmessage=Μήνυμα Συμβουλής κατά την Είσοδο
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Προσωπικές Ρυθμίσεις
+sweepnslash.config.personal.indicator=Δείκτης Επίθεσης
+sweepnslash.config.personal.indicator.tooltip=Αλλάζει το UI του Δείκτη Επίθεσης. Εάν αντιμετωπίζετε προβλήματα με το UI του addon, δοκιμάστε να χρησιμοποιήσετε Geyser.
+sweepnslash.config.personal.indicator.crosshair=Σταυρόνημα
+sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Κανένα
+sweepnslash.config.personal.bowhitsound=Ήχος Χτυπήματος Τόξου
+sweepnslash.config.personal.sweep.particles=Σωματίδια Σαρώματος
+sweepnslash.config.personal.enchanted.particles=Σωματίδια Γοητευμένου Χτυπήματος
+sweepnslash.config.personal.damage.particles=Σωματίδια Ένδειξης Ζημιάς
+sweepnslash.config.personal.crit.particles=Σωματίδια Κρίσιμου Χτυπήματος
+sweepnslash.config.personal.crit.sounds=Ήχοι Κρίσιμου Χτυπήματος
+sweepnslash.config.personal.sweep.rgb=Χρώμα RGB Σαρώματος
+sweepnslash.config.save=Αποθήκευση
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cΟι ρυθμίσεις ακυρώθηκαν.
+sweepnslash.config.status.saved=§aΟι ρυθμίσεις αποθηκεύτηκαν.
 
+sweepnslash.config.status.nan=§cΆκυρος αριθμός.

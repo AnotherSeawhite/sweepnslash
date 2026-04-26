@@ -1,4 +1,4 @@
-import { EntityStats } from '../importStats.js';
+import { EntityStats } from '../importStats.ts';
 
 export const vanillaEntities: EntityStats[] = [
     {

@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Коли в основній руці:
-sweepnslash.attribute.name.attack_damage=шкоди при атаці
-sweepnslash.attribute.name.attack_speed=швидкости атаки
+sweepnslash.item.mainhand=Коли в основній руці:
+sweepnslash.attribute.attack_damage=шкоди при атаці
+sweepnslash.attribute.attack_speed=швидкости атаки
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fНадрукуйте §e%s §fщоб відкрити §3Sweep §f'N §6Slash §fменю налаштувань
+sweepnslash.tip.version=Поточна версія:§e %s
 
-sweepnslash.commanddescription=Відкриває меню налаштувань Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Відкриває меню налаштувань Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Налаштування
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Розширені Параметри Оператора
+sweepnslash.config.operator.addon=Увімкнути/Вимкнути Add-On
+sweepnslash.config.operator.debug=Увімкнути/Вимкнути Режим Налагодження
+sweepnslash.config.operator.debug.tooltip=Перемикач режиму налагодження для розробників і творців. Виводить різну інформацію до Content Log та вмикає тестер DPS (подія скрипту 'sns:testdamage').
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Параметри Сервера
+sweepnslash.config.server.shieldbreak=Вимагати Заряджених Сокир для Розбиття Щитів
+sweepnslash.config.server.shieldbreak.tooltip=Якщо увімкнено, сокири вимикають щити лише якщо заряд охолодження атакуючого перевищує 84,8%%.
+sweepnslash.config.server.saturation=Відновлення через Насичення
+sweepnslash.config.server.saturation.tooltip=Якщо увімкнено, насичення використовуватиметься швидше для відновлення здоров'я. Це примусово вимкне правило гри Природної Регенерації.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Загальні Параметри
+sweepnslash.config.general.excludepet=Ігнорувати Приручених Тварин при Замаху
+sweepnslash.config.general.excludepet.tooltip=Якщо увімкнено, атаки замахом не завдаватимуть шкоди прирученим тваринам.
+sweepnslash.config.general.tipmessage=Підказка при Вході до Гри
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Особисті Налаштування
+sweepnslash.config.personal.indicator=Індикатор Атаки
+sweepnslash.config.personal.indicator.tooltip=Змінює UI Індикатора Атаки. Якщо у вас виникають проблеми з UI додатку, спробуйте використати Geyser.
+sweepnslash.config.personal.indicator.crosshair=Приціл
+sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Немає
+sweepnslash.config.personal.bowhitsound=Звук Влучання Лука
+sweepnslash.config.personal.sweep.particles=Частинки Замаху
+sweepnslash.config.personal.enchanted.particles=Частинки Зачарованого Удару
+sweepnslash.config.personal.damage.particles=Частинки Індикатора Шкоди
+sweepnslash.config.personal.crit.particles=Частинки Критичного Удару
+sweepnslash.config.personal.crit.sounds=Звуки Критичного Удару
+sweepnslash.config.personal.sweep.rgb=RGB Колір Замаху
+sweepnslash.config.save=Зберегти
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cНалаштування скасовано.
+sweepnslash.config.status.saved=§aНалаштування збережено.
 
+sweepnslash.config.status.nan=§cНеправильне число.

@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Ana Eldeyken:
-sweepnslash.attribute.name.attack_damage=Saldırı Hasarı
-sweepnslash.attribute.name.attack_speed=Saldırı Hızı
+sweepnslash.item.mainhand=Ana Eldeyken:
+sweepnslash.attribute.attack_damage=Saldırı Hasarı
+sweepnslash.attribute.attack_speed=Saldırı Hızı
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fYazmak için §e%s §façın §3Sweep §f'N §6Slash §fyapılandırma menüsünü
+sweepnslash.tip.version=Mevcut sürüm:§e %s
 
-sweepnslash.commanddescription=Sweep 'N Slash yapılandırma menüsünü açar.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Sweep 'N Slash yapılandırma menüsünü açar.
+sweepnslash.config.menu.title=Sweep 'N Slash Yapılandırma
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Gelişmiş Operatör Seçenekleri
+sweepnslash.config.operator.addon=Add-On'u Aç/Kapat
+sweepnslash.config.operator.debug=Hata Ayıklama Modunu Aç/Kapat
+sweepnslash.config.operator.debug.tooltip=Geliştiriciler ve içerik üreticileri için hata ayıklama modu değiştirici. Content Log'a çeşitli bilgiler yazdırır ve DPS test aracını etkinleştirir ('sns:testdamage' betik olayı).
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Sunucu Seçenekleri
+sweepnslash.config.server.shieldbreak=Kalkanları Kırmak için Şarjlı Balta Gereksin
+sweepnslash.config.server.shieldbreak.tooltip=Etkinleştirilirse, baltalar kalkanları yalnızca saldırganın bekleme süresi şarjı %%84,8'in üzerindeyse devre dışı bırakır.
+sweepnslash.config.server.saturation=Doygunluk ile İyileşme
+sweepnslash.config.server.saturation.tooltip=Etkinleştirilirse, doygunluk iyileşme için daha hızlı kullanılır. Bu, Doğal Yenilenme oyun kuralını kapatmaya zorlar.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Genel Seçenekler
+sweepnslash.config.general.excludepet=Süpürme Sırasında Evcil Hayvanları Yoksay
+sweepnslash.config.general.excludepet.tooltip=Etkinleştirilirse, süpürme saldırıları evcilleştirilmiş hayvanlara hasar vermez.
+sweepnslash.config.general.tipmessage=Oyuna Girişte İpucu Mesajı
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Kişisel Ayarlar
+sweepnslash.config.personal.indicator=Saldırı Göstergesi
+sweepnslash.config.personal.indicator.tooltip=Saldırı Göstergesi arayüzünü değiştirir. Eklentinin arayüzünde sorun yaşıyorsanız Geyser kullanmayı deneyin.
+sweepnslash.config.personal.indicator.crosshair=Nişangah
+sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Yok
+sweepnslash.config.personal.bowhitsound=Ok İsabet Sesi
+sweepnslash.config.personal.sweep.particles=Süpürme Partikülleri
+sweepnslash.config.personal.enchanted.particles=Büyülü İsabet Partikülleri
+sweepnslash.config.personal.damage.particles=Hasar Göstergesi Partikülleri
+sweepnslash.config.personal.crit.particles=Kritik İsabet Partikülleri
+sweepnslash.config.personal.crit.sounds=Kritik İsabet Sesleri
+sweepnslash.config.personal.sweep.rgb=Süpürme RGB Rengi
+sweepnslash.config.save=Kaydet
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cYapılandırma iptal edildi.
+sweepnslash.config.status.saved=§aYapılandırma kaydedildi.
 
+sweepnslash.config.status.nan=§cGeçersiz sayı.

@@ -2,51 +2,52 @@ pack.name=§3Sweep §f'N §6Slash §f- Пакет Ресурсов
 pack.description=Конвертирует боевую систему Бэдрок Издании в боевую систему Джава Издании 1.9+.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Когда в ведущей руке:
-sweepnslash.attribute.name.attack_damage=Урон
-sweepnslash.attribute.name.attack_speed=Скорость атаки
+sweepnslash.item.mainhand=Когда в ведущей руке:
+sweepnslash.attribute.attack_damage=Урон
+sweepnslash.attribute.attack_speed=Скорость атаки
 
-sweepnslash.tipmessage=§fНапишите §e%s §fчто бы откорыть §3Sweep §f'N §6Slash §fменю конфигурации
-sweepnslash.currentversion=Нынешняя версия:§e %s
+sweepnslash.tip.message=§fНапишите §e%s §fчто бы откорыть §3Sweep §f'N §6Slash §fменю конфигурации
+sweepnslash.tip.version=Нынешняя версия:§e %s
 
-sweepnslash.commanddescription=Открывает меню конфигурации для Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Конфигурация
+sweepnslash.config.command.description=Открывает меню конфигурации для Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Конфигурация
 
 ## Advanced Operator Toggles
-sweepnslash.operatortoggleheader=Расширенные возможности оператора
-sweepnslash.toggleaddon=Переключить аддон
-sweepnslash.toggledebugmode=Переключить режим отладки
-sweepnslash.toggledebugmode.tooltip=Переключатель режима отладки для разработчиков и создателей. Выводит различную информацию в журнал контента и включает DPS-тестер. ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Расширенные возможности оператора
+sweepnslash.config.operator.addon=Переключить аддон
+sweepnslash.config.operator.debug=Переключить режим отладки
+sweepnslash.config.operator.debug.tooltip=Переключатель режима отладки для разработчиков и создателей. Выводит различную информацию в журнал контента и включает DPS-тестер. ('sns:testdamage' script event).
 
 ## Server Toggles
-sweepnslash.servertoggleheader=Переключатели сервера
-sweepnslash.shieldbreakspecial=Для пробития щитов требуются заряженные топоры
-sweepnslash.shieldbreakspecial.tooltip=Если включено то топоры пробивают щиты только в том случае если заряд перезарядки атакующего превышает 84,8%%.
-sweepnslash.saturationhealing=Исцеление от насыщение
-sweepnslash.saturationhealing.tooltip=Если включено то насыщение будет исцелять быстрее. Это отключит игровое правило «Естественная регенерация».
+sweepnslash.config.server.header=Переключатели сервера
+sweepnslash.config.server.shieldbreak=Для пробития щитов требуются заряженные топоры
+sweepnslash.config.server.shieldbreak.tooltip=Если включено то топоры пробивают щиты только в том случае если заряд перезарядки атакующего превышает 84,8%%.
+sweepnslash.config.server.saturation=Исцеление от насыщение
+sweepnslash.config.server.saturation.tooltip=Если включено то насыщение будет исцелять быстрее. Это отключит игровое правило «Естественная регенерация».
 
 ## General Toggles
-sweepnslash.generaltoggleheader=Общие переключатели
-sweepnslash.excludepetfromsweep=Игнорировать прирученных питомцев при разрезе
-sweepnslash.excludepetfromsweep.tooltip=Если эта опция включена то разрезы атаки не будут наносить урон прирученным питомцам.
-sweepnslash.tipmessagetoggle=Подсказка в виде сообщения в чате при присоединении
+sweepnslash.config.general.header=Общие переключатели
+sweepnslash.config.general.excludepet=Игнорировать прирученных питомцев при разрезе
+sweepnslash.config.general.excludepet.tooltip=Если эта опция включена то разрезы атаки не будут наносить урон прирученным питомцам.
+sweepnslash.config.general.tipmessage=Подсказка в виде сообщения в чате при присоединении
 
 ## Personal Settings
-sweepnslash.personaltoggleheader=Персональные настройки
-sweepnslash.indicatorstyle=Индикатор атаки
-sweepnslash.indicatorstyle.tooltip=Изменяет интерфейс индикатора атаки. Если у вас возникли проблемы с интерфейсом дополнения, попробуйте использовать индекатор Гейзера.
-sweepnslash.crosshair=Крестик
-sweepnslash.hotbar=Хотбар
-sweepnslash.geyser=Гейзер
-sweepnslash.none=Без индекатора
-sweepnslash.bowhitsound=Звук при попадании с лука
-sweepnslash.sweepparticles=Партиклы разрезов
-sweepnslash.enchantedhitparticles=Партиклы зачарованных атак
-sweepnslash.damageindicatorparticles=Партиклы индекатора урона
-sweepnslash.critparticles=Партиклы критического удара
-sweepnslash.critsounds=Звуки критического удара
-sweepnslash.sweepRGBtitle=Цвет разреза в RGB
-sweepnslash.saveconfig=Сохранить
+sweepnslash.config.personal.header=Персональные настройки
+sweepnslash.config.personal.indicator=Индикатор атаки
+sweepnslash.config.personal.indicator.tooltip=Изменяет интерфейс индикатора атаки. Если у вас возникли проблемы с интерфейсом дополнения, попробуйте использовать индекатор Гейзера.
+sweepnslash.config.personal.indicator.crosshair=Крестик
+sweepnslash.config.personal.indicator.hotbar=Хотбар
+sweepnslash.config.personal.indicator.geyser=Гейзер
+sweepnslash.config.personal.indicator.none=Без индекатора
+sweepnslash.config.personal.bowhitsound=Звук при попадании с лука
+sweepnslash.config.personal.sweep.particles=Партиклы разрезов
+sweepnslash.config.personal.enchanted.particles=Партиклы зачарованных атак
+sweepnslash.config.personal.damage.particles=Партиклы индекатора урона
+sweepnslash.config.personal.crit.particles=Партиклы критического удара
+sweepnslash.config.personal.crit.sounds=Звуки критического удара
+sweepnslash.config.personal.sweep.rgb=Цвет разреза в RGB
+sweepnslash.config.save=Сохранить
 
-sweepnslash.canceled=§cКонфигурация отменена.
-sweepnslash.saved=§aКонфигурация сохранена.
+sweepnslash.config.status.canceled=§cКонфигурация отменена.
+sweepnslash.config.status.saved=§aКонфигурация сохранена.
+sweepnslash.config.status.nan=§cНеверное число.

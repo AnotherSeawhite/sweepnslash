@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Saat di Tangan Utama:
-sweepnslash.attribute.name.attack_damage=Kekuatan Serangan
-sweepnslash.attribute.name.attack_speed=Kecepatan Serangan
+sweepnslash.item.mainhand=Saat di Tangan Utama:
+sweepnslash.attribute.attack_damage=Kekuatan Serangan
+sweepnslash.attribute.attack_speed=Kecepatan Serangan
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fKetik §e%s §funtuk membuka menu konfigurasi §3Sweep §f'N §6Slash
+sweepnslash.tip.version=Versi saat ini:§e %s
 
-sweepnslash.commanddescription=Membuka menu konfigurasi untuk Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Membuka menu konfigurasi untuk Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Konfigurasi
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Pengaturan Operator Lanjutan
+sweepnslash.config.operator.addon=Aktifkan/Nonaktifkan Add-On
+sweepnslash.config.operator.debug=Aktifkan/Nonaktifkan Mode Debug
+sweepnslash.config.operator.debug.tooltip=Pengalih mode debug untuk pengembang dan pembuat konten. Mencetak berbagai informasi di Content Log, dan mengaktifkan penguji DPS (acara skrip 'sns:testdamage').
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Pengaturan Server
+sweepnslash.config.server.shieldbreak=Kapak Harus Terisi Penuh untuk Merusak Perisai
+sweepnslash.config.server.shieldbreak.tooltip=Jika diaktifkan, kapak hanya bisa menonaktifkan perisai apabila pengisian ulang serangan penyerang di atas 84.8%%.
+sweepnslash.config.server.saturation=Penyembuhan dengan Saturasi
+sweepnslash.config.server.saturation.tooltip=Jika diaktifkan, saturasi akan digunakan lebih cepat untuk penyembuhan. Ini akan memaksa aturan permainan Regenerasi Alami dimatikan.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Pengaturan Umum
+sweepnslash.config.general.excludepet=Abaikan Hewan Peliharaan Saat Serangan Sapuan
+sweepnslash.config.general.excludepet.tooltip=Jika diaktifkan, serangan sapuan tidak akan merusak hewan peliharaan yang dijinakkan.
+sweepnslash.config.general.tipmessage=Pesan Tip Saat Bergabung
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Pengaturan Pribadi
+sweepnslash.config.personal.indicator=Indikator Serangan
+sweepnslash.config.personal.indicator.tooltip=Mengubah UI Indikator Serangan. Jika Anda mengalami masalah dengan UI addon, coba gunakan Geyser.
+sweepnslash.config.personal.indicator.crosshair=Crosshair
+sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Tidak Ada
+sweepnslash.config.personal.bowhitsound=Suara Terkena Panah
+sweepnslash.config.personal.sweep.particles=Partikel Sapuan
+sweepnslash.config.personal.enchanted.particles=Partikel Serangan Bertepat
+sweepnslash.config.personal.damage.particles=Partikel Indikator Kerusakan
+sweepnslash.config.personal.crit.particles=Partikel Serangan Kritis
+sweepnslash.config.personal.crit.sounds=Suara Serangan Kritis
+sweepnslash.config.personal.sweep.rgb=Warna RGB Sapuan
+sweepnslash.config.save=Simpan
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfigurasi dibatalkan.
+sweepnslash.config.status.saved=§aKonfigurasi disimpan.
 
+sweepnslash.config.status.nan=§cAngka tidak valid.

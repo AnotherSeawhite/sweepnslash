@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=Når i primære hånd:
-sweepnslash.attribute.name.attack_damage=Angrebsstyrke
-sweepnslash.attribute.name.attack_speed=Angrebshastighed
+sweepnslash.item.mainhand=Når i primære hånd:
+sweepnslash.attribute.attack_damage=Angrebsstyrke
+sweepnslash.attribute.attack_speed=Angrebshastighed
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fSkriv §e%s §ffor at åbne §3Sweep §f'N §6Slash §fkonfigurationsmenuen
+sweepnslash.tip.version=Aktuel version:§e %s
 
-sweepnslash.commanddescription=Åbner konfigurationsmenu for Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Åbner konfigurationsmenu for Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Konfiguration
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Avancerede Operatorindstillinger
+sweepnslash.config.operator.addon=Slå Add-On til/fra
+sweepnslash.config.operator.debug=Slå fejlfindingstilstand til/fra
+sweepnslash.config.operator.debug.tooltip=Fejlfindingstilstand til udviklere og skabere. Udskriver diverse oplysninger i indholdloggen og aktiverer DPS-testeren ('sns:testdamage' skripthændelse).
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Serverindstillinger
+sweepnslash.config.server.shieldbreak=Kræv opladet øksehug for at bryde skjolde
+sweepnslash.config.server.shieldbreak.tooltip=Hvis aktiveret, deaktiverer økser kun skjolde, hvis angriberens opladning er over 84,8%%.
+sweepnslash.config.server.saturation=Mætningshealing
+sweepnslash.config.server.saturation.tooltip=Hvis aktiveret, forbruges mætning hurtigere til healing. Dette tvinger spillereglen Naturlig Regenerering fra.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Generelle Indstillinger
+sweepnslash.config.general.excludepet=Ignorer tamme kæledyr ved sweepangreb
+sweepnslash.config.general.excludepet.tooltip=Hvis aktiveret, skader sweepangreb ikke tamme kæledyr.
+sweepnslash.config.general.tipmessage=Tipbesked ved tilmelding
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Personlige Indstillinger
+sweepnslash.config.personal.indicator=Angrebsindikator
+sweepnslash.config.personal.indicator.tooltip=Ændrer angrebsindikator-UI. Hvis du har problemer med add-onets UI, prøv at bruge Geyser.
+sweepnslash.config.personal.indicator.crosshair=Sigtekornet
+sweepnslash.config.personal.indicator.hotbar=Hotbar
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Ingen
+sweepnslash.config.personal.bowhitsound=Buetræfslyd
+sweepnslash.config.personal.sweep.particles=Sweepangreb-partikler
+sweepnslash.config.personal.enchanted.particles=Fortryllet træf-partikler
+sweepnslash.config.personal.damage.particles=Skadesindikatorer-partikler
+sweepnslash.config.personal.crit.particles=Kritisk træf-partikler
+sweepnslash.config.personal.crit.sounds=Kritisk træf-lyde
+sweepnslash.config.personal.sweep.rgb=Sweepangreb RGB-farve
+sweepnslash.config.save=Gem
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfiguration annulleret.
+sweepnslash.config.status.saved=§aKonfiguration gemt.
 
+sweepnslash.config.status.nan=§cUgyldigt tal.

@@ -1,4 +1,7 @@
+import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { WeaponStats } from '../importStats';
+
+const daggerSecondHitMap = new Map<string, boolean>();
 
 export const alylicaDungeons: WeaponStats[] = [
     {
@@ -62,13 +65,14 @@ export const alylicaDungeons: WeaponStats[] = [
             let doCrit = false;
 
             if (rng(10)) {
-                player.dimension.spawnParticle('dungeons:skull_crit', target.location);
-                player.dimension.spawnParticle('dungeons:skull_burst', target.location);
-                player.dimension.playSound('random.anvil_land', player.location, {
+                const dim = player.dimension;
+                dim.spawnParticle('dungeons:skull_crit', target.location);
+                dim.spawnParticle('dungeons:skull_burst', target.location);
+                dim.playSound('random.anvil_land', player.location, {
                     volume: 0.2,
                     pitch: 1.5,
                 });
-                player.playSound('random.orb', { volume: 0.6, pitch: 1 });
+                player.playSound('random.orb', { volume: 0.6 });
                 doCrit = true;
             }
 
@@ -120,17 +124,16 @@ export const alylicaDungeons: WeaponStats[] = [
         isWeapon: true,
         beforeEffect: ({ player, target, specialCheck, iframes, sprintKnockback }) => {
             let daggerHit = false;
-            target.__daggerSecondHit = target.__daggerSecondHit ?? false;
             if (specialCheck) {
-                if (iframes && target.__daggerSecondHit) {
+                if (iframes && (daggerSecondHitMap.get(target.id) ?? false)) {
                     daggerHit = true;
-                    target.__daggerSecondHit = false;
+                    daggerSecondHitMap.set(target.id, false);
                     player.playAnimation('animation.player.attack_daggers');
                 } else if (!iframes) {
                     player.dimension.playSound('weapon.daggers.hit', player.location, {
                         volume: 0.6,
                     });
-                    target.__daggerSecondHit = true;
+                    daggerSecondHitMap.set(target.id, true);
                 }
             }
 
@@ -144,7 +147,7 @@ export const alylicaDungeons: WeaponStats[] = [
 
                 critParticle: daggerHit ? 'dungeons:daggers_strike' : undefined,
                 critSound: daggerHit ? 'weapon.daggers.hit' : undefined,
-                critOffset: daggerHit ? { x: 0, y: -1, z: 0 } : undefined,
+                critOffset: daggerHit ? Vec3.from(0, -1, 0) : undefined,
             };
         },
     },
@@ -181,10 +184,10 @@ export const alylicaDungeons: WeaponStats[] = [
         sweep: true,
         beforeEffect: ({ player }) => {
             return {
-                sweepLocation: player.location,
+                sweepLocation: Vec3.from(player.location),
                 sweepSound: 'weapon.enchant.swirling',
                 sweepParticle: 'dungeons:swirling',
-                sweepOffset: { x: 0, y: 1, z: 0 },
+                sweepOffset: Vec3.from(0, 1, 0),
             };
         },
     },
@@ -211,10 +214,10 @@ export const alylicaDungeons: WeaponStats[] = [
                 });
             }
             return {
-                sweepLocation: player.location,
+                sweepLocation: Vec3.from(player.location),
                 sweepSound: 'weapon.enchant.swirling',
                 sweepParticle: 'dungeons:swirling',
-                sweepOffset: { x: 0, y: 1, z: 0 },
+                sweepOffset: Vec3.from(0, 1, 0),
             };
         },
     },
@@ -226,10 +229,10 @@ export const alylicaDungeons: WeaponStats[] = [
         sweep: true,
         beforeEffect: ({ player }) => {
             return {
-                sweepLocation: player.location,
+                sweepLocation: Vec3.from(player.location),
                 sweepSound: 'weapon.enchant.swirling',
                 sweepParticle: 'dungeons:swirling',
-                sweepOffset: { x: 0, y: 1, z: 0 },
+                sweepOffset: Vec3.from(0, 1, 0),
             };
         },
     },

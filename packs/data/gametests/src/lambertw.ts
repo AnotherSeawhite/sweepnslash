@@ -1,5 +1,6 @@
 // Lambert W Function
-// https://github.com/protobi/lambertw/
+// Ported from https://github.com/protobi/lambertw/ (same algorithm, numerically identical).
+// Kept local to avoid a JS-only npm dependency with no TypeScript types and a different API shape.
 
 const GSL_DBL_EPSILON = 2.2204460492503131e-16;
 const ONE_OVER_E = 1.0 / Math.E;

@@ -2,48 +2,49 @@ pack.name=§3Sweep §f'N §6Slash §f- Resource Pack
 pack.description=Converts Bedrock Edition's combat into Java Edition's 1.9+ combat.
 
 attribute.name.generic.attackDamage=§r
-sweepnslash.item.modifiers.mainhand=V hlavnej ruke:
-sweepnslash.attribute.name.attack_damage=Sila útoku
-sweepnslash.attribute.name.attack_speed=Rýchlosť útoku
+sweepnslash.item.mainhand=V hlavnej ruke:
+sweepnslash.attribute.attack_damage=Sila útoku
+sweepnslash.attribute.attack_speed=Rýchlosť útoku
 
-sweepnslash.tipmessage=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
-sweepnslash.currentversion=Current version:§e %s
+sweepnslash.tip.message=§fNapíšte §e%s §fna otvorenie §3Sweep §f'N §6Slash §fkonfiguračného menu
+sweepnslash.tip.version=Aktuálna verzia:§e %s
 
-sweepnslash.commanddescription=Otvorí konfiguračné menu pre Sweep 'N Slash.
-sweepnslash.configmenutitle=Sweep 'N Slash Configuration
+sweepnslash.config.command.description=Otvorí konfiguračné menu pre Sweep 'N Slash.
+sweepnslash.config.menu.title=Sweep 'N Slash Konfigurácia
 
-sweepnslash.operatortoggleheader=Advanced Operator Toggles
-sweepnslash.toggleaddon=Toggle Add-On
-sweepnslash.toggledebugmode=Toggle Debug Mode
-sweepnslash.toggledebugmode.tooltip=Debug mode toggle for developers and creators. Prints various informations in Content Log, and enables DPS tester ('sns:testdamage' script event).
+sweepnslash.config.operator.header=Pokročilé prepínače operátora
+sweepnslash.config.operator.addon=Prepnúť doplnok
+sweepnslash.config.operator.debug=Prepnúť režim ladenia
+sweepnslash.config.operator.debug.tooltip=Prepínač režimu ladenia pre vývojárov a tvorcov. Vypisuje rôzne informácie do protokolu obsahu a povoľuje tester DPS (skriptová udalosť 'sns:testdamage').
 
-sweepnslash.servertoggleheader=Server Toggles
-sweepnslash.shieldbreakspecial=Require Charged Axes to Break Shields
-sweepnslash.shieldbreakspecial.tooltip=If enabled, axes disable shields only if the attacker's cooldown charge is above 84.8%%.
-sweepnslash.saturationhealing=Saturation Healing
-sweepnslash.saturationhealing.tooltip=If enabled, saturation will be used more rapidly for healing. This will force Natural Regeneration gamerule off.
+sweepnslash.config.server.header=Prepínače servera
+sweepnslash.config.server.shieldbreak=Vyžadovať nabitú sekeru na rozbití štítu
+sweepnslash.config.server.shieldbreak.tooltip=Ak je povolené, sekery vyraďujú štíty iba vtedy, keď je nabíjanie útočníka nad 84.8%%.
+sweepnslash.config.server.saturation=Liečenie nasýtením
+sweepnslash.config.server.saturation.tooltip=Ak je povolené, nasýtenie bude rýchlejšie využívané na liečenie. Tým sa vynúti vypnutie herného pravidla prirodzenej regenerácie.
 
-sweepnslash.generaltoggleheader=General Toggles
-sweepnslash.excludepetfromsweep=Ignore Tamed Pets On Sweep
-sweepnslash.excludepetfromsweep.tooltip=If enabled, sweep attacks will not damage tamed pets.
-sweepnslash.tipmessagetoggle=Tip Message Upon Joining
+sweepnslash.config.general.header=Všeobecné prepínače
+sweepnslash.config.general.excludepet=Ignorovať skrotené zvieratá pri oblúkovom útoku
+sweepnslash.config.general.excludepet.tooltip=Ak je povolené, oblúkové útoky nespôsobia poškodenie skroteným zvieratám.
+sweepnslash.config.general.tipmessage=Uvítacia správa po pripojení
 
-sweepnslash.personaltoggleheader=Personal Settings
-sweepnslash.indicatorstyle=Attack Indicator
-sweepnslash.indicatorstyle.tooltip=Changes Attack Indicator UI. If you're having issues with the addon's UI, try using Geyser.
-sweepnslash.crosshair=Crosshair
-sweepnslash.hotbar=Hotbar
-sweepnslash.geyser=Geyser
-sweepnslash.none=None
-sweepnslash.bowhitsound=Bow Hit Sound
-sweepnslash.sweepparticles=Sweep Particles
-sweepnslash.enchantedhitparticles=Enchanted Hit Particles
-sweepnslash.damageindicatorparticles=Damage Indicator Particles
-sweepnslash.critparticles=Critical Hit Particles
-sweepnslash.critsounds=Critical Hit Sounds
-sweepnslash.sweepRGBtitle=Sweep RGB Color
-sweepnslash.saveconfig=Save
+sweepnslash.config.personal.header=Osobné nastavenia
+sweepnslash.config.personal.indicator=Ukazovateľ útoku
+sweepnslash.config.personal.indicator.tooltip=Mení rozhranie ukazovateľa útoku. Ak máte problémy s rozhraním doplnku, skúste použiť Geyser.
+sweepnslash.config.personal.indicator.crosshair=Zameriavač
+sweepnslash.config.personal.indicator.hotbar=Panel akcií
+sweepnslash.config.personal.indicator.geyser=Geyser
+sweepnslash.config.personal.indicator.none=Žiadny
+sweepnslash.config.personal.bowhitsound=Zvuk zásahu lukom
+sweepnslash.config.personal.sweep.particles=Častice oblúkového útoku
+sweepnslash.config.personal.enchanted.particles=Častice okúzleného zásahu
+sweepnslash.config.personal.damage.particles=Častice ukazovateľa poškodenia
+sweepnslash.config.personal.crit.particles=Častice kritického zásahu
+sweepnslash.config.personal.crit.sounds=Zvuky kritického zásahu
+sweepnslash.config.personal.sweep.rgb=RGB farba oblúkového útoku
+sweepnslash.config.save=Uložiť
 
-sweepnslash.canceled=§cConfiguration canceled.
-sweepnslash.saved=§aConfiguration saved.
+sweepnslash.config.status.canceled=§cKonfigurácia zrušená.
+sweepnslash.config.status.saved=§aKonfigurácia uložená.
 
+sweepnslash.config.status.nan=§cNeplatné číslo.
