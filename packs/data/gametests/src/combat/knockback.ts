@@ -3,11 +3,7 @@ import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { lambertW0, lambertWm1 } from '../lambertw.ts';
 import { Debug } from '../shared/debug.ts';
 
-export function applyAttackKnockback(
-    entity: Entity,
-    location: Vec3,
-    max_height = 1,
-): void {
+export function applyAttackKnockback(entity: Entity, location: Vec3, max_height = 1): void {
     const delta = Vec3.from(location).subtract(entity.location);
     const y_max = Math.max(max_height, delta.y + max_height);
     const a = 0.08;
@@ -31,10 +27,7 @@ export function applyAttackKnockback(
     applyImpulseAsKnockback(entity, Vec3.from(vx, vy, vz));
 }
 
-export function applyImpulseAsKnockback(
-    entity: Entity,
-    vector3: Vec3,
-): void {
+export function applyImpulseAsKnockback(entity: Entity, vector3: Vec3): void {
     const { x, y, z } = vector3;
     const horizontalStrength = Math.sqrt(x * x + z * z);
     const verticalStrength = y;

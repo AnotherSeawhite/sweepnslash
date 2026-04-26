@@ -20,26 +20,28 @@ export function registerCombatHandlers(): void {
         AttackCooldownManager.forPlayer(player).onSwing();
     });
 
-    world.afterEvents.entityHitEntity.subscribe(({ damagingEntity: player, hitEntity: target }) => {
-        if (world.getDynamicProperty('addon_toggle') == false) return;
+    world.afterEvents.entityHitEntity.subscribe(
+        ({ damagingEntity: player, hitEntity: target }) => {
+            if (world.getDynamicProperty('addon_toggle') == false) return;
 
-        const currentTick = system.currentTick;
-        const status = getStatus(player);
+            const currentTick = system.currentTick;
+            const status = getStatus(player);
 
-        if (!(player instanceof Player)) {
-            const { stats } = getItemStats(player as any);
-            const shieldBlocked = shieldBlock(currentTick, player, target, stats);
-            if (shieldBlocked) player.applyKnockback({ x: 0, z: 0 }, 0);
-            return;
-        }
+            if (!(player instanceof Player)) {
+                const { stats } = getItemStats(player as any);
+                const shieldBlocked = shieldBlock(currentTick, player, target, stats);
+                if (shieldBlocked) player.applyKnockback({ x: 0, z: 0 }, 0);
+                return;
+            }
 
-        status.leftClick = true;
+            status.leftClick = true;
 
-        if (isTeam(player, target)) return;
+            if (isTeam(player, target)) return;
 
-        if (target?.isValid && player.getComponent('health')?.currentValue! > 0)
-            AttackCooldownManager.forPlayer(player).onHit(target);
-    });
+            if (target?.isValid && player.getComponent('health')?.currentValue! > 0)
+                AttackCooldownManager.forPlayer(player).onHit(target);
+        },
+    );
 
     world.afterEvents.entityHurt.subscribe(({ damageSource, hurtEntity, damage }) => {
         if (!hurtEntity?.isValid) return;
@@ -70,7 +72,11 @@ export function registerCombatHandlers(): void {
             } else if (damageSource.cause === EntityDamageCause.maceSmash) {
                 healthParticle(hurtEntity, damage);
             } else {
-                lastAttackMap.set(hurtEntity.id, { rawDamage: damage, damage, time: currentTick });
+                lastAttackMap.set(hurtEntity.id, {
+                    rawDamage: damage,
+                    damage,
+                    time: currentTick,
+                });
             }
         } else {
             lastAttackMap.set(hurtEntity.id, { rawDamage: damage, damage, time: currentTick });

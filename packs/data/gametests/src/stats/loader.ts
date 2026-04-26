@@ -121,7 +121,11 @@ export function registerStatsLoader(): void {
         },
     );
 
-    IPC.on('sweep-and-slash:register-weapons@3', PROTO.Array(WeaponStatsSerializerV3), (data) => {
-        for (const weaponStat of data) registerWeaponStats(weaponStat as WeaponStats);
-    });
+    IPC.on(
+        'sweep-and-slash:register-weapons@3',
+        PROTO.Array(WeaponStatsSerializerV3),
+        (data) => {
+            for (const weaponStat of data) registerWeaponStats(weaponStat as WeaponStats);
+        },
+    );
 }

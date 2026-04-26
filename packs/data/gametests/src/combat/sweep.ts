@@ -115,11 +115,13 @@ export function sweep(
     if (damage == undefined) return { swept: false, commonEntities };
     if (damage <= 0) return { swept: false, commonEntities: [] };
 
-    const rgb = toColor(Vec3.from(
-        (player.getDynamicProperty('sweepR') as number) ?? 255,
-        (player.getDynamicProperty('sweepG') as number) ?? 255,
-        (player.getDynamicProperty('sweepB') as number) ?? 255,
-    ));
+    const rgb = toColor(
+        Vec3.from(
+            (player.getDynamicProperty('sweepR') as number) ?? 255,
+            (player.getDynamicProperty('sweepG') as number) ?? 255,
+            (player.getDynamicProperty('sweepB') as number) ?? 255,
+        ),
+    );
     if (!map) {
         map = new MolangVariableMap();
         map.setFloat('variable.size', 1.0);

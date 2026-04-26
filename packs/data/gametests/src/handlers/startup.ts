@@ -1,10 +1,9 @@
-const VERSION = '2.7.0';
-
 import { Player, system, world } from '@minecraft/server';
 import { initWorldProperties, initPlayerProperties } from '../config/init.ts';
 import { registerConfigCommand } from '../config/form.ts';
 import { setAttackCooldown } from '../shared/status.ts';
 import { damageTest } from '../combat/checks.ts';
+import { VERSION } from '../main.ts';
 
 let SimulatedPlayer: any;
 let gametest = true;

@@ -7,13 +7,15 @@ export function registerPlayerHandlers(): void {
     world.afterEvents.itemStartUse.subscribe(({ source: player, itemStack }) => {
         const status = getStatus(player);
         status.holdInteract = true;
-        if (itemStack && itemHasFlag(itemStack, 'kinetic_weapon')) status.chargeAttacking = true;
+        if (itemStack && itemHasFlag(itemStack, 'kinetic_weapon'))
+            status.chargeAttacking = true;
     });
 
     world.afterEvents.itemStopUse.subscribe(({ source: player, itemStack }) => {
         const status = getStatus(player);
         status.holdInteract = false;
-        if (itemStack && itemHasFlag(itemStack, 'kinetic_weapon')) status.chargeAttacking = false;
+        if (itemStack && itemHasFlag(itemStack, 'kinetic_weapon'))
+            status.chargeAttacking = false;
     });
 
     world.afterEvents.playerInteractWithBlock.subscribe(({ player, block }) => {

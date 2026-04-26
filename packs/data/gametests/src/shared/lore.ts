@@ -1,5 +1,6 @@
 import { Player } from '@minecraft/server';
 import { getItemStats, hasItemFlag } from '../stats/item.ts';
+import { logger } from './debug.ts';
 
 function stringifyRawMessage(msg: any): string {
     if (!msg) return '';
