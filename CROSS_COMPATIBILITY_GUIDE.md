@@ -123,7 +123,7 @@ Uses `WeaponStatsSerializerVersioned`. **Frozen** — bugs are preserved to avoi
 
 Use the V3 channel if you need `reach` or `flags` to work correctly.
 
-### `sweep-and-slash:register-weapons@3` _(new in 2.8.0)_
+### `sweep-and-slash:register-weapons@3` _(new in 3.0.0)_
 
 Uses `WeaponStatsSerializerV3`. Fixes the bugs in the versioned channel:
 
@@ -164,7 +164,7 @@ Existing callbacks that do not destructure `utils` are **unaffected** — this i
 
 ## Prototype Extensions Removed
 
-As of 2.8.0, Sweep 'N Slash **no longer mutates `@minecraft/server` prototypes**. The following prototype extensions no longer exist:
+As of 3.0.0, Sweep 'N Slash **no longer mutates `@minecraft/server` prototypes**. The following prototype extensions no longer exist:
 
 | Removed extension                     | Replacement                                                            |
 | ------------------------------------- | ---------------------------------------------------------------------- |
