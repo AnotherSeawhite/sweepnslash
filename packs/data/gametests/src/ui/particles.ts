@@ -1,11 +1,11 @@
-import { Entity, MolangVariableMap, world } from '@minecraft/server';
+import { Entity, MolangVariableMap, RGB, world } from '@minecraft/server';
 import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { clampNumber } from '../shared/math.ts';
 import { Debug } from '../shared/debug.ts';
 import { Particles } from '../Files.ts';
 import { getEntityStats } from '../stats/entity.ts';
 
-export function toColor(vector3: Vec3) {
+export function toColor(vector3: Vec3): RGB {
     const { x, y, z } = vector3;
     const rand = Math.random() * 0.6 + 0.4;
     return {
@@ -57,8 +57,10 @@ export function healthParticle(entity: Entity, damage: number): void {
     const hp = entity.getComponent('health');
     const dmg = clampNumber(damage, hp!.effectiveMin, hp!.effectiveMax) / 2;
     const amount = Math.trunc(dmg);
+
     const map = new MolangVariableMap();
     map.setFloat('variable.amount', amount);
+
     spawnSelectiveParticle(
         entity,
         Particles.DamageIndicatorEmitter,

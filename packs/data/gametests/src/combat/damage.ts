@@ -1,4 +1,5 @@
-import { Entity, ItemStack, Player } from '@minecraft/server';
+import { Entity, ItemStack, Player, WeatherType } from '@minecraft/server';
+import { getWeather } from '../shared/weather.ts';
 import { getStatus } from '../shared/status.ts';
 import { getEntityStats } from '../stats/entity.ts';
 import { itemHasFlag } from '../stats/item.ts';
@@ -112,7 +113,7 @@ export function calculateDamage(
     }
 
     const isInRain =
-        target.dimension.getWeather() !== 'Clear' &&
+        getWeather(target.dimension) !== WeatherType.Clear &&
         !biomeArray.includes(target.dimension.getBiome(target.location)?.id ?? '') &&
         target.dimension
             .getBlockAbove(target.location, { includePassableBlocks: false })

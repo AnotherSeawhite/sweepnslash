@@ -22,3 +22,47 @@ Also, since Bedrock's Scripting API lacks in reading/writing entity/item attribu
 # Cross-Compatibility
 
 This project uses [MCPE-IPC](https://github.com/OmniacDev/MCBE-IPC) for Cross-compatibility. It allows the add-on to have item stats defined by receiving scriptevents of item data from external behavior packs. This eliminates the hassle of having to modify the add-on's internal data.
+
+# Development
+
+This project uses [Regolith](https://github.com/Bedrock-OSS/regolith) as its build pipeline.
+
+## Prerequisites
+
+| Tool                                                         | Purpose                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------- |
+| [Regolith](https://github.com/Bedrock-OSS/regolith/releases) | Build pipeline runner                                         |
+| [Node.js](https://nodejs.org/)                               | Required by the `gametests` filter for TypeScript compilation |
+| [Deno](https://deno.com/)                                    | Required by the `marathon` and `shush` filters (from Azurite) |
+
+## Setup
+
+Install filter dependencies:
+
+```sh
+regolith install-all
+```
+
+## Profiles
+
+All profiles export to `com.mojang/development_*_packs` unless noted otherwise.
+
+| Profile         | JSON     | Scripts               | Notes                                         |
+| --------------- | -------- | --------------------- | --------------------------------------------- |
+| `dev`           | Pretty   | Bundled, not minified | Day-to-day development                        |
+| `dev-gametest`  | Pretty   | Bundled, not minified | Development with `@minecraft/server-gametest` |
+| `pack`          | Minified | Bundled, minified     | Outputs `SweepNSlash.mcaddon`                 |
+| `pack-gametest` | Minified | Bundled, minified     | Outputs `SweepNSlash-gametest.mcaddon`        |
+
+### Running a profile
+
+```sh
+regolith run <profile>
+```
+
+For example:
+
+```sh
+regolith run dev
+regolith run pack
+```

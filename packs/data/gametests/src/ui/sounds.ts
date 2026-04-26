@@ -12,9 +12,8 @@ export function playSelectiveSound(
             if (
                 p.getDynamicProperty(dynamicProperty) == true &&
                 p.dimension.id == entity.dimension.id
-            ) {
+            )
                 p.playSound(soundId, soundOptions);
-            }
         } catch (e) {
             Debug.error(e);
         }

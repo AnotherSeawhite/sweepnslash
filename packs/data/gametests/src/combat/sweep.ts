@@ -1,4 +1,11 @@
-import { Entity, EntityDamageCause, MolangVariableMap, Player, world } from '@minecraft/server';
+import {
+    Entity,
+    EntityDamageCause,
+    InputMode,
+    MolangVariableMap,
+    Player,
+    world,
+} from '@minecraft/server';
 import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { Particles } from '../Files.ts';
 import { Debug } from '../shared/debug.ts';
@@ -130,7 +137,7 @@ export function sweep(
 
     let particleLocation: Vec3;
     const inView = view(player) === target;
-    if (inView || player.inputInfo.lastInputModeUsed !== 'Touch') {
+    if (inView || player.inputInfo.lastInputModeUsed !== InputMode.Touch) {
         const rot = player.getRotation();
         particleLocation = Vec3.from(
             pLoc.x - Math.sin(rot.y * (Math.PI / 180)) * dist,

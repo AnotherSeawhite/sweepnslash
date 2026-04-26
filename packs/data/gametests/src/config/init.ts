@@ -1,4 +1,4 @@
-import { Player, world } from '@minecraft/server';
+import { DimensionTypes, Player, WeatherType, world } from '@minecraft/server';
 
 export function initWorldProperties(): void {
     if (world.getDynamicProperty('addon_toggle') == undefined) {
@@ -9,6 +9,12 @@ export function initWorldProperties(): void {
     }
     if (world.getDynamicProperty('saturationHealing') == undefined) {
         world.setDynamicProperty('saturationHealing', true);
+    }
+    for (const dimensionType of DimensionTypes.getAll()) {
+        const key = `sns:weather:${dimensionType.typeId}`;
+        if (world.getDynamicProperty(key) === undefined) {
+            world.setDynamicProperty(key, WeatherType.Clear);
+        }
     }
 }
 

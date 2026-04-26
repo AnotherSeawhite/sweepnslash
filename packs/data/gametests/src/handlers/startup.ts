@@ -79,4 +79,8 @@ export function registerStartupHandlers(): void {
             damageTest(player);
         }
     });
+
+    world.afterEvents.weatherChange.subscribe(({ dimension, newWeather }) => {
+        world.setDynamicProperty(`sns:weather:${dimension}`, newWeather);
+    });
 }

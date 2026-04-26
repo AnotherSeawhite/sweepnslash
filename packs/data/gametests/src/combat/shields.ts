@@ -1,4 +1,4 @@
-import { Entity, GameMode, Player, world } from '@minecraft/server';
+import { Entity, EquipmentSlot, GameMode, Player, world } from '@minecraft/server';
 import { Vec3 } from '@bedrock-oss/bedrock-boost';
 import { getStatus } from '../shared/status.ts';
 import { hasItemFlag } from '../stats/item.ts';
@@ -6,13 +6,12 @@ import { specialValid } from './checks.ts';
 
 export function shield(target: Entity): boolean {
     if (!(target instanceof Player)) return false;
-    const slot = ['Mainhand', 'Offhand'];
+    const slots = [EquipmentSlot.Mainhand, EquipmentSlot.Offhand];
     const targetEquippable = target.getComponent('equippable');
     const shieldCooldown = target.getItemCooldown('minecraft:shield');
 
-    for (const s of slot) {
-        const shieldItem =
-            targetEquippable?.getEquipment(s as any)?.typeId === 'minecraft:shield';
+    for (const slot of slots) {
+        const shieldItem = targetEquippable?.getEquipment(slot)?.typeId === 'minecraft:shield';
         const isRiding = target.getComponent('riding')?.isValid ?? false;
         if (shieldItem && (target.isSneaking || isRiding) && shieldCooldown == 0) {
             return true;

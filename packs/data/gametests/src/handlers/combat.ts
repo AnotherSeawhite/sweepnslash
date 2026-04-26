@@ -1,4 +1,11 @@
-import { EntityDamageCause, GameMode, Player, system, world } from '@minecraft/server';
+import {
+    EntityDamageCause,
+    EntitySwingSource,
+    GameMode,
+    Player,
+    system,
+    world,
+} from '@minecraft/server';
 import { getStatus, setAttackCooldown, setLastShieldTime } from '../shared/status.ts';
 import { isTeam } from '../shared/team.ts';
 import { getItemStats } from '../stats/item.ts';
@@ -16,7 +23,7 @@ export function registerCombatHandlers(): void {
         player.startItemCooldown('minecraft:shield', shieldCooldown ? shieldCooldown : 5);
         setLastShieldTime(player, system.currentTick);
 
-        if (swingSource !== 'Attack') return;
+        if (swingSource !== EntitySwingSource.Attack) return;
         AttackCooldownManager.forPlayer(player).onSwing();
     });
 
