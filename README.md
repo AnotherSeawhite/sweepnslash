@@ -21,7 +21,7 @@ Also, since Bedrock's Scripting API lacks in reading/writing entity/item attribu
 
 # Cross-Compatibility
 
-This project uses [MCPE-IPC](https://github.com/OmniacDev/MCBE-IPC) for Cross-compatibility. It allows the add-on to have item stats defined by receiving scriptevents of item data from external behavior packs. This eliminates the hassle of having to modify the add-on's internal data.
+This project uses [MCBE-IPC](https://github.com/OmniacDev/MCBE-IPC) for Cross-compatibility. It allows the add-on to have item stats defined by receiving script events of item data from external behavior packs. This eliminates the hassle of having to modify the add-on's internal data.
 
 # Development
 

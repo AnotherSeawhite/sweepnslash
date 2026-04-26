@@ -1,12 +1,12 @@
-import { Player } from '@minecraft/server';
+import { Player, RawMessage } from '@minecraft/server';
 import { getItemStats, hasItemFlag } from '../stats/item.ts';
 import { logger } from './debug.ts';
 
-function stringifyRawMessage(msg: any): string {
+function stringifyRawMessage(msg: RawMessage): string {
     if (!msg) return '';
     if (msg.text) return msg.text;
     if (msg.translate) return msg.translate;
-    if (msg.rawtext) return (msg.rawtext as any[]).map(stringifyRawMessage).join('');
+    if (msg.rawtext) return msg.rawtext.map(stringifyRawMessage).join('');
     return '';
 }
 

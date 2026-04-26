@@ -1,4 +1,4 @@
-import { Player, system, world } from '@minecraft/server';
+import { DimensionTypes, Player, system, world } from '@minecraft/server';
 import { initWorldProperties, initPlayerProperties } from '../config/init.ts';
 import { registerConfigCommand } from '../config/form.ts';
 import { setAttackCooldown } from '../shared/status.ts';
@@ -81,6 +81,7 @@ export function registerStartupHandlers(): void {
     });
 
     world.afterEvents.weatherChange.subscribe(({ dimension, newWeather }) => {
-        world.setDynamicProperty(`sns:weather:${dimension}`, newWeather);
+        const type = DimensionTypes.get(dimension)!;
+        world.setDynamicProperty(`sns:weather:${type.typeId}`, newWeather);
     });
 }
