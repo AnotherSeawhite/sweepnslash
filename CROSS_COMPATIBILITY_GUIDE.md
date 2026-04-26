@@ -20,7 +20,7 @@ Note that stats added via IPC has higher priority and can be overwritten.
 
 ### sweepnslash:stats
 
-Object for defining stats. Below are possible parameters:
+Object for defining stats. Refer to 'Format' section in the the repo's wiki. Below are possible parameters:
 
 - "damage": number
 - "attack_speed": number
