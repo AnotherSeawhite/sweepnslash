@@ -1,4 +1,4 @@
-# Adding Custom Weapon Stats from Other Addons
+# Adding Custom Weapon Stats
 
 ## 0. Information
 
@@ -8,12 +8,43 @@ Existing stats can be defined internally and/or by sending items data from exter
 
 Overwrite orders work the same as how you order RP/BP in the game. The topmost addon will have the final stats.
 
-## 1. Adding stats in Sweep 'N Slash files
+## 1. Adding stats by modifying the add-on
 
 In weaponStats folder, you can simply add entries in the existing files. Or if you want to import it from separate files, create a file in the 'weaponStats' folder and add an entry in the 'importStats' array inside the 'importStats.ts'. After that, compile the pack and the stats will be added in the pack.
 You can also manually add stats inside the already compiled pack, but it's not recommended.
 
-## 2. Adding stats from other behavior packs (after compiling)
+## 2. Adding stats with item custom components
+
+You can add stats by using custom components for your items. This is useful for basic work if using script and/or IPC is not preferred.
+Note that stats added via IPC has higher priority and can be overwritten.
+
+### sweepnslash:stats
+
+Object for defining stats. Below are possible parameters:
+
+- "damage": number
+- "attack_speed": number
+- "reach": number
+- "regular_knockback": number
+- "enchanted_knockback": number
+- "regular_vertical_knockback": number
+- "enchanted_vertical_knockback": number
+
+### sweepnslash:flags
+
+Array of strings, used for defining specific behavior of items. Below are possible flags:
+
+- "is_weapon": Whether the item should be treated as a weapon. If not set, attacking with this item will deplete durability by 2.
+- "sweep": Whether the item should have sweeping attack behavior.
+- "disable_shield": Whether the item should disable shields when hit.
+- "skip_lore": Whether to skip adding lore to the item.
+- "no_inherit": Whether the item should not inherit the shooter's velocity when thrown/shot.
+- "hide_indicator": Whether to hide the attack indicator when using this item.
+- "kinetic_weapon": Whether the item has kinetic weapon component. When set, holding interact will disable custom damage behavior and use vanilla mechanics. This is *required* for kinetic weapons to work properly.
+- "custom_cooldown": Whether the item uses vanilla item cooldown. When set, attack indicator will show the item cooldown instead.
+- "mace": Whether the item has mace behavior. When set, falling for more than 1.5 blocks while holding the item will disable custom damage behavior and use vanilla mechanics. This is *not recommended* for custom items, as it is only a requirement for changing vanilla mace.
+
+## 3. Adding stats from other behavior packs (after compiling)
 
 First, install IPC for your addon from this website:
 https://github.com/OmniacDev/MCBE-IPC
@@ -23,10 +54,11 @@ You can also use a complete IPC pack for better understanding. (IPC_example_pack
 
 Extract the zip file into scripts folder. After that, make a file or use an already existing file to define your stats on.
 
+Following instructions assume that `WeaponStatsSerializerV3` channel will be used. You can change the IPC channel if needed.
 In your stats file, import these:
 
 ```javascript
-import { WeaponStatsSerializer } from './IPC/weapon_stats.ipc';
+import { WeaponStatsSerializerV3 } from './IPC/weapon_stats.ipc';
 import { IPC, PROTO } from './IPC/ipc';
 import { world } from '@minecraft/server';
 ```
@@ -38,8 +70,8 @@ And then, paste this into the stats file:
 ```javascript
 world.afterEvents.worldInitialize.subscribe((event) => {
     IPC.send(
-        'sweep-and-slash:register-weapons',
-        PROTO.Array(WeaponStatsSerializer),
+        'sweep-and-slash:register-weapons@3',
+        PROTO.Array(WeaponStatsSerializerV3),
         weaponStats,
     );
 });
@@ -50,8 +82,8 @@ world.afterEvents.worldInitialize.subscribe((event) => {
 ```javascript
 world.afterEvents.worldLoad.subscribe((event) => {
     IPC.send(
-        'sweep-and-slash:register-weapons',
-        PROTO.Array(WeaponStatsSerializer),
+        'sweep-and-slash:register-weapons@3',
+        PROTO.Array(WeaponStatsSerializerV3),
         weaponStats,
     );
 });
@@ -62,7 +94,8 @@ The 'weaponStats' will be the name of the stats array:
 ```javascript
 const weaponStats = [
     {
-        id: 'namespace:example1',
+        id: 'namespace:example_item',
+        damage: 6,
         attackSpeed: 1.6,
         // ...
     },
@@ -71,15 +104,15 @@ const weaponStats = [
 
 If the stats are not importing, turn on Debug Mode and reload the world to see if the stats are importing correctly.
 
-**NOTE:** Sweep 'N Slash uses 2.1.0-beta module for @minecraft/server. This means IPC exported functions are required to follow 2.1.0-beta formats.
+**NOTE:** It is *not* recommended to set IPC pack's script version higher than the main add-on's script version.
 
-(Credits to Hog554 and OmniacDev for the help!)
+(Credits to Hog554, OmniacDev and theaddon for the help!)
 
 ## IPC Channels
 
 ### `sweep-and-slash:register-weapons`
 
-Uses `WeaponStatsSerializer`. Supports basic fields only (no `reach`, no `flags`, no functions). Unchanged.
+Uses `WeaponStatsSerializer`. Supports basic fields only (no `reach`, no `flags`). Unchanged.
 
 ### `sweep-and-slash:register-weapons-versioned`
 

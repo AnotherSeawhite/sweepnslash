@@ -19,6 +19,7 @@ export function registerStartupHandlers(): void {
 
     system.beforeEvents.startup.subscribe(({ itemComponentRegistry }) => {
         itemComponentRegistry.registerCustomComponent('sweepnslash:stats', {});
+        itemComponentRegistry.registerCustomComponent('sweepnslash:flags', {});
     });
 
     system.beforeEvents.startup.subscribe((init) => {

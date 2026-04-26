@@ -10,6 +10,7 @@ const keyMap: Record<string, keyof WeaponStats> = {
     disable_shield: 'disableShield',
     skip_lore: 'skipLore',
     no_inherit: 'noInherit',
+    reach: 'reach',
     regular_knockback: 'regularKnockback',
     enchanted_knockback: 'enchantedKnockback',
     regular_vertical_knockback: 'regularVerticalKnockback',

@@ -1,5 +1,5 @@
-import { PROTO } from 'mcbe-ipc';
-import { FunctionSerializer } from './function.ts';
+import { PROTO } from './ipc';
+import { FunctionSerializer } from './function.ipc';
 
 // V1 - no functions, basic fields only. Unchanged.
 export const WeaponStatsSerializer = PROTO.Object({
@@ -19,28 +19,8 @@ export const WeaponStatsSerializer = PROTO.Object({
     script: PROTO.Optional(FunctionSerializer),
 });
 
-interface StatsData {
-    formatVersion?: string;
-    id: string;
-    attackSpeed?: number;
-    damage?: number;
-    isWeapon?: boolean;
-    sweep?: boolean;
-    disableShield?: boolean;
-    skipLore?: boolean;
-    regularKnockback?: number;
-    enchantedKnockback?: number;
-    regularVerticalKnockback?: number;
-    enchantedVerticalKnockback?: number;
-    noInherit?: boolean;
-    reach?: number;
-    flags?: string[];
-    beforeEffect?: Function;
-    script?: Function;
-}
-
 // V2 - frozen. Bugs preserved intentionally to avoid changing existing behavior.
-export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
+export const WeaponStatsSerializerVersioned = {
     *serialize(value, stream) {
         yield* PROTO.Optional(PROTO.String).serialize(value.formatVersion, stream);
         yield* PROTO.String.serialize(value.id, stream);
@@ -60,7 +40,7 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
         yield* PROTO.Optional(PROTO.Boolean).serialize(value.noInherit, stream);
         if (value.formatVersion === '2.4.0') {
             yield* PROTO.Optional(PROTO.Float64).serialize(value.reach, stream);
-            const flags: Set<string> = new Set();
+            const flags = new Set();
             for (const flag of value.flags || []) flags.add(flag);
             yield* PROTO.Optional(PROTO.Set(PROTO.String)).serialize(flags, stream);
         }
@@ -85,7 +65,7 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
             stream,
         );
         const noInherit = yield* PROTO.Optional(PROTO.Boolean).deserialize(stream);
-        let flags: string[] = [];
+        let flags = [];
         if (formatVersion === '2.4.0') {
             const reach = yield* PROTO.Optional(PROTO.Float64).deserialize(stream);
             const flagsSet = yield* PROTO.Optional(PROTO.Set(PROTO.String)).deserialize(stream);
@@ -106,15 +86,15 @@ export const WeaponStatsSerializerVersioned: PROTO.Serializable<StatsData> = {
             regularVerticalKnockback,
             enchantedVerticalKnockback,
             noInherit,
-            flags: [] as string[], // BUG preserved: reach also not returned
+            flags: [], // BUG preserved: reach also not returned
             beforeEffect,
             script,
         };
     },
 };
 
-// V3 - fixes reach and flags bugs. Full migration from boolean to flags. Flat serialize/deserialize, no formatVersion branching.
-export const WeaponStatsSerializerV3: PROTO.Serializable<StatsData> = {
+// V3 - fixes reach and flags bugs. Clean, flat serialize/deserialize, no formatVersion branching.
+export const WeaponStatsSerializerV3 = {
     *serialize(value, stream) {
         yield* PROTO.String.serialize(value.id, stream);
         yield* PROTO.Optional(PROTO.Float64).serialize(value.attackSpeed, stream);
@@ -127,7 +107,7 @@ export const WeaponStatsSerializerV3: PROTO.Serializable<StatsData> = {
             stream,
         );
         yield* PROTO.Optional(PROTO.Float64).serialize(value.reach, stream);
-        const flagsSet: Set<string> = new Set(value.flags || []);
+        const flagsSet = new Set(value.flags || []);
         yield* PROTO.Optional(PROTO.Set(PROTO.String)).serialize(flagsSet, stream);
         yield* PROTO.Optional(FunctionSerializer).serialize(value.beforeEffect, stream);
         yield* PROTO.Optional(FunctionSerializer).serialize(value.script, stream);
