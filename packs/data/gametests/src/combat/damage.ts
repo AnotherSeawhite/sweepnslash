@@ -112,10 +112,11 @@ export function calculateDamage(
         enchantBonus += sharpnessLevel;
     }
 
+    const dim = target.dimension;
     const isInRain =
-        getWeather(target.dimension) !== WeatherType.Clear &&
-        !biomeArray.includes(target.dimension.getBiome(target.location)?.id ?? '') &&
-        target.dimension
+        getWeather(dim) !== WeatherType.Clear &&
+        !biomeArray.includes(dim.getBiome(target.location)?.id ?? '') &&
+        dim
             .getBlockAbove(target.location, { includePassableBlocks: false })
             ?.getComponent('precipitation_interactions')
             ?.obstructsRain() === (false || undefined);

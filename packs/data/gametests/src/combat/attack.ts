@@ -186,11 +186,12 @@ export class CombatManager {
                     id: (beforeEffect as any)?.critSound ?? Sounds.EntityPlayerAttackCrit,
                 });
             }
+            const dim = player.dimension;
             for (const s of sounds) {
-                player.dimension.playSound(s.id, loc2, s.soundOptions);
+                dim.playSound(s.id, loc2, s.soundOptions);
             }
             if (sprintKB) {
-                player.dimension.playSound(Sounds.EntityPlayerAttackKnockback, loc2, {
+                dim.playSound(Sounds.EntityPlayerAttackKnockback, loc2, {
                     volume: 0.7,
                 });
             }

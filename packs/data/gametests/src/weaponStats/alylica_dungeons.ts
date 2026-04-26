@@ -65,9 +65,10 @@ export const alylicaDungeons: WeaponStats[] = [
             let doCrit = false;
 
             if (rng(10)) {
-                player.dimension.spawnParticle('dungeons:skull_crit', target.location);
-                player.dimension.spawnParticle('dungeons:skull_burst', target.location);
-                player.dimension.playSound('random.anvil_land', player.location, {
+                const dim = player.dimension;
+                dim.spawnParticle('dungeons:skull_crit', target.location);
+                dim.spawnParticle('dungeons:skull_burst', target.location);
+                dim.playSound('random.anvil_land', player.location, {
                     volume: 0.2,
                     pitch: 1.5,
                 });

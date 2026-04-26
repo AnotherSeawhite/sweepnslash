@@ -95,8 +95,9 @@ export function sweep(
     const tLoc = location ?? target.location;
     const headLoc = player.getHeadLocation();
 
-    const playerCenter = player.dimension.getEntities({ location: pLoc, maxDistance: scale });
-    const targetCenter = player.dimension.getEntities({
+    const dim = player.dimension;
+    const playerCenter = dim.getEntities({ location: pLoc, maxDistance: scale });
+    const targetCenter = dim.getEntities({
         location: { x: tLoc.x - scale / 2, y: tLoc.y, z: tLoc.z - scale / 2 },
         volume: { x: scale, y: 0.25, z: scale },
     });
