@@ -22,8 +22,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
- /*
+
+/*
 	https://github.com/OmniacDev/MCBE-IPC
 */
 
@@ -111,22 +111,22 @@ export var PROTO;
             return new ByteQueue();
         }
         MIPS.deserialize = deserialize;
-    })(MIPS = PROTO.MIPS || (PROTO.MIPS = {}));
+    })((MIPS = PROTO.MIPS || (PROTO.MIPS = {})));
     PROTO.Void = {
-        *serialize() { },
-        *deserialize() { }
+        *serialize() {},
+        *deserialize() {},
     };
     PROTO.Null = {
-        *serialize() { },
+        *serialize() {},
         *deserialize() {
             return null;
-        }
+        },
     };
     PROTO.Undefined = {
-        *serialize() { },
+        *serialize() {},
         *deserialize() {
             return undefined;
-        }
+        },
     };
     PROTO.Int8 = {
         *serialize(value, stream) {
@@ -138,7 +138,7 @@ export var PROTO;
             const value = stream.data_view.getInt8(stream.front);
             stream.read(1);
             return value;
-        }
+        },
     };
     PROTO.Int16 = {
         *serialize(value, stream) {
@@ -150,7 +150,7 @@ export var PROTO;
             const value = stream.data_view.getInt16(stream.front);
             stream.read(2);
             return value;
-        }
+        },
     };
     PROTO.Int32 = {
         *serialize(value, stream) {
@@ -162,7 +162,7 @@ export var PROTO;
             const value = stream.data_view.getInt32(stream.front);
             stream.read(4);
             return value;
-        }
+        },
     };
     PROTO.UInt8 = {
         *serialize(value, stream) {
@@ -174,7 +174,7 @@ export var PROTO;
             const value = stream.data_view.getUint8(stream.front);
             stream.read(1);
             return value;
-        }
+        },
     };
     PROTO.UInt16 = {
         *serialize(value, stream) {
@@ -186,7 +186,7 @@ export var PROTO;
             const value = stream.data_view.getUint16(stream.front);
             stream.read(2);
             return value;
-        }
+        },
     };
     PROTO.UInt32 = {
         *serialize(value, stream) {
@@ -198,7 +198,7 @@ export var PROTO;
             const value = stream.data_view.getUint32(stream.front);
             stream.read(4);
             return value;
-        }
+        },
     };
     PROTO.UVarInt32 = {
         *serialize(value, stream) {
@@ -220,7 +220,7 @@ export var PROTO;
                 yield;
             } while ((byte & 0x80) !== 0 && size < 10);
             return value;
-        }
+        },
     };
     PROTO.Float32 = {
         *serialize(value, stream) {
@@ -232,7 +232,7 @@ export var PROTO;
             const value = stream.data_view.getFloat32(stream.front);
             stream.read(4);
             return value;
-        }
+        },
     };
     PROTO.Float64 = {
         *serialize(value, stream) {
@@ -244,7 +244,7 @@ export var PROTO;
             const value = stream.data_view.getFloat64(stream.front);
             stream.read(8);
             return value;
-        }
+        },
     };
     PROTO.String = {
         *serialize(value, stream) {
@@ -262,7 +262,7 @@ export var PROTO;
                 value += globalThis.String.fromCharCode(code);
             }
             return value;
-        }
+        },
     };
     PROTO.Boolean = {
         *serialize(value, stream) {
@@ -271,7 +271,7 @@ export var PROTO;
         *deserialize(stream) {
             const value = stream.read()[0];
             return value === 1;
-        }
+        },
     };
     PROTO.UInt8Array = {
         *serialize(value, stream) {
@@ -281,7 +281,7 @@ export var PROTO;
         *deserialize(stream) {
             const length = yield* PROTO.UVarInt32.deserialize(stream);
             return new Uint8Array(stream.read(length));
-        }
+        },
     };
     PROTO.Date = {
         *serialize(value, stream) {
@@ -289,7 +289,7 @@ export var PROTO;
         },
         *deserialize(stream) {
             return new globalThis.Date(yield* PROTO.Float64.deserialize(stream));
-        }
+        },
     };
     function Object(obj) {
         return {
@@ -304,7 +304,7 @@ export var PROTO;
                     result[key] = yield* obj[key].deserialize(stream);
                 }
                 return result;
-            }
+            },
         };
     }
     PROTO.Object = Object;
@@ -323,7 +323,7 @@ export var PROTO;
                     result[i] = yield* value.deserialize(stream);
                 }
                 return result;
-            }
+            },
         };
     }
     PROTO.Array = Array;
@@ -340,7 +340,7 @@ export var PROTO;
                     result[i] = yield* values[i].deserialize(stream);
                 }
                 return result;
-            }
+            },
         };
     }
     PROTO.Tuple = Tuple;
@@ -358,7 +358,7 @@ export var PROTO;
                     return yield* value.deserialize(stream);
                 }
                 return undefined;
-            }
+            },
         };
     }
     PROTO.Optional = Optional;
@@ -380,7 +380,7 @@ export var PROTO;
                     result.set(k, v);
                 }
                 return result;
-            }
+            },
         };
     }
     PROTO.Map = Map;
@@ -400,7 +400,7 @@ export var PROTO;
                     result.add(v);
                 }
                 return result;
-            }
+            },
         };
     }
     PROTO.Set = Set;
@@ -409,7 +409,7 @@ export var PROTO;
         guid: PROTO.String,
         encoding: PROTO.String,
         index: PROTO.UVarInt32,
-        final: PROTO.Boolean
+        final: PROTO.Boolean,
     });
 })(PROTO || (PROTO = {}));
 export var NET;
@@ -424,7 +424,8 @@ export var NET;
         let acc_size = 0;
         for (let i = 0; i < uint8array.length; i++) {
             const char_code = uint8array[i] | (uint8array[++i] << 8);
-            const utf16_size = char_code <= 0x7f ? 1 : char_code <= 0x7ff ? 2 : char_code <= 0xffff ? 3 : 4;
+            const utf16_size =
+                char_code <= 0x7f ? 1 : char_code <= 0x7ff ? 2 : char_code <= 0xffff ? 3 : 4;
             const char_size = char_code > 0xff ? utf16_size : 2;
             if (acc_size + char_size > max_size) {
                 result.push(acc_str);
@@ -434,8 +435,7 @@ export var NET;
             if (char_code > 0xff) {
                 acc_str += String.fromCharCode(char_code);
                 acc_size += utf16_size;
-            }
-            else {
+            } else {
                 acc_str += char_code.toString(16).padStart(2, '0').toUpperCase();
                 acc_size += 2;
             }
@@ -456,8 +456,7 @@ export var NET;
                     const hex_code = parseInt(hex, 16);
                     result.push(hex_code & 0xff);
                     result.push(hex_code >> 8);
-                }
-                else {
+                } else {
                     result.push(char_code & 0xff);
                     result.push(char_code >> 8);
                 }
@@ -468,20 +467,22 @@ export var NET;
         return PROTO.ByteQueue.from_uint8array(new Uint8Array(result));
     }
     NET.deserialize = deserialize;
-    system.afterEvents.scriptEventReceive.subscribe(event => {
-        system.runJob((function* () {
-            const [serialized_endpoint, serialized_header] = event.id.split(':');
-            const endpoint_stream = yield* PROTO.MIPS.deserialize(serialized_endpoint);
-            const endpoint = yield* PROTO.Endpoint.deserialize(endpoint_stream);
-            const listeners = ENDPOINTS.get(endpoint);
-            if (event.sourceType === ScriptEventSource.Server && listeners) {
-                const header_stream = yield* PROTO.MIPS.deserialize(serialized_header);
-                const header = yield* PROTO.Header.deserialize(header_stream);
-                for (let i = 0; i < listeners.length; i++) {
-                    yield* listeners[i](header, event.message);
+    system.afterEvents.scriptEventReceive.subscribe((event) => {
+        system.runJob(
+            (function* () {
+                const [serialized_endpoint, serialized_header] = event.id.split(':');
+                const endpoint_stream = yield* PROTO.MIPS.deserialize(serialized_endpoint);
+                const endpoint = yield* PROTO.Endpoint.deserialize(endpoint_stream);
+                const listeners = ENDPOINTS.get(endpoint);
+                if (event.sourceType === ScriptEventSource.Server && listeners) {
+                    const header_stream = yield* PROTO.MIPS.deserialize(serialized_header);
+                    const header = yield* PROTO.Header.deserialize(header_stream);
+                    for (let i = 0; i < listeners.length; i++) {
+                        yield* listeners[i](header, event.message);
+                    }
                 }
-            }
-        })());
+            })(),
+        );
     });
     function create_listener(endpoint, listener) {
         let listeners = ENDPOINTS.get(endpoint);
@@ -492,8 +493,7 @@ export var NET;
         listeners.push(listener);
         return () => {
             const idx = listeners.indexOf(listener);
-            if (idx !== -1)
-                listeners.splice(idx, 1);
+            if (idx !== -1) listeners.splice(idx, 1);
             if (listeners.length === 0) {
                 ENDPOINTS.delete(endpoint);
             }
@@ -501,10 +501,12 @@ export var NET;
     }
     function generate_id() {
         const r = (Math.random() * 0x100000000) >>> 0;
-        return ((r & 0xff).toString(16).padStart(2, '0') +
+        return (
+            (r & 0xff).toString(16).padStart(2, '0') +
             ((r >> 8) & 0xff).toString(16).padStart(2, '0') +
             ((r >> 16) & 0xff).toString(16).padStart(2, '0') +
-            ((r >> 24) & 0xff).toString(16).padStart(2, '0')).toUpperCase();
+            ((r >> 24) & 0xff).toString(16).padStart(2, '0')
+        ).toUpperCase();
     }
     function* emit(endpoint, serializer, value) {
         const guid = generate_id();
@@ -517,14 +519,24 @@ export var NET;
             const serialized_header = yield* PROTO.MIPS.serialize(header_stream);
             world
                 .getDimension('overworld')
-                .runCommand(`scriptevent ${serialized_endpoint}:${serialized_header} ${serialized_packet}`);
+                .runCommand(
+                    `scriptevent ${serialized_endpoint}:${serialized_header} ${serialized_packet}`,
+                );
         };
         const packet_stream = new PROTO.ByteQueue();
         yield* serializer.serialize(value, packet_stream);
         const serialized_packets = yield* serialize(packet_stream, FRAG_MAX);
         for (let i = 0; i < serialized_packets.length; i++) {
             const serialized_packet = serialized_packets[i];
-            yield* RUN({ guid, encoding: ENCODING, index: i, final: i === serialized_packets.length - 1 }, serialized_packet);
+            yield* RUN(
+                {
+                    guid,
+                    encoding: ENCODING,
+                    index: i,
+                    final: i === serialized_packets.length - 1,
+                },
+                serialized_packet,
+            );
         }
     }
     NET.emit = emit;
@@ -541,7 +553,10 @@ export var NET;
             }
             fragment.serialized_packets[payload.index] = serialized_packet;
             fragment.data_size += payload.index + 1;
-            if (fragment.size !== -1 && fragment.data_size === (fragment.size * (fragment.size + 1)) / 2) {
+            if (
+                fragment.size !== -1 &&
+                fragment.data_size === (fragment.size * (fragment.size + 1)) / 2
+            ) {
                 const stream = yield* deserialize(fragment.serialized_packets);
                 const value = yield* serializer.deserialize(stream);
                 yield* callback(value);
@@ -562,11 +577,15 @@ export var IPC;
     /** Sends an `invoke` message through IPC, and expects a result asynchronously. */
     function invoke(channel, serializer, value, deserializer) {
         system.runJob(NET.emit(`ipc:${channel}:invoke`, serializer, value));
-        return new Promise(resolve => {
-            const terminate = NET.listen(`ipc:${channel}:handle`, deserializer, function* (value) {
-                resolve(value);
-                terminate();
-            });
+        return new Promise((resolve) => {
+            const terminate = NET.listen(
+                `ipc:${channel}:handle`,
+                deserializer,
+                function* (value) {
+                    resolve(value);
+                    terminate();
+                },
+            );
         });
     }
     IPC.invoke = invoke;

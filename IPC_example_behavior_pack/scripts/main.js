@@ -1,1 +1,1 @@
-import "./stats.js"
+import './stats.js';
