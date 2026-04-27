@@ -87,6 +87,7 @@ const controls: Array<Record<string, object>> = [{ data_eq_control: dataEqContro
 for (const slot of SLOTS) {
     for (const side of ['r', 'l'] as const) {
         const anchorTo = side === 'r' ? 'bottom_right' : 'bottom_left';
+        const anchorFrom = side === 'r' ? 'bottom_right' : 'bottom_left';
         const xBg  = side === 'r' ? -4 : 4;
         const xBar = side === 'r' ? -9 : 9; // bar is 12px wide; shifts it 5px inward to center under icon
         const y    = side === 'r' ? slot.yR : slot.yL;
@@ -100,7 +101,7 @@ for (const slot of SLOTS) {
                 texture: slot.bg,
                 size: [22, 22],
                 layer: 1,
-                anchor_from: 'bottom_right',
+                anchor_from: anchorFrom,
                 anchor_to: anchorTo,
                 offset: [xBg, y],
                 bindings: slotBinding(occupiedExpr),
@@ -115,7 +116,7 @@ for (const slot of SLOTS) {
                 renderer: 'progress_bar_renderer',
                 size: [12, 1],
                 layer: 2,
-                anchor_from: 'bottom_right',
+                anchor_from: anchorFrom,
                 anchor_to: anchorTo,
                 offset: [xBar, y - 5],
                 property_bag: {
