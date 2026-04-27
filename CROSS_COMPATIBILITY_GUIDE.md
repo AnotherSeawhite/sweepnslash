@@ -18,7 +18,7 @@ You can also manually add stats inside the already compiled pack, but it's not r
 You can add stats by using custom components for your items. This is useful for basic work if using script and/or IPC is not preferred.
 Note that stats added via IPC has higher priority and can be overwritten.
 
-### sweepnslash:stats
+### `sweepnslash:stats`
 
 Object for defining stats. Refer to 'Format' section in the the repo's wiki. Below are possible parameters:
 
@@ -30,7 +30,7 @@ Object for defining stats. Refer to 'Format' section in the the repo's wiki. Bel
 - "regular_vertical_knockback": number
 - "enchanted_vertical_knockback": number
 
-### sweepnslash:flags
+### `sweepnslash:flags`
 
 Array of strings, used for defining specific behavior of items. Below are possible flags:
 
