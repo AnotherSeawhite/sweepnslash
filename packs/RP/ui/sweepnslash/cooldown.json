@@ -16,7 +16,7 @@
             },
             {
                 "binding_type": "view",
-                "source_property_name": "(#texto - ('%.6s' * #texto))",
+                "source_property_name": "('%.2s' * (#texto - ('%.6s' * #texto)))",
                 "target_property_name": "#texttonumber"
             },
             {
@@ -134,7 +134,7 @@
     },
     "cooldown_ui": {
         "type": "panel",
-        "$update_string": "_sweepnslash:",
+        "$update_string": "_sweepnslash|",
         "size": ["100%", "100%"],
         "controls": [
             {

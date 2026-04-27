@@ -7,7 +7,7 @@
                 "operation": "insert_back",
                 "value": {
                     "binding_type": "view",
-                    "source_property_name": "(not (('%.13s' * #text) = '_sweepnslash:'))",
+                    "source_property_name": "(not (('%.13s' * #text) = '_sweepnslash|'))",
                     "target_property_name": "#visible"
                 }
             }
