@@ -2,22 +2,43 @@ import { Player } from '@minecraft/server';
 import { getSaturation, getExhaustion, getHunger } from '../food/accessors.ts';
 import { FOOD_LOOKUP } from '../food/lookup.ts';
 
-export interface HungerData {
+export interface FoodOverlayData {
     sat: number;
     exh: number;
     hun: number;
     fnut: number;
     fsat: number;
+    falpha: number;
     foodHeld: boolean;
 }
 
-export function getHungerData(player: Player, currentTick: number): HungerData {
+function getFlashAlpha(tick: number, maxAlpha = 1.0) {
+    const pos = tick % 32;
+
+    const unclamped =
+        pos < 16
+            ? -0.5 + pos * 0.125 // ascending
+            : 1.5 - (pos - 16) * 0.125; // descending
+
+    const clamped = Math.max(0, Math.min(1, unclamped));
+    return clamped * Math.max(0, Math.min(1, maxAlpha));
+}
+
+export function getFoodOverlayData(player: Player, currentTick: number): FoodOverlayData {
     const sat = Math.round(getSaturation(player) ?? 0);
     const exh = Math.round((getExhaustion(player) ?? 0) * 10);
     const hun = Math.round(getHunger(player) ?? 0);
 
     const hungerOverlay = player.getDynamicProperty('hungerOverlay') ?? true;
-    const base = { sat: hungerOverlay ? sat : 0, exh: hungerOverlay ? exh : 0, hun, fnut: 0, fsat: 0, foodHeld: false };
+    const base: FoodOverlayData = {
+        sat: hungerOverlay ? sat : 0,
+        exh: hungerOverlay ? exh : 0,
+        hun,
+        fnut: 0,
+        fsat: 0,
+        falpha: 0,
+        foodHeld: false,
+    };
 
     const foodPreview = player.getDynamicProperty('foodPreview') ?? true;
     if (!foodPreview) return base;
@@ -41,8 +62,6 @@ export function getHungerData(player: Player, currentTick: number): HungerData {
         satMod = entry.saturation;
     }
 
-    // Blink: alternate every 10 ticks (same cadence as AppSkin)
-    const inPreviewPhase = Math.floor(currentTick / 10) % 2 === 0;
     const previewHunger = Math.min(20, hun + nutrition);
     const previewSat = Math.min(20, sat + nutrition * satMod * 2);
 
@@ -50,8 +69,9 @@ export function getHungerData(player: Player, currentTick: number): HungerData {
         sat: hungerOverlay ? sat : 0,
         exh: hungerOverlay ? exh : 0,
         hun,
-        fnut: inPreviewPhase ? Math.round(previewHunger) : 0,
-        fsat: inPreviewPhase ? Math.round(previewSat) : 0,
+        fnut: Math.round(previewHunger),
+        fsat: Math.round(previewSat),
+        falpha: getFlashAlpha(currentTick),
         foodHeld: true,
     };
 }
