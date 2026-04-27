@@ -56,6 +56,28 @@ export function userConfigForm(player: Player): void {
             },
         )
         .toggle(
+            { translate: 'sweepnslash.config.personal.food_preview' },
+            {
+                defaultValue: dp(player, { id: 'foodPreview' }) ?? true,
+                tooltip: { translate: 'sweepnslash.config.personal.food_preview.tooltip' },
+            },
+        )
+        .toggle(
+            { translate: 'sweepnslash.config.personal.armor_overlay' },
+            {
+                defaultValue: dp(player, { id: 'armorOverlay' }) ?? true,
+                tooltip: { translate: 'sweepnslash.config.personal.armor_overlay.tooltip' },
+            },
+        )
+        .dropdown(
+            { translate: 'sweepnslash.config.personal.armor_side' },
+            [
+                { translate: 'sweepnslash.config.personal.armor_side.right' },
+                { translate: 'sweepnslash.config.personal.armor_side.left' },
+            ],
+            { defaultValueIndex: dp(player, { id: 'armorSide' }) ?? 0 },
+        )
+        .toggle(
             { translate: 'sweepnslash.config.personal.bowhitsound' },
             { defaultValue: dp(player, { id: 'bowHitSound' }) ?? false },
         )
@@ -119,6 +141,9 @@ export function userConfigForm(player: Player): void {
         const properties = [
             { object: player, dynamicProperty: 'cooldownStyle' },
             { object: player, dynamicProperty: 'hungerOverlay' },
+            { object: player, dynamicProperty: 'foodPreview' },
+            { object: player, dynamicProperty: 'armorOverlay' },
+            { object: player, dynamicProperty: 'armorSide' },
             { object: player, dynamicProperty: 'bowHitSound' },
             { object: player, dynamicProperty: 'sweep' },
             { object: player, dynamicProperty: 'enchantedHit' },

@@ -28,6 +28,8 @@ export function initPlayerProperties(player: Player): void {
         'sweep',
         'bowHitSound',
         'hungerOverlay',
+        'foodPreview',
+        'armorOverlay',
     ];
     for (const dp of dpArray) {
         if (player.getDynamicProperty(dp) == undefined) {
@@ -36,5 +38,8 @@ export function initPlayerProperties(player: Player): void {
     }
     if (player.getDynamicProperty('cooldownStyle') == undefined) {
         player.setDynamicProperty('cooldownStyle', 0);
+    }
+    if (player.getDynamicProperty('armorSide') == undefined) {
+        player.setDynamicProperty('armorSide', 0);
     }
 }
