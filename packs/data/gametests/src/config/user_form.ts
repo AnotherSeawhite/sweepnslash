@@ -88,7 +88,7 @@ export function userConfigForm(player: Player): void {
 
         function n(value: any) {
             const num = Number(value);
-            if (isNaN(value)) player.sendMessage({ translate: 'sweepnslash.config.status.nan' });
+            if (isNaN(num)) player.sendMessage({ translate: 'sweepnslash.config.status.nan' });
             return isNaN(num) ? 0 : num;
         }
 
