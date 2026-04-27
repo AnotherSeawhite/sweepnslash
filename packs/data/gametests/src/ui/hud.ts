@@ -16,24 +16,9 @@ export function tickHUD(player: Player, currentTick: number, addonToggle: boolea
     const pad2 = (n: number) => String(n).padStart(2, '0');
     const title = `_sweepnslash|${mode}|${ready ? 't' : 'f'}|${pad2(pixel)}|${pad2(sat)}|${pad2(exh)}`;
 
+    // Sub (Geyser) mode: send data title first (stayDuration 0), then the visual subtitle title
+    player.onScreenDisplay.setTitle(title, { fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 0 });
     if (mode === 'sub' && subtitle !== undefined) {
-        // Sub (Geyser) mode: send data title first (stayDuration 0), then visual subtitle title
-        player.onScreenDisplay.setTitle(title, {
-            fadeInDuration: 0,
-            fadeOutDuration: 0,
-            stayDuration: 0,
-        });
-        player.onScreenDisplay.setTitle(' ', {
-            fadeInDuration: 0,
-            fadeOutDuration: 0,
-            stayDuration: 10,
-            subtitle,
-        });
-    } else {
-        player.onScreenDisplay.setTitle(title, {
-            fadeInDuration: 0,
-            fadeOutDuration: 0,
-            stayDuration: 0,
-        });
+        player.onScreenDisplay.setTitle(' ', { fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 10, subtitle });
     }
 }
