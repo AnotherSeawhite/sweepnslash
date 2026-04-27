@@ -27,10 +27,14 @@ export function initPlayerProperties(player: Player): void {
         'criticalHit',
         'sweep',
         'bowHitSound',
+        'hungerOverlay',
     ];
     for (const dp of dpArray) {
         if (player.getDynamicProperty(dp) == undefined) {
             player.setDynamicProperty(dp, true);
         }
+    }
+    if (player.getDynamicProperty('cooldownStyle') == undefined) {
+        player.setDynamicProperty('cooldownStyle', 0);
     }
 }

@@ -7,7 +7,6 @@ import {
     world,
 } from '@minecraft/server';
 import { FormCancelationReason, ModalFormData } from '@minecraft/server-ui';
-import { clampNumber } from '../shared/math.ts';
 import { Sounds } from '../Files.ts';
 
 const configLastClosedMap = new Map<string, number>();
@@ -95,58 +94,11 @@ export function configForm(player: Player): void {
         { translate: 'sweepnslash.config.general.tipmessage' },
         { defaultValue: dp(player, { id: 'tipMessage' }) ?? false },
     );
-    form.divider();
-    form.label({ translate: 'sweepnslash.config.personal.header' });
-    form.dropdown(
-        { translate: 'sweepnslash.config.personal.indicator' },
-        [
-            { translate: 'sweepnslash.config.personal.indicator.crosshair' },
-            { translate: 'sweepnslash.config.personal.indicator.hotbar' },
-            { translate: 'sweepnslash.config.personal.indicator.geyser' },
-            { translate: 'sweepnslash.config.personal.indicator.none' },
-        ],
-        {
-            defaultValueIndex: dp(player, { id: 'cooldownStyle' }),
-            tooltip: { translate: 'sweepnslash.config.personal.indicator.tooltip' },
-        },
-    );
-    form.toggle(
-        { translate: 'sweepnslash.config.personal.bowhitsound' },
-        { defaultValue: dp(player, { id: 'bowHitSound' }) ?? false },
-    );
-    form.toggle(
-        { translate: 'sweepnslash.config.personal.sweep.particles' },
-        { defaultValue: dp(player, { id: 'sweep' }) ?? false },
-    );
-    form.toggle(
-        { translate: 'sweepnslash.config.personal.enchanted.particles' },
-        { defaultValue: dp(player, { id: 'enchantedHit' }) ?? false },
-    );
-    form.toggle(
-        { translate: 'sweepnslash.config.personal.damage.particles' },
-        { defaultValue: dp(player, { id: 'damageIndicator' }) ?? false },
-    );
-    form.toggle(
-        { translate: 'sweepnslash.config.personal.crit.particles' },
-        { defaultValue: dp(player, { id: 'criticalHit' }) ?? false },
-    );
-    form.divider();
-    form.label({ translate: 'sweepnslash.config.personal.sweep.rgb' });
-    form.slider('§cR', 0, 255, { defaultValue: dp(player, { id: 'sweepR' }) ?? 255 });
-    form.slider('§aG', 0, 255, { defaultValue: dp(player, { id: 'sweepG' }) ?? 255 });
-    form.slider('§9B', 0, 255, { defaultValue: dp(player, { id: 'sweepB' }) ?? 255 });
     form.submitButton({ translate: 'sweepnslash.config.save' });
 
     form.show(player as any).then((response) => {
         const { canceled, formValues, cancelationReason } = response;
         configLastClosedMap.set(player.id, system.currentTick);
-
-        function n(value: any) {
-            const num = Number(value);
-            if (isNaN(value))
-                player.sendMessage({ translate: 'sweepnslash.config.status.nan' });
-            return isNaN(num) ? 0 : num;
-        }
 
         if (response && canceled && cancelationReason === FormCancelationReason.UserBusy)
             return;
@@ -160,18 +112,12 @@ export function configForm(player: Player): void {
         player.playSound(Sounds.GamePlayerBowDing);
         player.sendMessage({ translate: 'sweepnslash.config.status.saved' });
 
-        const rgbProps = ['sweepR', 'sweepG', 'sweepB'];
-
         function valuePush({ object, dynamicProperty, condition = true }: any) {
             if (!condition) return;
             while (formValues![formValuesPush] === undefined) {
                 formValuesPush++;
             }
-            const isRgb = rgbProps.includes(dynamicProperty);
-            const value = isRgb
-                ? clampNumber(n(formValues![formValuesPush]), 0, 255)
-                : formValues![formValuesPush];
-            object.setDynamicProperty(dynamicProperty, value);
+            object.setDynamicProperty(dynamicProperty, formValues![formValuesPush]);
             formValuesPush++;
         }
 
@@ -186,15 +132,6 @@ export function configForm(player: Player): void {
             { object: world, dynamicProperty: 'saturationHealing', condition: op },
             { object: player, dynamicProperty: 'excludePetFromSweep' },
             { object: player, dynamicProperty: 'tipMessage' },
-            { object: player, dynamicProperty: 'cooldownStyle' },
-            { object: player, dynamicProperty: 'bowHitSound' },
-            { object: player, dynamicProperty: 'sweep' },
-            { object: player, dynamicProperty: 'enchantedHit' },
-            { object: player, dynamicProperty: 'damageIndicator' },
-            { object: player, dynamicProperty: 'criticalHit' },
-            { object: player, dynamicProperty: 'sweepR' },
-            { object: player, dynamicProperty: 'sweepG' },
-            { object: player, dynamicProperty: 'sweepB' },
         ];
 
         properties.forEach(valuePush);
