@@ -2,23 +2,46 @@ import { Player } from '@minecraft/server';
 import { getStatus } from '../shared/status.ts';
 import { tickIndicator } from './indicator.ts';
 import { getHungerData } from './hunger_overlay.ts';
+import { getEquipmentData } from './equipment_overlay.ts';
 
 export function tickHUD(player: Player, currentTick: number, addonToggle: boolean): void {
     const status = getStatus(player);
     const { mode, pixel, ready, subtitle } = tickIndicator(player, currentTick, addonToggle);
-    const { sat, exh } = getHungerData(player);
+    const { sat, exh, hun, fnut, fsat, foodHeld } = getHungerData(player, currentTick);
+    const eq = getEquipmentData(player);
 
-    // Skip sending when nothing is active and we already cleared
-    const isActive = mode !== 'non' || sat > 0 || exh > 0;
+    const hasEquipment = eq.hMax > 0 || eq.cMax > 0 || eq.lMax > 0 || eq.fMax > 0 || eq.oMax > 0;
+    const isActive = mode !== 'non' || sat > 0 || exh > 0 || foodHeld || hasEquipment;
     if (!isActive && !status.showBar) return;
     status.showBar = isActive;
 
     const pad2 = (n: number) => String(n).padStart(2, '0');
-    const title = `_sweepnslash|${mode}|${ready ? 't' : 'f'}|${pad2(pixel)}|${pad2(sat)}|${pad2(exh)}`;
+    const pad5 = (n: number) => String(n).padStart(5, '_');
+    const side = ((player.getDynamicProperty('armorSide') as number) ?? 0) === 0 ? 'r' : 'l';
 
-    // Sub (Geyser) mode: send data title first (stayDuration 0), then the visual subtitle title
-    player.onScreenDisplay.setTitle(title, { fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 0 });
+    const title = [
+        `_sweepnslash|${mode}|${ready ? 't' : 'f'}|${pad2(pixel)}`,
+        `${pad2(sat)}|${pad2(exh)}|${pad2(hun)}|${pad2(fnut)}|${pad2(fsat)}`,
+        `${side}`,
+        `${pad5(eq.hCur)}|${pad5(eq.hMax)}`,
+        `${pad5(eq.cCur)}|${pad5(eq.cMax)}`,
+        `${pad5(eq.lCur)}|${pad5(eq.lMax)}`,
+        `${pad5(eq.fCur)}|${pad5(eq.fMax)}`,
+        `${pad5(eq.oCur)}|${pad5(eq.oMax)}`,
+    ].join('|');
+
+    player.onScreenDisplay.setTitle(title, {
+        fadeInDuration: 0,
+        fadeOutDuration: 0,
+        stayDuration: 0,
+    });
+    player.sendMessage(title); // DEBUG - intentional per user
     if (mode === 'sub' && subtitle !== undefined) {
-        player.onScreenDisplay.setTitle(' ', { fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 10, subtitle });
+        player.onScreenDisplay.setTitle(' ', {
+            fadeInDuration: 0,
+            fadeOutDuration: 0,
+            stayDuration: 10,
+            subtitle,
+        });
     }
 }
