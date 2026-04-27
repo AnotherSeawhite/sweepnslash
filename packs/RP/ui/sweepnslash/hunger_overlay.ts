@@ -11,7 +11,7 @@ const EXH_X = [89, 85, 81, 77, 73, 69, 65, 61, 57, 53, 49, 45, 41, 37, 33, 29, 2
 
 const Y = -32;
 
-// ─── data control ────────────────────────────────────────────────────────────
+// data control
 // Preserved-title pattern: captures the title string whenever it changes to one
 // starting with UPDATE_STRING, then exposes #sat and #exh as computed properties
 // that icon siblings can read via source_control_name: "data_control_hunger".
@@ -52,14 +52,9 @@ const dataControlHunger = {
     ],
 };
 
-// ─── helper to build a single icon element ───────────────────────────────────
-function icon(
-    texture: string,
-    layer: number,
-    x: number,
-    visExpr: string,
-    alpha = 1.0,
-): object {
+// helper to build a single icon element
+function icon(texture: string, layer: number, x: number, visExpr: string, alpha = 1.0): object {
+    // deno-lint-ignore no-explicit-any
     const def: any = {
         type: 'image',
         layer,
@@ -69,11 +64,17 @@ function icon(
         anchor_to: 'bottom_middle',
         offset: [x, Y],
         bindings: [
-            { binding_name: '#show_survival_ui', binding_name_override: '#alpha' },
+            { binding_name: '#show_survival_ui' },
             {
                 binding_type: 'view',
                 source_control_name: 'data_control_hunger',
+                resolve_sibling_scope: true,
                 source_property_name: visExpr,
+                target_property_name: '#data_visible',
+            },
+            {
+                binding_type: 'view',
+                source_property_name: '(#show_survival_ui and #data_visible)',
                 target_property_name: '#visible',
             },
         ],
@@ -82,10 +83,8 @@ function icon(
     return def;
 }
 
-// ─── build controls ───────────────────────────────────────────────────────────
-const controls: Array<Record<string, object>> = [
-    { data_control_hunger: dataControlHunger },
-];
+// build controls
+const controls: Array<Record<string, object>> = [{ data_control_hunger: dataControlHunger }];
 
 // Saturation icons (layer 3, on top of vanilla hunger hearts)
 for (let i = 0; i < 10; i++) {
@@ -93,20 +92,10 @@ for (let i = 0; i < 10; i++) {
     const x = SAT_X[i];
     const threshold = 2 * n - 1; // odd numbers 1, 3, 5 … 19
     controls.push({
-        [`sat_full_${n}`]: icon(
-            'textures/ui/saturation_full',
-            3,
-            x,
-            `(#sat > ${threshold})`,
-        ),
+        [`sat_full_${n}`]: icon('textures/ui/saturation_full', 3, x, `(#sat > ${threshold})`),
     });
     controls.push({
-        [`sat_half_${n}`]: icon(
-            'textures/ui/saturation_half',
-            3,
-            x,
-            `(#sat = ${threshold})`,
-        ),
+        [`sat_half_${n}`]: icon('textures/ui/saturation_half', 3, x, `(#sat = ${threshold})`),
     });
 }
 
@@ -116,17 +105,11 @@ for (let i = 0; i < 20; i++) {
     const x = EXH_X[i];
     const threshold = (n - 1) * 2; // 0, 2, 4 … 38
     controls.push({
-        [`exh_${n}`]: icon(
-            'textures/ui/hunger_exhaustion',
-            0,
-            x,
-            `(#exh > ${threshold})`,
-            0.5,
-        ),
+        [`exh_${n}`]: icon('textures/ui/hunger_exhaustion', 0, x, `(#exh > ${threshold})`, 0.5),
     });
 }
 
-// ─── assemble output ──────────────────────────────────────────────────────────
+// assemble output
 const output = {
     namespace: 'sweepnslash_hunger',
     hunger_overlay_panel: {
