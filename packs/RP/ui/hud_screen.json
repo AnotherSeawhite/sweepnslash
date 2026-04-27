@@ -21,7 +21,7 @@
                 "value": [
                     {
                         "cooldown_hotbar@sweepnslash.cooldown_hotbar": {
-                            "$update_string": "_sweepnslash:"
+                            "$update_string": "_sweepnslash|"
                         }
                     }
                 ]
