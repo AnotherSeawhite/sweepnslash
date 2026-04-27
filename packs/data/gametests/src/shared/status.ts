@@ -6,7 +6,6 @@ export interface PlayerStatus {
     critSweepValid: boolean;
     shieldValid: boolean;
     mace: boolean;
-    attackReady: boolean;
     chargeAttacking: boolean;
     showBar: boolean;
     holdInteract: boolean;
@@ -30,7 +29,6 @@ function initializePlayerStatus(entity: Entity): PlayerStatus {
         critSweepValid: true,
         shieldValid: false,
         mace: false,
-        attackReady: false,
         chargeAttacking: false,
         showBar: true,
         holdInteract: false,
