@@ -40,6 +40,9 @@
                             "size": ["16px", "16px"],
                             "controls": [{ "cooldown_ui@sweepnslash.cooldown_ui": {} }]
                         }
+                    },
+                    {
+                        "hunger_overlay_panel@sweepnslash_hunger.hunger_overlay_panel": {}
                     }
                 ]
             }
