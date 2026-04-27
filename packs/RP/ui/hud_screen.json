@@ -43,6 +43,9 @@
                     },
                     {
                         "hunger_overlay_panel@sweepnslash_hunger.hunger_overlay_panel": {}
+                    },
+                    {
+                        "equipment_overlay@sweepnslash_eq.equipment_overlay": {}
                     }
                 ]
             }
