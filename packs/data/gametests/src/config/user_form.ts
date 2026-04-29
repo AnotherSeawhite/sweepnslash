@@ -1,15 +1,16 @@
-import {
-    CustomCommandSource,
-    CustomCommandStatus,
-    Player,
-    system,
-} from '@minecraft/server';
+import { CustomCommandSource, CustomCommandStatus, Player, system } from '@minecraft/server';
 import { FormCancelationReason, ModalFormData } from '@minecraft/server-ui';
 import { clampNumber } from '../shared/math.ts';
 import { Sounds } from '../Files.ts';
+import { OverlayMode } from '../ui/overlay_mode.ts';
 
 const userConfigLastClosedMap = new Map<string, number>();
 const userConfigCommand = 'sns:user_config';
+
+// Index order matches dropdown options for all three OverlayMode dropdowns
+const MODE_VALUES = [OverlayMode.Auto, OverlayMode.Always, OverlayMode.Disabled];
+const modeIdx = (val: unknown, def: OverlayMode) =>
+    Math.max(0, MODE_VALUES.indexOf((val as OverlayMode) ?? def));
 
 export function userConfigFormOpener({ sourceEntity: player, sourceType }: any) {
     if (!(player instanceof Player && sourceType === CustomCommandSource.Entity)) {
@@ -62,24 +63,54 @@ export function userConfigForm(player: Player): void {
                 tooltip: { translate: 'sweepnslash.config.personal.food_preview.tooltip' },
             },
         )
-        .toggle(
-            { translate: 'sweepnslash.config.personal.armor_overlay' },
+        .slider({ translate: 'sweepnslash.config.personal.food_preview_max_alpha' }, 0, 100, {
+            defaultValue: Math.round((dp(player, { id: 'foodPreviewMaxAlpha' }) ?? 1.0) * 100),
+            tooltip: {
+                translate: 'sweepnslash.config.personal.food_preview_max_alpha.tooltip',
+            },
+        })
+        .dropdown(
+            { translate: 'sweepnslash.config.personal.armor_mode' },
+            [
+                { translate: 'sweepnslash.config.personal.armor_mode.auto' },
+                { translate: 'sweepnslash.config.personal.armor_mode.always' },
+                { translate: 'sweepnslash.config.personal.armor_mode.disabled' },
+            ],
             {
-                defaultValue: dp(player, { id: 'armorOverlay' }) ?? true,
-                tooltip: { translate: 'sweepnslash.config.personal.armor_overlay.tooltip' },
+                defaultValueIndex: modeIdx(dp(player, { id: 'armorMode' }), OverlayMode.Auto),
+                tooltip: { translate: 'sweepnslash.config.personal.armor_mode.tooltip' },
             },
         )
         .dropdown(
-            { translate: 'sweepnslash.config.personal.armor_side' },
+            { translate: 'sweepnslash.config.personal.offhand_mode' },
             [
-                { translate: 'sweepnslash.config.personal.armor_side.right' },
-                { translate: 'sweepnslash.config.personal.armor_side.left' },
+                { translate: 'sweepnslash.config.personal.offhand_mode.auto' },
+                { translate: 'sweepnslash.config.personal.offhand_mode.always' },
+                { translate: 'sweepnslash.config.personal.offhand_mode.disabled' },
             ],
-            { defaultValueIndex: dp(player, { id: 'armorSide' }) ?? 0 },
+            {
+                defaultValueIndex: modeIdx(
+                    dp(player, { id: 'offhandMode' }),
+                    OverlayMode.Always,
+                ),
+                tooltip: { translate: 'sweepnslash.config.personal.offhand_mode.tooltip' },
+            },
+        )
+        .dropdown(
+            { translate: 'sweepnslash.config.personal.arrow_mode' },
+            [
+                { translate: 'sweepnslash.config.personal.arrow_mode.auto' },
+                { translate: 'sweepnslash.config.personal.arrow_mode.always' },
+                { translate: 'sweepnslash.config.personal.arrow_mode.disabled' },
+            ],
+            {
+                defaultValueIndex: modeIdx(dp(player, { id: 'arrowMode' }), OverlayMode.Auto),
+                tooltip: { translate: 'sweepnslash.config.personal.arrow_mode.tooltip' },
+            },
         )
         .toggle(
             { translate: 'sweepnslash.config.personal.bowhitsound' },
-            { defaultValue: dp(player, { id: 'bowHitSound' }) ?? false },
+            { defaultValue: dp(player, { id: 'bowHitSound' }) ?? true },
         )
         .toggle(
             { translate: 'sweepnslash.config.personal.sweep.particles' },
@@ -97,6 +128,23 @@ export function userConfigForm(player: Player): void {
             { translate: 'sweepnslash.config.personal.crit.particles' },
             { defaultValue: dp(player, { id: 'criticalHit' }) ?? false },
         )
+        .toggle(
+            { translate: 'sweepnslash.config.personal.projectile_warnings' },
+            {
+                defaultValue: dp(player, { id: 'projectileWarnings' }) ?? true,
+                tooltip: {
+                    translate: 'sweepnslash.config.personal.projectile_warnings.tooltip',
+                },
+            },
+        )
+        .slider({ translate: 'sweepnslash.config.personal.equip_warn_threshold' }, 0, 100, {
+            defaultValue: (dp(player, { id: 'equipWarnThreshold' }) as number) ?? 10,
+            tooltip: { translate: 'sweepnslash.config.personal.equip_warn_threshold.tooltip' },
+        })
+        .slider({ translate: 'sweepnslash.config.personal.ammo_warn_threshold' }, 0, 64, {
+            defaultValue: (dp(player, { id: 'ammoWarnThreshold' }) as number) ?? 16,
+            tooltip: { translate: 'sweepnslash.config.personal.ammo_warn_threshold.tooltip' },
+        })
         .divider()
         .label({ translate: 'sweepnslash.config.personal.sweep.rgb' })
         .slider('§cR', 0, 255, { defaultValue: dp(player, { id: 'sweepR' }) ?? 255 })
@@ -114,7 +162,8 @@ export function userConfigForm(player: Player): void {
             return isNaN(num) ? 0 : num;
         }
 
-        if (response && canceled && cancelationReason === FormCancelationReason.UserBusy) return;
+        if (response && canceled && cancelationReason === FormCancelationReason.UserBusy)
+            return;
 
         if (canceled) {
             player.playSound(Sounds.SnsConfigCanceled);
@@ -126,29 +175,44 @@ export function userConfigForm(player: Player): void {
         player.sendMessage({ translate: 'sweepnslash.config.status.saved' });
 
         const rgbProps = ['sweepR', 'sweepG', 'sweepB'];
+        const alphaProps = ['foodPreviewMaxAlpha'];
+        const modeProps = ['armorMode', 'offhandMode', 'arrowMode'];
 
         function valuePush({ object, dynamicProperty, condition = true }: any) {
             if (!condition) return;
             while (formValues![formValuesPush] === undefined) formValuesPush++;
             const isRgb = rgbProps.includes(dynamicProperty);
+            const isAlpha = alphaProps.includes(dynamicProperty);
+            const isMode = modeProps.includes(dynamicProperty);
+            const raw = formValues![formValuesPush];
             const value = isRgb
-                ? clampNumber(n(formValues![formValuesPush]), 0, 255)
-                : formValues![formValuesPush];
+                ? clampNumber(n(raw), 0, 255)
+                : isAlpha
+                  ? clampNumber(n(raw), 0, 100) / 100
+                  : isMode
+                    ? (MODE_VALUES[n(raw)] ?? OverlayMode.Auto)
+                    : raw;
             object.setDynamicProperty(dynamicProperty, value);
             formValuesPush++;
         }
 
+        // Must match form field order exactly (labels/dividers produce no values)
         const properties = [
             { object: player, dynamicProperty: 'cooldownStyle' },
             { object: player, dynamicProperty: 'hungerOverlay' },
             { object: player, dynamicProperty: 'foodPreview' },
-            { object: player, dynamicProperty: 'armorOverlay' },
-            { object: player, dynamicProperty: 'armorSide' },
+            { object: player, dynamicProperty: 'foodPreviewMaxAlpha' },
+            { object: player, dynamicProperty: 'armorMode' },
+            { object: player, dynamicProperty: 'offhandMode' },
+            { object: player, dynamicProperty: 'arrowMode' },
             { object: player, dynamicProperty: 'bowHitSound' },
             { object: player, dynamicProperty: 'sweep' },
             { object: player, dynamicProperty: 'enchantedHit' },
             { object: player, dynamicProperty: 'damageIndicator' },
             { object: player, dynamicProperty: 'criticalHit' },
+            { object: player, dynamicProperty: 'projectileWarnings' },
+            { object: player, dynamicProperty: 'equipWarnThreshold' },
+            { object: player, dynamicProperty: 'ammoWarnThreshold' },
             { object: player, dynamicProperty: 'sweepR' },
             { object: player, dynamicProperty: 'sweepG' },
             { object: player, dynamicProperty: 'sweepB' },

@@ -1,4 +1,5 @@
 import { DimensionTypes, Player, WeatherType, world } from '@minecraft/server';
+import { OverlayMode } from '../ui/overlay_mode';
 
 export function initWorldProperties(): void {
     if (world.getDynamicProperty('addon_toggle') == undefined) {
@@ -19,6 +20,7 @@ export function initWorldProperties(): void {
 }
 
 export function initPlayerProperties(player: Player): void {
+    // Bool defaults (true)
     const dpArray = [
         'excludePetFromSweep',
         'tipMessage',
@@ -29,17 +31,36 @@ export function initPlayerProperties(player: Player): void {
         'bowHitSound',
         'hungerOverlay',
         'foodPreview',
-        'armorOverlay',
+        'projectileWarnings',
     ];
     for (const dp of dpArray) {
         if (player.getDynamicProperty(dp) == undefined) {
             player.setDynamicProperty(dp, true);
         }
     }
+
+    // Number defaults
     if (player.getDynamicProperty('cooldownStyle') == undefined) {
         player.setDynamicProperty('cooldownStyle', 0);
     }
-    if (player.getDynamicProperty('armorSide') == undefined) {
-        player.setDynamicProperty('armorSide', 0);
+    if (player.getDynamicProperty('foodPreviewMaxAlpha') == undefined) {
+        player.setDynamicProperty('foodPreviewMaxAlpha', 1.0);
+    }
+    if (player.getDynamicProperty('equipWarnThreshold') == undefined) {
+        player.setDynamicProperty('equipWarnThreshold', 10);
+    }
+    if (player.getDynamicProperty('ammoWarnThreshold') == undefined) {
+        player.setDynamicProperty('ammoWarnThreshold', 16);
+    }
+
+    // OverlayMode string defaults
+    if (player.getDynamicProperty('armorMode') == undefined) {
+        player.setDynamicProperty('armorMode', OverlayMode.Auto);
+    }
+    if (player.getDynamicProperty('offhandMode') == undefined) {
+        player.setDynamicProperty('offhandMode', OverlayMode.Always);
+    }
+    if (player.getDynamicProperty('arrowMode') == undefined) {
+        player.setDynamicProperty('arrowMode', OverlayMode.Auto);
     }
 }
