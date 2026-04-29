@@ -7,7 +7,7 @@
                 "operation": "insert_back",
                 "value": {
                     "binding_type": "view",
-                    "source_property_name": "(not (('%.13s' * #text) = '_sweepnslash|'))",
+                    "source_property_name": "(not (('%.13s' * #text) = '_sweepnslash:'))",
                     "target_property_name": "#visible"
                 }
             }
@@ -21,7 +21,7 @@
                 "value": [
                     {
                         "cooldown_hotbar@sweepnslash.cooldown_hotbar": {
-                            "$update_string": "_sweepnslash|"
+                            "$update_string": "_sweepnslash:"
                         }
                     }
                 ]
@@ -42,7 +42,7 @@
                         }
                     },
                     {
-                        "hunger_overlay_panel@sweepnslash_hunger.hunger_overlay_panel": {}
+                        "food_overlay_panel@sweepnslash_food.food_overlay_panel": {}
                     },
                     {
                         "equipment_overlay@sweepnslash_eq.equipment_overlay": {}

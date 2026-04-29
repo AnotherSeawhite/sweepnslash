@@ -1,3 +1,7 @@
 {
-    "ui_defs": ["ui/sweepnslash/cooldown.json", "ui/sweepnslash/hunger_overlay.json", "ui/sweepnslash/equipment_overlay.json"]
+    "ui_defs": [
+        "ui/sweepnslash/cooldown.json",
+        "ui/sweepnslash/food_overlay.json",
+        "ui/sweepnslash/equipment_overlay.json"
+    ]
 }

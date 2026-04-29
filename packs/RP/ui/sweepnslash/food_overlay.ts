@@ -1,7 +1,7 @@
-// packs/RP/ui/sweepnslash/hunger_overlay.ts
-// Marathon generator — produces hunger_overlay.json, then is deleted by the build pipeline.
+// packs/RP/ui/sweepnslash/food_overlay.ts
+// Marathon generator — produces food_overlay.json, then is deleted by the build pipeline.
 
-const UPDATE_STRING = '_sweepnslash|';
+const UPDATE_STRING = '_sweepnslash:';
 
 // x offsets matching the vanilla hunger heart positions (rightmost heart 1 → leftmost heart 10)
 const SAT_X = [87, 79, 71, 63, 55, 47, 39, 31, 23, 15];
@@ -13,8 +13,8 @@ const pad2 = (n: number) => String(n).padStart(2, '0');
 
 // Data control — preserved-title pattern.
 // Captures every title that starts with UPDATE_STRING.
-// Exposes #sat, #exh, #hun, #fnut, #fsat as computed view bindings read by sibling icons.
-const dataControlHunger = {
+// Exposes #sat, #exh, #hun, #fnut, #fsat, #falpha as computed view bindings read by sibling icons.
+const dataControlFood = {
     type: 'panel',
     size: [0, 0],
     bindings: [
@@ -64,15 +64,21 @@ const dataControlHunger = {
             source_property_name: "('%.2s' * (#texto - ('%.21s' * #texto)))",
             target_property_name: '#fsat',
         },
+        // falpha: offset 24, width 3
+        {
+            binding_type: 'view',
+            source_property_name: "('%.3s' * (#texto - ('%.24s' * #texto)))",
+            target_property_name: '#falpha',
+        },
     ],
 };
 
 // Three-binding pattern for all icons:
 //   1. read #show_survival_ui into local scope
-//   2. evaluate data visibility expression from data_control_hunger sibling
+//   2. evaluate data visibility expression from data_control_food sibling
 //   3. AND both → #visible
 // resolve_sibling_scope: true is required because the icon is a direct sibling of
-// data_control_hunger (same parent), not a descendant — MCUI needs the hint to look "outward".
+// data_control_food (same parent), not a descendant — MCUI needs the hint to look "outward".
 function icon(texture: string, layer: number, x: number, visExpr: string, alpha = 1.0): object {
     // deno-lint-ignore no-explicit-any
     const def: any = {
@@ -87,7 +93,7 @@ function icon(texture: string, layer: number, x: number, visExpr: string, alpha 
             { binding_name: '#show_survival_ui' },
             {
                 binding_type: 'view',
-                source_control_name: 'data_control_hunger',
+                source_control_name: 'data_control_food',
                 resolve_sibling_scope: true,
                 source_property_name: visExpr,
                 target_property_name: '#data_visible',
@@ -103,9 +109,9 @@ function icon(texture: string, layer: number, x: number, visExpr: string, alpha 
     return def;
 }
 
-const controls: Array<Record<string, object>> = [{ data_control_hunger: dataControlHunger }];
+const controls: Array<Record<string, object>> = [{ data_control_food: dataControlFood }];
 
-// ── Saturation icons (combined current/preview) ──────────────────────────────
+// Saturation icons (combined current/preview)
 // When fnut = '00': show based on #sat (normal mode)
 // When fnut ≠ '00': show based on #fsat (food preview phase)
 for (let i = 0; i < 10; i++) {
@@ -118,7 +124,7 @@ for (let i = 0; i < 10; i++) {
     controls.push({ [`sat_half_${n}`]: icon('textures/ui/saturation_half', 3, x, halfExpr) });
 }
 
-// ── Exhaustion markers ────────────────────────────────────────────────────────
+// Exhaustion markers
 for (let i = 0; i < 20; i++) {
     const n = i + 1;
     const x = EXH_X[i];
@@ -128,7 +134,7 @@ for (let i = 0; i < 20; i++) {
     });
 }
 
-// ── Ghost hunger preview icons (food delta) ───────────────────────────────────
+// Ghost hunger preview icons (food delta)
 // Reuse saturation textures at 0.5 alpha (golden tint = food preview convention).
 // Visible only during preview phase (fnut ≠ '00') at positions the player doesn't
 // currently have filled (hun < threshold) but would be filled after eating (fnut ≥ threshold).
@@ -136,17 +142,21 @@ for (let i = 0; i < 10; i++) {
     const n = i + 1;
     const x = SAT_X[i]; // same x positions as the vanilla hunger hearts
     const tFull = pad2(2 * n - 1); // fnut must be > this for a full ghost heart
-    const tFullHun = pad2(2 * n);  // hun must be < this (slot currently unfilled)
+    const tFullHun = pad2(2 * n); // hun must be < this (slot currently unfilled)
     const tHalf = pad2(2 * n - 1); // for half ghost: fnut exactly equals this
     const fullExpr = `(not (#fnut = '00') and (#fnut > '${tFull}') and (#hun < '${tFullHun}'))`;
     const halfExpr = `(not (#fnut = '00') and (#fnut = '${tHalf}') and (#hun < '${tHalf}'))`;
-    controls.push({ [`ghost_full_${n}`]: icon('textures/ui/saturation_full', 2, x, fullExpr, 0.5) });
-    controls.push({ [`ghost_half_${n}`]: icon('textures/ui/saturation_half', 2, x, halfExpr, 0.5) });
+    controls.push({
+        [`ghost_full_${n}`]: icon('textures/ui/saturation_full', 2, x, fullExpr, 0.5),
+    });
+    controls.push({
+        [`ghost_half_${n}`]: icon('textures/ui/saturation_half', 2, x, halfExpr, 0.5),
+    });
 }
 
 const output = {
-    namespace: 'sweepnslash_hunger',
-    hunger_overlay_panel: {
+    namespace: 'sweepnslash_food',
+    food_overlay_panel: {
         type: 'panel',
         size: ['100%', '100%'],
         anchor_from: 'center',
@@ -155,5 +165,4 @@ const output = {
     },
 };
 
-await Deno.writeTextFile('./hunger_overlay.json', JSON.stringify(output, null, 2));
-console.log('Generated hunger_overlay.json');
+await Deno.writeTextFile('./food_overlay.json', JSON.stringify(output, null, 2));
