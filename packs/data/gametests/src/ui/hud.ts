@@ -54,7 +54,7 @@ export function tickHUD(player: Player, currentTick: number, addonToggle: boolea
         (eq.showArmor ? 't' : 'f') +
         (eq.showOffhand ? 't' : 'f') +
         (proj.showOverlay ? 't' : 'f') +
-        ((player.getDynamicProperty('hungerOverlay') ?? true) ? 't' : 'f');
+        ((player.getDynamicProperty('foodOverlay') ?? true) ? 't' : 'f');
 
     const warn =
         (wh ? 't' : 'f') +

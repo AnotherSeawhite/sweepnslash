@@ -29,7 +29,7 @@ export function initPlayerProperties(player: Player): void {
         'criticalHit',
         'sweep',
         'bowHitSound',
-        'hungerOverlay',
+        'foodOverlay',
         'foodPreview',
         'projectileWarnings',
     ];

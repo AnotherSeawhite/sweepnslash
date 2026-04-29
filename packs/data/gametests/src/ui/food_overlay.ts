@@ -29,10 +29,10 @@ export function getFoodOverlayData(player: Player, currentTick: number): FoodOve
     const exh = Math.round((getExhaustion(player) ?? 0) * 10);
     const hun = Math.round(getHunger(player) ?? 0);
 
-    const hungerOverlay = player.getDynamicProperty('hungerOverlay') ?? true;
+    const foodOverlay = player.getDynamicProperty('foodOverlay') ?? true;
     const base: FoodOverlayData = {
-        sat: hungerOverlay ? sat : 0,
-        exh: hungerOverlay ? exh : 0,
+        sat: foodOverlay ? sat : 0,
+        exh: foodOverlay ? exh : 0,
         hun,
         fnut: 0,
         fsat: 0,
@@ -68,8 +68,8 @@ export function getFoodOverlayData(player: Player, currentTick: number): FoodOve
     const previewSat = Math.min(20, sat + nutrition * satMod * 2);
 
     return {
-        sat: hungerOverlay ? sat : 0,
-        exh: hungerOverlay ? exh : 0,
+        sat: foodOverlay ? sat : 0,
+        exh: foodOverlay ? exh : 0,
         hun,
         fnut: Math.round(previewHunger),
         fsat: Math.round(previewSat),

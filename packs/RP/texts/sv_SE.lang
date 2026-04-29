@@ -51,8 +51,8 @@ sweepnslash.config.status.nan=§cOgiltigt tal.
 
 sweepnslash.user_config.command.description=Opens personal settings menu for Sweep 'N Slash.
 sweepnslash.user_config.menu.title=Sweep 'N Slash - Personal Settings
-sweepnslash.config.personal.hunger_overlay=Hunger Overlay
-sweepnslash.config.personal.hunger_overlay.tooltip=Displays saturation and exhaustion overlaid on the vanilla hunger bar.
+sweepnslash.config.personal.food_overlay=Food Overlay
+sweepnslash.config.personal.food_overlay.tooltip=Displays saturation and exhaustion overlaid on the vanilla hunger bar.
 sweepnslash.config.personal.food_preview=Food Preview
 sweepnslash.config.personal.food_preview.tooltip=Show ghost icons when holding food for how eating would change hunger and saturation.
 sweepnslash.config.personal.food_preview_max_alpha=Food Preview Opacity

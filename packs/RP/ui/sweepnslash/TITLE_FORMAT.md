@@ -60,7 +60,7 @@ Durability fields (`h_cur`…`o_max`) use **`0`-padding** (not `_`). The bar onl
 | 0     | armor   | `armorMode=always` OR (`armorMode=auto` AND any armor slot occupied) |
 | 1     | offhand | `offhandMode=always` OR (`offhandMode=auto` AND offhand occupied)    |
 | 2     | arrow   | `arrowMode=always` OR (`arrowMode=auto` AND shooter in main hand)    |
-| 3     | food    | `hungerOverlay` player property is `true`                            |
+| 3     | food    | `foodOverlay` player property is `true`                              |
 
 ## `warn` flag semantics
 

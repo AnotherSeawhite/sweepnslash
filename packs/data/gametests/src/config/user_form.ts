@@ -50,10 +50,10 @@ export function userConfigForm(player: Player): void {
             },
         )
         .toggle(
-            { translate: 'sweepnslash.config.personal.hunger_overlay' },
+            { translate: 'sweepnslash.config.personal.food_overlay' },
             {
-                defaultValue: dp(player, { id: 'hungerOverlay' }) ?? true,
-                tooltip: { translate: 'sweepnslash.config.personal.hunger_overlay.tooltip' },
+                defaultValue: dp(player, { id: 'foodOverlay' }) ?? true,
+                tooltip: { translate: 'sweepnslash.config.personal.food_overlay.tooltip' },
             },
         )
         .toggle(
@@ -199,7 +199,7 @@ export function userConfigForm(player: Player): void {
         // Must match form field order exactly (labels/dividers produce no values)
         const properties = [
             { object: player, dynamicProperty: 'cooldownStyle' },
-            { object: player, dynamicProperty: 'hungerOverlay' },
+            { object: player, dynamicProperty: 'foodOverlay' },
             { object: player, dynamicProperty: 'foodPreview' },
             { object: player, dynamicProperty: 'foodPreviewMaxAlpha' },
             { object: player, dynamicProperty: 'armorMode' },
