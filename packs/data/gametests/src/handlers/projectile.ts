@@ -12,15 +12,16 @@ export function registerProjectileHandlers(): void {
         if (world.getDynamicProperty('addon_toggle') == false) return;
         if (isTeam(player, target)) return;
 
-        const configCheck =
-            player instanceof Player && player.getDynamicProperty('bowHitSound') == true;
         if (
-            configCheck &&
+            player instanceof Player &&
             target instanceof Player &&
             player !== target &&
             projectile.typeId === 'minecraft:arrow'
         ) {
-            (player as Player).playSound(Sounds.GamePlayerBowDing, { pitch: 0.5 });
+            // Existing bow hit ding (plays on shooter)
+            if (player.getDynamicProperty('bowHitSound') == true) {
+                player.playSound(Sounds.GamePlayerBowDing, { pitch: 0.5 });
+            }
         }
     });
 
