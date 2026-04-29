@@ -122,7 +122,7 @@ export function tickIndicator(
 
     const barStyle = (player.getDynamicProperty('cooldownStyle') as number) ?? 0;
     const barArray = ['crs', 'htb', 'sub', 'non'][barStyle];
-    const bonkReady = viewCheck && curCD <= 0;
+    const bonkReady: boolean = (viewCheck && curCD <= 0) ?? false;
 
     if (addonToggle && Debug.isEnabled()) {
         const cooldownPercentage = Math.floor(((maxCD - curCD) / maxCD) * 100);
