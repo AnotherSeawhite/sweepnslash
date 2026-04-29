@@ -40,6 +40,8 @@ export function getFoodOverlayData(player: Player, currentTick: number): FoodOve
         foodHeld: false,
     };
 
+    const maxAlpha = (player.getDynamicProperty('foodPreviewMaxAlpha') as number) ?? 1.0;
+
     const foodPreview = player.getDynamicProperty('foodPreview') ?? true;
     if (!foodPreview) return base;
 
@@ -71,7 +73,7 @@ export function getFoodOverlayData(player: Player, currentTick: number): FoodOve
         hun,
         fnut: Math.round(previewHunger),
         fsat: Math.round(previewSat),
-        falpha: getFlashAlpha(currentTick),
+        falpha: getFlashAlpha(currentTick, maxAlpha),
         foodHeld: true,
     };
 }
