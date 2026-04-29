@@ -40,7 +40,7 @@ Array of strings, used for defining specific behavior of items. Below are possib
 - "skip_lore": Whether to skip adding lore to the item.
 - "no_inherit": Whether the item should not inherit the shooter's velocity when thrown/shot.
 - "hide_indicator": Whether to hide the attack indicator when using this item.
-- "kinetic_weapon": Whether the item has kinetic weapon component. When set, holding interact will disable custom damage behavior and use vanilla mechanics. This is _required_ for kinetic weapons to work properly.
+- "kinetic_weapon": Whether the item has kinetic weapon component. When set, holding interact will disable custom damage behavior and use vanilla mechanics. This is required for kinetic weapons to work properly.
 - "custom_cooldown": Whether the item uses vanilla item cooldown. When set, attack indicator will show the item cooldown instead.
 - "mace": Whether the item has mace behavior. When set, falling for more than 1.5 blocks while holding the item will disable custom damage behavior and use vanilla mechanics. This is _not recommended_ for custom items, as it is only a requirement for changing vanilla mace.
 
