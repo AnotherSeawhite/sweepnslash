@@ -14,7 +14,11 @@ export interface IndicatorResult {
     subtitle?: string;
 }
 
-export function tickIndicator(player: Player, currentTick: number, addonToggle: boolean): IndicatorResult {
+export function tickIndicator(
+    player: Player,
+    currentTick: number,
+    addonToggle: boolean,
+): IndicatorResult {
     const status = getStatus(player);
     const { item, stats } = getItemStats(player);
 
@@ -133,9 +137,18 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
         (viewCheck && stats && !hasItemFlag(player, 'hide_indicator') && barStyle === 0)
     ) {
         if (barStyle === 2) {
-            return { mode: 'sub', pixel: uiPixelValue, ready: bonkReady, subtitle: cooldownSubtitle };
+            return {
+                mode: 'sub',
+                pixel: uiPixelValue,
+                ready: bonkReady,
+                subtitle: cooldownSubtitle,
+            };
         } else {
-            return { mode: barArray as 'crs' | 'htb' | 'sub' | 'non', pixel: uiPixelValue, ready: bonkReady };
+            return {
+                mode: barArray as 'crs' | 'htb' | 'sub' | 'non',
+                pixel: uiPixelValue,
+                ready: bonkReady,
+            };
         }
     } else {
         return { mode: 'non', pixel: 0, ready: false };
