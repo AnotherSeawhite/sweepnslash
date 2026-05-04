@@ -67,14 +67,14 @@
             },
             {
                 "cooldown_crosshair_layout@sweepnslash.cooldown_layout": {
-                    "texture": "textures/cooldown_crosshair_full",
+                    "texture": "textures/ui/sweepnslash/cooldown/crosshair/full",
                     "alpha": 0.5,
                     "clip_direction": "left",
                     "controls": [
                         {
                             "bar_bg": {
                                 "type": "image",
-                                "texture": "textures/cooldown_crosshair_empty",
+                                "texture": "textures/ui/sweepnslash/cooldown/crosshair/empty",
                                 "alpha": 0.5,
                                 "layer": -1
                             }
@@ -84,13 +84,13 @@
             },
             {
                 "cooldown_ready_crosshair@sweepnslash.cooldown_ready": {
-                    "texture": "textures/cooldown_crosshair_ready",
+                    "texture": "textures/ui/sweepnslash/cooldown/crosshair/ready",
                     "alpha": 0.6,
                     "controls": [
                         {
                             "full_layout_with_alpha": {
                                 "type": "image",
-                                "texture": "textures/cooldown_crosshair_full",
+                                "texture": "textures/ui/sweepnslash/cooldown/crosshair/full",
                                 "alpha": 0.2
                             }
                         }
@@ -112,13 +112,13 @@
             },
             {
                 "cooldown_hotbar_layout@sweepnslash.cooldown_layout": {
-                    "texture": "textures/cooldown_hotbar_full",
+                    "texture": "textures/ui/sweepnslash/cooldown/hotbar/full",
                     "clip_direction": "down",
                     "controls": [
                         {
                             "bar_bg": {
                                 "type": "image",
-                                "texture": "textures/cooldown_hotbar_empty",
+                                "texture": "textures/ui/sweepnslash/cooldown/hotbar/empty",
                                 "layer": -1
                             }
                         }
@@ -127,7 +127,7 @@
             },
             {
                 "cooldown_ready_hotbar@sweepnslash.cooldown_ready": {
-                    "texture": "textures/cooldown_hotbar_full"
+                    "texture": "textures/ui/sweepnslash/cooldown/hotbar/ready"
                 }
             }
         ]

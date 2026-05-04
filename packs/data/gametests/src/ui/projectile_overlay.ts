@@ -24,7 +24,7 @@ const OFFHAND_ONLY_PROJECTILES = new Set<string>(['minecraft:firework_rocket']);
 export function formatArrowCount(n: number): string {
     if (n < 1000) return String(n).padStart(5, '_');
     const k = n / 1000;
-    // k.toFixed(1) rounds 9.95→'10.0' (6 chars); redirect to floor branch in that case
+    // k.toFixed(1) rounds 9.95->'10.0' (6 chars); redirect to floor branch in that case
     // Realistic max is ~2.3k so this edge is purely defensive
     return k < 9.95 ? `_${k.toFixed(1)}k` : String(Math.round(k) + 'k').padStart(5, '_');
 }
@@ -45,7 +45,7 @@ function countType(player: Player, typeId: string): number {
 }
 
 // Resolve which projectile type to use and where the first one lives.
-// Priority: offhand (regardless of type priority order) → inventory (by type priority order).
+// Priority: offhand (regardless of type priority order) -> inventory (by type priority order).
 function resolveAmmo(
     player: Player,
     projectileTypes: string[],

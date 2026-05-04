@@ -29,7 +29,7 @@ export function tickIndicator(
     const shieldTime = currentTick - status.lastShieldTime;
     status.shieldValid = shieldTime >= 5 || shieldTime == 1;
 
-    // Slot/item change → reset cooldown
+    // Slot/item change -> reset cooldown
     if (
         (player.selectedSlotIndex !== status.lastSelectedSlot &&
             status.lastSelectedItem !== item?.typeId) ||
