@@ -82,7 +82,7 @@ export function registerStartupHandlers(): void {
     });
 
     world.afterEvents.weatherChange.subscribe(({ dimension, newWeather }) => {
-        const type = DimensionTypes.get(dimension)!;
+        const type = DimensionTypes.get(dimension.toLowerCase())!;
         world.setDynamicProperty(`sns:weather:${type.typeId}`, newWeather);
     });
 }
