@@ -16,8 +16,8 @@ Following is a list of examples. Broad categories are "Yes (Desired)", "Maybe" a
 
 ### Parity
 
-#### Attack animations: Desired but Not Possible ATM
-This is one of the features that we really want, but the maintenance cost is too high. With current "best" method, it will require us to add attachments for every single items.
+#### Attack animations: Desired but will not add for now
+This is one of the features that we really want, but the  maintenance cost of current "best" method is too high, as it requires us to add attachments for every single items.
 
 #### Ability to use items in Offhand: Not from this add-on
 Adding Offhand support for mobile users is very tricky. It is simply not possible for us to implement it in a way that everyone would like.
