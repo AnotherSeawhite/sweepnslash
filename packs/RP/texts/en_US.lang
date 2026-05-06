@@ -6,11 +6,14 @@ sweepnslash.item.mainhand=When in Main Hand:
 sweepnslash.attribute.attack_damage=Attack Damage
 sweepnslash.attribute.attack_speed=Attack Speed
 
-sweepnslash.tip.message=§fType §e%s §fto open §3Sweep §f'N §6Slash §fconfiguration menu
+sweepnslash.tip.message=§fType §e%s §fto open §3Sweep §f'N §6Slash §fpersonal settings
 sweepnslash.tip.version=Current version:§e %s
 
 sweepnslash.config.command.description=Opens up configuration menu for Sweep 'N Slash.
 sweepnslash.config.menu.title=Sweep 'N Slash Configuration
+
+sweepnslash.user_config.command.description=Opens personal settings menu for Sweep 'N Slash.
+sweepnslash.user_config.menu.title=Sweep 'N Slash - Personal Settings
 
 ## Advanced Operator Toggles
 sweepnslash.config.operator.header=Advanced Operator Toggles
@@ -39,6 +42,33 @@ sweepnslash.config.personal.indicator.crosshair=Crosshair
 sweepnslash.config.personal.indicator.hotbar=Hotbar
 sweepnslash.config.personal.indicator.geyser=Geyser
 sweepnslash.config.personal.indicator.none=None
+sweepnslash.config.personal.food_overlay=Food Overlay
+sweepnslash.config.personal.food_overlay.tooltip=Displays saturation and exhaustion overlaid on the vanilla hunger bar.
+sweepnslash.config.personal.food_preview=Food Preview
+sweepnslash.config.personal.food_preview.tooltip=Show ghost icons when holding food for how eating would change hunger and saturation.
+sweepnslash.config.personal.food_preview_max_alpha=Food Preview Opacity
+sweepnslash.config.personal.food_preview_max_alpha.tooltip=Maximum opacity of the ghost food preview icons (0 = invisible, 100 = fully opaque).
+sweepnslash.config.personal.armor_mode=Armor Overlay Mode
+sweepnslash.config.personal.armor_mode.tooltip=Controls when the armor durability overlay is shown.
+sweepnslash.config.personal.armor_mode.auto=Auto (when armor worn)
+sweepnslash.config.personal.armor_mode.always=Always Show
+sweepnslash.config.personal.armor_mode.disabled=Disabled
+sweepnslash.config.personal.offhand_mode=Offhand Overlay Mode
+sweepnslash.config.personal.offhand_mode.tooltip=Controls when the offhand durability overlay is shown.
+sweepnslash.config.personal.offhand_mode.auto=Auto (when item present)
+sweepnslash.config.personal.offhand_mode.always=Always Show
+sweepnslash.config.personal.offhand_mode.disabled=Disabled
+sweepnslash.config.personal.arrow_mode=Arrow Count Overlay
+sweepnslash.config.personal.arrow_mode.tooltip=Shows total arrow count when holding a bow or crossbow.
+sweepnslash.config.personal.arrow_mode.auto=Auto (when shooter held)
+sweepnslash.config.personal.arrow_mode.always=Always Show
+sweepnslash.config.personal.arrow_mode.disabled=Disabled
+sweepnslash.config.personal.projectile_warnings=Overlay Warnings
+sweepnslash.config.personal.projectile_warnings.tooltip=Show warning indicators when equipment durability is low or ammo is scarce.
+sweepnslash.config.personal.equip_warn_threshold=Equipment Warning Threshold (%)
+sweepnslash.config.personal.equip_warn_threshold.tooltip=Warn when an equipped item's durability drops below this percentage.
+sweepnslash.config.personal.ammo_warn_threshold=Ammo Warning Threshold
+sweepnslash.config.personal.ammo_warn_threshold.tooltip=Warn when total arrow count drops below this number.
 sweepnslash.config.personal.bowhitsound=Bow Hit Sound
 sweepnslash.config.personal.sweep.particles=Sweep Particles
 sweepnslash.config.personal.enchanted.particles=Enchanted Hit Particles

@@ -1,4 +1,4 @@
-import { Player, system, world } from '@minecraft/server';
+import { Player, system } from '@minecraft/server';
 import { clampNumber } from '../shared/math.ts';
 import { Debug } from '../shared/debug.ts';
 import { getStatus, setLastShieldTime } from '../shared/status.ts';
@@ -7,7 +7,18 @@ import { getCooldownTime } from '../combat/damage.ts';
 import { view, specialValid } from '../combat/checks.ts';
 import { shield } from '../combat/shields.ts';
 
-export function tickIndicator(player: Player, currentTick: number, addonToggle: boolean): void {
+export interface IndicatorResult {
+    mode: 'crs' | 'htb' | 'sub' | 'non';
+    pixel: number;
+    ready: boolean;
+    subtitle?: string;
+}
+
+export function tickIndicator(
+    player: Player,
+    currentTick: number,
+    addonToggle: boolean,
+): IndicatorResult {
     const status = getStatus(player);
     const { item, stats } = getItemStats(player);
 
@@ -18,7 +29,7 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
     const shieldTime = currentTick - status.lastShieldTime;
     status.shieldValid = shieldTime >= 5 || shieldTime == 1;
 
-    // Slot/item change → reset cooldown
+    // Slot/item change -> reset cooldown
     if (
         (player.selectedSlotIndex !== status.lastSelectedSlot &&
             status.lastSelectedItem !== item?.typeId) ||
@@ -111,48 +122,35 @@ export function tickIndicator(player: Player, currentTick: number, addonToggle: 
 
     const barStyle = (player.getDynamicProperty('cooldownStyle') as number) ?? 0;
     const barArray = ['crs', 'htb', 'sub', 'non'][barStyle];
-    const bonkReady = viewCheck && curCD <= 0;
-
-    if (!addonToggle || barStyle === 3) {
-        if (status.showBar) {
-            player.onScreenDisplay.setTitle('_sweepnslash:non', {
-                fadeInDuration: 0,
-                fadeOutDuration: 0,
-                stayDuration: 0,
-            });
-            status.showBar = false;
-        }
-    } else {
-        status.showBar = true;
-        if (
-            curCD > 0 ||
-            (viewCheck && stats && !hasItemFlag(player, 'hide_indicator') && barStyle === 0)
-        ) {
-            barStyle !== 2
-                ? player.onScreenDisplay.setTitle(
-                      `_sweepnslash:${barArray}:${bonkReady ? 't' : 'f'}:${uiPixelValue}`,
-                      { fadeInDuration: 0, fadeOutDuration: 0, stayDuration: 0 },
-                  )
-                : player.onScreenDisplay.setTitle(' ', {
-                      fadeInDuration: 0,
-                      fadeOutDuration: 0,
-                      stayDuration: 10,
-                      subtitle: `${cooldownSubtitle}`,
-                  });
-            status.attackReady = false;
-        } else if (curCD <= 0 && status.attackReady == false) {
-            player.onScreenDisplay.setTitle('_sweepnslash:non', {
-                fadeInDuration: 0,
-                fadeOutDuration: 0,
-                stayDuration: 0,
-            });
-            status.attackReady = true;
-        }
-    }
+    const bonkReady: boolean = (viewCheck && curCD <= 0) ?? false;
 
     if (addonToggle && Debug.isEnabled()) {
         const cooldownPercentage = Math.floor(((maxCD - curCD) / maxCD) * 100);
         const actionBarDisplay = `${Math.trunc(curCD)} (${specialCheck ? '§a' : ''}${cooldownPercentage}%§f)`;
         player.onScreenDisplay.setActionBar(actionBarDisplay);
+    }
+
+    if (!addonToggle || barStyle === 3) {
+        return { mode: 'non', pixel: 0, ready: false };
+    } else if (
+        curCD > 0 ||
+        (viewCheck && stats && !hasItemFlag(player, 'hide_indicator') && barStyle === 0)
+    ) {
+        if (barStyle === 2) {
+            return {
+                mode: 'sub',
+                pixel: uiPixelValue,
+                ready: bonkReady,
+                subtitle: cooldownSubtitle,
+            };
+        } else {
+            return {
+                mode: barArray as 'crs' | 'htb' | 'sub' | 'non',
+                pixel: uiPixelValue,
+                ready: bonkReady,
+            };
+        }
+    } else {
+        return { mode: 'non', pixel: 0, ready: false };
     }
 }

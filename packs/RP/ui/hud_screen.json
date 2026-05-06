@@ -40,6 +40,12 @@
                             "size": ["16px", "16px"],
                             "controls": [{ "cooldown_ui@sweepnslash.cooldown_ui": {} }]
                         }
+                    },
+                    {
+                        "food_overlay_panel@sweepnslash_food.food_overlay_panel": {}
+                    },
+                    {
+                        "equipment_overlay@sweepnslash_eq.equipment_overlay": {}
                     }
                 ]
             }

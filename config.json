@@ -135,7 +135,7 @@
                         "filter": "gametests",
                         "settings": {
                             "buildOptions": {
-                                "dropLabels": ["DEBUG", "LOGGING"],
+                                "dropLabels": ["QA"],
                                 "bundle": true,
                                 "minify": false
                             },
@@ -155,7 +155,7 @@
                         "filter": "gametests",
                         "settings": {
                             "buildOptions": {
-                                "dropLabels": ["DEBUG", "LOGGING"],
+                                "dropLabels": ["QA"],
                                 "bundle": true,
                                 "minify": false
                             },

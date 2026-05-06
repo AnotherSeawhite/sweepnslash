@@ -1,5 +1,5 @@
 import { Difficulty, system, world } from '@minecraft/server';
-import { tickIndicator } from '../ui/indicator.ts';
+import { tickHUD } from '../ui/hud.ts';
 import { tickFood } from '../food/index.ts';
 
 export function registerTickHandlers(): void {
@@ -13,7 +13,7 @@ export function registerTickHandlers(): void {
             world.gameRules.naturalRegeneration = false;
 
         for (const player of world.getAllPlayers()) {
-            tickIndicator(player, currentTick, addonToggle);
+            tickHUD(player, currentTick, addonToggle);
             tickFood(player, currentTick, saturationHealing, isPeaceful);
         }
     });

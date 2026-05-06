@@ -1,6 +1,7 @@
 import { DimensionTypes, Player, system, world } from '@minecraft/server';
 import { initWorldProperties, initPlayerProperties } from '../config/init.ts';
 import { registerConfigCommand } from '../config/form.ts';
+import { registerUserConfigCommand } from '../config/user_form.ts';
 import { setAttackCooldown } from '../shared/status.ts';
 import { damageTest } from '../combat/checks.ts';
 import { VERSION } from '../main.ts';
@@ -24,6 +25,7 @@ export function registerStartupHandlers(): void {
 
     system.beforeEvents.startup.subscribe((init) => {
         registerConfigCommand(init);
+        registerUserConfigCommand(init);
     });
 
     world.afterEvents.worldLoad.subscribe(() => {
@@ -47,7 +49,7 @@ export function registerStartupHandlers(): void {
             )
                 player.sendMessage({
                     rawtext: [
-                        { translate: 'sweepnslash.tip.message', with: ['/sns:config'] },
+                        { translate: 'sweepnslash.tip.message', with: ['/sns:user_config'] },
                         { text: '\n' },
                         {
                             translate: 'sweepnslash.tip.version',
